@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Pop Fanclub | Member Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            /* K-Pop Band Background Image */
+            background: url('https://i.pinimg.com/originals/c4/78/50/c47850005840a2526ec4664961bfa086.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Dark overlay to make the login card stand out */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 5, 20, 0.55);
+            z-index: -1;
+        }
+
+        /* Glassmorphism Card Container */
+        .login-container {
+            text-align: center;
+            padding: 35px 30px;
+            width: 90%;
+            max-width: 400px;
+            background: rgba(20, 15, 35, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
+                        0 0 20px rgba(236, 72, 153, 0.2);
+            color: #ffffff;
+        }
+
+        .disc-logo {
+            font-size: 70px;
+            display: inline-block;
+            animation: spin 6s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+            margin-bottom: 5px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h2 {
+            font-size: 26px;
+            margin: 0 0 5px 0;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff71ce, #01cdfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 13px;
+            color: #e0e0e0;
+            margin: 0 0 25px 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form Styling */
+        .input-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .input-group input:focus {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: #ff71ce;
+            box-shadow: 0 0 12px rgba(255, 113, 206, 0.5);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-bottom: 22px;
+            color: #ccc;
+        }
+
+        .form-actions a {
+            color: #ff71ce;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .form-actions a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px 0;
+            background: linear-gradient(135deg, #ff3399, #7928ca);
+            border: none;
+            border-radius: 30px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 51, 153, 0.4);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 51, 153, 0.7);
+            background: linear-gradient(135deg, #ff52a8, #8a36d9);
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #bbb;
+        }
+
+        .footer-text a {
+            color: #01cdfe;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="disc-logo">💿</div>
+    <h2>Fanclub Login</h2>
+    <p class="subtitle">Enter the groove & step into the world</p>
+
+    <form action="music.html" method="GET">
+        <div class="input-group">
+            <input type="text" placeholder="Fan ID or Email" required>
+        </div>
+        
+        <div class="input-group">
+            <input type="password" placeholder="Password" required>
+        </div>
+
+        <div class="form-actions">
+            <label style="cursor: pointer;">
+                <input type="checkbox" style="accent-color: #ff71ce;"> Remember me
+            </label>
+            <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="login-btn">ENTER THE GROOVE</button>
+    </form>
+
+    <div class="footer-text">
+        Don't have an ID? <a href="#">Join the Fandom</a>
+    </div>
+</div>
+
+<script>
+    // Offline redirect handling from original script
+    window.addEventListener("offline", () => {
+        window.location.href = "404.html";
+    });
+</script>
+
+</body>
+</html>
