@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVT Carat Land | Interactive Binder Game</title>
+    <title>SVT Carat Land | 15-Page Interactive Photocard Binder</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         :root {
@@ -42,42 +45,43 @@
         /* --- Header & Score --- */
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #fff;
             text-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             font-weight: 800;
             letter-spacing: -0.5px;
         }
 
         .header p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.95;
         }
 
         .score-board {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(10px);
-            padding: 6px 20px;
+            padding: 6px 22px;
             border-radius: 20px;
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 8px;
             font-weight: 700;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         /* --- 3D Photocard Binder --- */
         .binder-wrapper {
             perspective: 1500px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
         .binder {
-            width: 780px;
-            height: 480px;
+            width: 820px;
+            height: 500px;
             background: #fcfbfa;
             border-radius: 18px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), inset 0 0 10px rgba(0, 0, 0, 0.05);
@@ -86,7 +90,7 @@
             border: 8px solid #ffffff;
         }
 
-        /* Metallic Ring Spine */
+        /* Spine Rings */
         .binder-spine {
             position: absolute;
             left: 50%;
@@ -114,11 +118,11 @@
         .binder-page {
             width: 50%;
             height: 100%;
-            padding: 25px 20px;
+            padding: 20px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 15px;
+            gap: 12px;
             background-image: radial-gradient(rgba(146, 168, 209, 0.2) 1px, transparent 1px);
             background-size: 16px 16px;
         }
@@ -155,10 +159,50 @@
         }
 
         .slot-hint {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #888;
             font-weight: 700;
             pointer-events: none;
+        }
+
+        /* --- Page Controls --- */
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 820px;
+            margin-bottom: 15px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 30px;
+            font-weight: 800;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--rose-quartz);
+            color: #fff;
+            transform: translateY(-2deg);
+        }
+
+        .page-indicator {
+            font-weight: 800;
+            color: #fff;
+            font-size: 1.1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
 
         /* --- Photocard Tray (Bottom Deck) --- */
@@ -168,33 +212,33 @@
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(12px);
             border-radius: 20px;
-            padding: 20px;
+            padding: 18px;
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .tray-title {
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             text-align: center;
         }
 
         .tray-cards {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             overflow-x: auto;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
-        /* Draggable Photocard Element */
+        /* Draggable Photocard */
         .photocard {
-            width: 110px;
-            height: 160px;
+            width: 105px;
+            height: 155px;
             background: #fff;
             border-radius: 10px;
-            padding: 6px;
+            padding: 5px;
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
             cursor: grab;
             flex-shrink: 0;
@@ -213,30 +257,30 @@
 
         .photocard img {
             width: 100%;
-            height: 110px;
+            height: 105px;
             object-fit: cover;
             border-radius: 6px;
             pointer-events: none;
         }
 
         .card-info {
-            margin-top: 6px;
+            margin-top: 4px;
             text-align: center;
         }
 
         .card-name {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 800;
             color: #222;
         }
 
-        .card-team {
-            font-size: 0.65rem;
-            color: #777;
+        .card-ver {
+            font-size: 0.62rem;
+            color: #666;
             font-weight: 700;
         }
 
-        /* Holographic Shine Effect */
+        /* Holographic Effect */
         .photocard::after {
             content: "";
             position: absolute;
@@ -246,48 +290,29 @@
             pointer-events: none;
         }
 
-        /* Complete Sparkle Effect */
+        /* Slot Card Pop Effect */
         @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            80% { transform: scale(1.1); }
+            0% { transform: scale(0.6); opacity: 0; }
+            80% { transform: scale(1.05); }
             100% { transform: scale(1); opacity: 1; }
         }
 
         .slot .photocard {
-            animation: popIn 0.4s ease forwards;
+            animation: popIn 0.35s ease forwards;
             width: 100%;
             height: 100%;
             box-shadow: none;
         }
 
         .slot .photocard img {
-            height: 130px;
+            height: 125px;
         }
 
-        /* Button Controls */
+        /* Controls Bottom */
         .controls {
             margin-top: 15px;
             display: flex;
             gap: 12px;
-        }
-
-        .btn {
-            padding: 10px 24px;
-            border-radius: 30px;
-            border: none;
-            background: #fff;
-            color: #333;
-            font-weight: 800;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
-        }
-
-        .btn:hover {
-            background: var(--rose-quartz);
-            color: #fff;
-            transform: translateY(-2deg);
         }
     </style>
 </head>
@@ -295,10 +320,17 @@
 
     <!-- Header -->
     <header class="header">
-        <h1>💎 SVT Carat Land Binder</h1>
-        <p>Drag photocards into the binder sleeves to complete your collection!</p>
-        <div class="score-board">Collected: <span id="collected-count">0</span> / 13</div>
+        <h1>💎 SEVENTEEN 15-Page Collector Binder</h1>
+        <p>13 Members • 4 Photocards Each • 52 Cards Total to Collect!</p>
+        <div class="score-board">Total Collected: <span id="collected-count">0</span> / 52</div>
     </header>
+
+    <!-- Page Navigation Bar -->
+    <div class="page-navigation">
+        <button class="nav-btn" id="prev-btn" onclick="changePage(-1)">◀ Prev Page</button>
+        <span class="page-indicator" id="page-display">Page 1 / 15</span>
+        <button class="nav-btn" id="next-btn" onclick="changePage(1)">Next Page ▶</button>
+    </div>
 
     <!-- Binder Area -->
     <div class="binder-wrapper">
@@ -311,7 +343,7 @@
                 <div class="ring"></div>
             </div>
 
-            <!-- Left Page Slots -->
+            <!-- Left Page (4 Slots) -->
             <div class="binder-page left-page">
                 <div class="slot" data-slot="1"><span class="slot-hint">Sleeve 1</span></div>
                 <div class="slot" data-slot="2"><span class="slot-hint">Sleeve 2</span></div>
@@ -319,7 +351,7 @@
                 <div class="slot" data-slot="4"><span class="slot-hint">Sleeve 4</span></div>
             </div>
 
-            <!-- Right Page Slots -->
+            <!-- Right Page (4 Slots) -->
             <div class="binder-page right-page">
                 <div class="slot" data-slot="5"><span class="slot-hint">Sleeve 5</span></div>
                 <div class="slot" data-slot="6"><span class="slot-hint">Sleeve 6</span></div>
@@ -329,64 +361,127 @@
         </div>
     </div>
 
-    <!-- Photocard Tray (Deck) -->
+    <!-- Photocard Tray -->
     <div class="tray-container">
-        <div class="tray-title">📦 Unopened Packs (Drag Cards Above)</div>
-        <div class="tray-cards" id="tray">
-            <!-- Dynamically populated cards -->
-        </div>
+        <div class="tray-title">📦 Photocard Deck (Drag Cards into Binder Slots Above)</div>
+        <div class="tray-cards" id="tray"></div>
     </div>
 
     <!-- Controls -->
     <div class="controls">
-        <button class="btn" onclick="resetBinder()">🔄 Reset Collection</button>
+        <button class="nav-btn" onclick="triggerConfetti()">🎉 Celebrate Confetti</button>
+        <button class="nav-btn" onclick="resetBinder()">🔄 Reset Collection</button>
     </div>
 
     <script>
-        // SEVENTEEN Members Dataset
-        const members = [
-            { id: "1", name: "S.Coups", team: "Hip-Hop Team", img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" },
-            { id: "2", name: "Jeonghan", team: "Vocal Team", img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" },
-            { id: "3", name: "Joshua", team: "Vocal Team", img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" },
-            { id: "4", name: "Jun", team: "Performance Team", img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" },
-            { id: "5", name: "Hoshi", team: "Performance Team", img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" },
-            { id: "6", name: "Wonwoo", team: "Hip-Hop Team", img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" },
-            { id: "7", name: "Woozi", team: "Vocal & Producer", img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" },
-            { id: "8", name: "Dokyeom", team: "Vocal Team", img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" }
+        // 13 SEVENTEEN Members
+        const memberList = [
+            "S.Coups", "Jeonghan", "Joshua", "Jun", "Hoshi", 
+            "Wonwoo", "Woozi", "DK", "Mingyu", "The8", 
+            "Seungkwan", "Vernon", "Dino"
         ];
 
-        let collected = 0;
-        const tray = document.getElementById('tray');
-        const countDisplay = document.getElementById('collected-count');
+        // 4 Versions Per Member = 52 Total Photocards
+        const cardVersions = ["Carat Land Ver.", "Vocal/Unit Ver.", "Selfie Ver.", "Rare Ver."];
 
-        // Initialize Cards into Tray
+        let currentPage = 1;
+        const totalPages = 15;
+        let binderState = {}; // Stores placed card IDs per page slot: { 'p1_s1': cardObj }
+        let allPhotocards = [];
+
+        // Generate 52 Photocards (13 members * 4 versions)
+        function generatePhotocards() {
+            let idCount = 1;
+            allPhotocards = [];
+            memberList.forEach(member => {
+                cardVersions.forEach(ver => {
+                    allPhotocards.push({
+                        id: `pc-${idCount}`,
+                        name: member,
+                        version: ver,
+                        img: "https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg"
+                    });
+                    idCount++;
+                });
+            });
+        }
+
+        // Initialize Game
         function initGame() {
-            tray.innerHTML = '';
-            collected = 0;
-            countDisplay.innerText = collected;
+            generatePhotocards();
+            binderState = {};
+            currentPage = 1;
+            updateUI();
+        }
 
-            // Clear slots
+        // Render Page & Tray
+        function updateUI() {
+            // Update Page Display & Controls
+            document.getElementById('page-display').innerText = `Page ${currentPage} / ${totalPages}`;
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            document.getElementById('next-btn').disabled = (currentPage === totalPages);
+
+            // Render Binder Slots for Current Page
             document.querySelectorAll('.slot').forEach(slot => {
-                slot.innerHTML = `<span class="slot-hint">Sleeve ${slot.dataset.slot}</span>`;
+                const slotNum = slot.dataset.slot;
+                const slotKey = `p${currentPage}_s${slotNum}`;
+
+                if (binderState[slotKey]) {
+                    const cardData = binderState[slotKey];
+                    slot.innerHTML = createCardElementHTML(cardData, false);
+                } else {
+                    slot.innerHTML = `<span class="slot-hint">Sleeve ${slotNum}</span>`;
+                }
             });
 
-            // Create Draggable Cards
-            members.forEach(member => {
-                const card = document.createElement('div');
-                card.className = 'photocard';
-                card.draggable = true;
-                card.id = `card-${member.id}`;
-                card.innerHTML = `
-                    <img src="${member.img}" alt="${member.name}">
+            // Render Tray Cards (Only unplaced cards)
+            const tray = document.getElementById('tray');
+            tray.innerHTML = '';
+
+            const placedCardIds = Object.values(binderState).map(c => c.id);
+            const remainingCards = allPhotocards.filter(c => !placedCardIds.includes(c.id));
+
+            remainingCards.forEach(cardData => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'photocard';
+                cardEl.draggable = true;
+                cardEl.id = cardData.id;
+                cardEl.innerHTML = `
+                    <img src="${cardData.img}" alt="${cardData.name}">
                     <div class="card-info">
-                        <div class="card-name">${member.name}</div>
-                        <div class="card-team">${member.team}</div>
+                        <div class="card-name">${cardData.name}</div>
+                        <div class="card-ver">${cardData.version}</div>
                     </div>
                 `;
-
-                card.addEventListener('dragstart', dragStart);
-                tray.appendChild(card);
+                cardEl.addEventListener('dragstart', dragStart);
+                tray.appendChild(cardEl);
             });
+
+            // Update Score Count
+            document.getElementById('collected-count').innerText = placedCardIds.length;
+
+            // Reattach Drag & Drop to Slots
+            setupSlotListeners();
+        }
+
+        function createCardElementHTML(cardData) {
+            return `
+                <div class="photocard" id="${cardData.id}">
+                    <img src="${cardData.img}" alt="${cardData.name}">
+                    <div class="card-info">
+                        <div class="card-name">${cardData.name}</div>
+                        <div class="card-ver">${cardData.version}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Page Navigation
+        function changePage(direction) {
+            currentPage += direction;
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            updateUI();
         }
 
         // Drag & Drop Mechanics
@@ -394,44 +489,83 @@
             e.dataTransfer.setData('text/plain', e.target.id);
         }
 
-        const slots = document.querySelectorAll('.slot');
-        slots.forEach(slot => {
-            slot.addEventListener('dragover', dragOver);
-            slot.addEventListener('dragenter', dragEnter);
-            slot.addEventListener('dragleave', dragLeave);
-            slot.addEventListener('drop', dropCard);
-        });
-
-        function dragOver(e) { e.preventDefault(); }
-        function dragEnter(e) { e.preventDefault(); this.classList.add('drag-over'); }
-        function dragLeave() { this.classList.remove('drag-over'); }
+        function setupSlotListeners() {
+            const slots = document.querySelectorAll('.slot');
+            slots.forEach(slot => {
+                slot.addEventListener('dragover', e => e.preventDefault());
+                slot.addEventListener('dragenter', function(e) { e.preventDefault(); this.classList.add('drag-over'); });
+                slot.addEventListener('dragleave', function() { this.classList.remove('drag-over'); });
+                slot.addEventListener('drop', dropCard);
+            });
+        }
 
         function dropCard(e) {
             e.preventDefault();
             this.classList.remove('drag-over');
 
-            // Prevent multiple cards in one slot
-            if (this.querySelector('.photocard')) return;
+            const slotNum = this.dataset.slot;
+            const slotKey = `p${currentPage}_s${slotNum}`;
+
+            if (binderState[slotKey]) return; // Slot already full
 
             const cardId = e.dataTransfer.getData('text/plain');
-            const card = document.getElementById(cardId);
+            const cardData = allPhotocards.find(c => c.id === cardId);
 
-            if (card) {
-                this.innerHTML = ''; // Hide sleeve hint text
-                this.appendChild(card);
-                card.draggable = false; // Lock card in place
-                
-                collected++;
-                countDisplay.innerText = collected;
+            if (cardData) {
+                binderState[slotKey] = cardData;
+                triggerConfetti(); // Trigger Confetti on successful drop
+                updateUI();
 
-                if (collected === 8) {
-                    setTimeout(() => alert("🎉 Congratulations! You completed the Carat Land Binder!"), 300);
+                // Check full binder completion (52 cards)
+                if (Object.keys(binderState).length === 52) {
+                    setTimeout(() => {
+                        triggerBigConfetti();
+                        alert("🎉 CONGRATULATIONS! You completed all 15 pages of the SEVENTEEN Binder! 💎");
+                    }, 400);
                 }
             }
         }
 
+        // Confetti Effects
+        function triggerConfetti() {
+            confetti({
+                particleCount: 40,
+                spread: 60,
+                origin: { y: 0.7 },
+                colors: ['#f7cac9', '#92a8d1', '#ffffff']
+            });
+        }
+
+        function triggerBigConfetti() {
+            const duration = 3 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#f7cac9', '#92a8d1']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#f7cac9', '#92a8d1']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+
         function resetBinder() {
-            initGame();
+            if (confirm("Reset your binder collection?")) {
+                initGame();
+            }
         }
 
         // Start Game
