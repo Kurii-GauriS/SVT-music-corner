@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whiteboard Scrapbook | Music & Memories</title>
+    <title>Whiteboard Scrapbook | SEVENTEEN Music & Memories</title>
 
     <!-- Google Fonts for Handwritten Quotes & Headers -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,7 +61,7 @@
         .header-container {
             text-align: center;
             max-width: 800px;
-            margin: 0 auto 50px auto;
+            margin: 0 auto 30px auto;
             position: relative;
             z-index: 10;
         }
@@ -78,11 +78,65 @@
         .header-subtitle {
             font-size: 1.1rem;
             color: #666;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             display: inline-block;
             padding: 6px 18px;
             border-radius: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        /* --- Featured Hero Section (Big Image First) --- */
+        .hero-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-polaroid {
+            background-color: var(--polaroid-bg);
+            padding: 20px 20px 30px 20px;
+            border-radius: 6px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12),
+                        0 4px 10px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 720px;
+            position: relative;
+            transform: rotate(-1.2deg);
+            transition: all 0.4s ease;
+        }
+
+        .hero-polaroid:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .hero-polaroid::before {
+            content: "";
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%) rotate(1deg);
+            width: 140px;
+            height: 32px;
+            background: var(--tape-pink);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            z-index: 2;
+        }
+
+        .hero-photo-frame {
+            width: 100%;
+            height: 380px;
+            overflow: hidden;
+            border-radius: 4px;
+            background-color: #eee;
+        }
+
+        .hero-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* --- Floating Animated Stickers --- */
@@ -102,23 +156,20 @@
         .st-4 { top: 52%; right: 3%; animation-duration: 5.5s; }
         .st-5 { bottom: 8%; left: 6%; animation-duration: 8s; }
         .st-6 { bottom: 6%; right: 7%; animation-duration: 6s; }
+        .st-7 { top: 30%; right: 4%; animation-duration: 7.5s; }
 
         @keyframes floatSlow {
-            0% {
-                transform: translateY(0px) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-20px) rotate(14deg);
-            }
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(14deg); }
         }
 
         /* --- Scrapbook Grid Container --- */
         .scrapbook-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 320px));
-            gap: 50px 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 310px));
+            gap: 50px 35px;
             justify-content: center;
-            max-width: 1280px;
+            max-width: 1400px;
             margin: 0 auto;
             position: relative;
             z-index: 5;
@@ -217,7 +268,7 @@
 
         .music-quote {
             font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: #4a4a4a;
             line-height: 1.35;
             padding: 0 6px;
@@ -237,16 +288,11 @@
         }
 
         /* Responsive Layout Tweaks */
-        @media (max-width: 600px) {
-            .header-title {
-                font-size: 2.8rem;
-            }
-            .scrapbook-grid {
-                gap: 40px 20px;
-            }
-            .sticker {
-                font-size: 1.6rem;
-            }
+        @media (max-width: 768px) {
+            .header-title { font-size: 2.8rem; }
+            .hero-photo-frame { height: 260px; }
+            .scrapbook-grid { gap: 40px 20px; }
+            .sticker { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -267,10 +313,24 @@
         <p class="header-subtitle">Pinned notes, polaroids, and what music means to each of us 🤍</p>
     </header>
 
-    <!-- Polaroid Scrapbook Grid -->
+    <!-- Big Featured Group Polaroid -->
+    <section class="hero-container">
+        <div class="hero-polaroid">
+            <div class="hero-photo-frame">
+                <img src="https://i.ytimg.com/vi/e94hCLHEEsk/maxresdefault.jpg" alt="SEVENTEEN Group Photo">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">SEVENTEEN (세븐틴)</h2>
+                <p class="music-quote">"13 Members, 3 Units, 1 Team. Making music together forever."</p>
+                <span class="member-tag">TEAM SVT</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Polaroid Scrapbook Grid (13 Members) -->
     <main class="scrapbook-grid">
 
-        <!-- Member 1 -->
+        <!-- Member 1: S.Coups -->
         <div class="polaroid-card">
             <div class="photo-frame">
                 <img src="" alt="S.Coups">
@@ -278,12 +338,12 @@
             <div class="member-details">
                 <h2 class="member-name">S.Coups</h2>
                 <p class="music-quote">"Music keeps us grounded together through every storm."</p>
-                <span class="member-tag">Leader & Rap & Hip-Hop Team</span>
+                <span class="member-tag">Leader & Hip-Hop Team</span>
             </div>
         </div>
 
-        <!-- Member 2 -->
-         <div class="polaroid-card">
+        <!-- Member 2: Jeonghan -->
+        <div class="polaroid-card">
             <div class="photo-frame">
                 <img src="" alt="Jeonghan">
             </div>
@@ -294,8 +354,8 @@
             </div>
         </div>
 
-        <!-- Member 3 -->
-         <div class="polaroid-card">
+        <!-- Member 3: Joshua -->
+        <div class="polaroid-card">
             <div class="photo-frame">
                 <img src="" alt="Joshua">
             </div>
@@ -304,9 +364,10 @@
                 <p class="music-quote">"Every note I sing is a piece of my heart shared with the world."</p>
                 <span class="member-tag">Vocal Team</span>
             </div>
-         </div>
-        <!-- Member 4 -->
-    <div class="polaroid-card">
+        </div>
+
+        <!-- Member 4: Jun -->
+        <div class="polaroid-card">
             <div class="photo-frame">
                 <img src="" alt="Jun">
             </div>
@@ -315,8 +376,10 @@
                 <p class="music-quote">"Dance and music are inseparable; they breathe life into each other."</p>
                 <span class="member-tag">Performance Team</span>
             </div>
-         <!-- Member 5 -->
-          <div class="polaroid-card">
+        </div>
+
+        <!-- Member 5: Hoshi -->
+        <div class="polaroid-card">
             <div class="photo-frame">
                 <img src="" alt="Hoshi">
             </div>
@@ -326,8 +389,9 @@
                 <span class="member-tag">Performance Team</span>
             </div>
         </div>
-           <!-- Member 6 -->
-            <div class="polaroid-card">
+
+        <!-- Member 6: Wonwoo -->
+        <div class="polaroid-card">
             <div class="photo-frame">
                 <img src="" alt="Wonwoo">
             </div>
@@ -336,8 +400,10 @@
                 <p class="music-quote">"Rap is my canvas; I paint my thoughts and feelings with words."</p>
                 <span class="member-tag">Hip-Hop Team</span>
             </div>
-             <!-- Member 7 -->
-              <div class="polaroid-card">
+        </div>
+
+        <!-- Member 7: Woozi -->
+        <div class="polaroid-card">
             <div class="photo-frame">
                 <img src="" alt="Woozi">
             </div>
@@ -347,18 +413,20 @@
                 <span class="member-tag">Vocal & Producer</span>
             </div>
         </div>
-               <!-- Member 8 -->
-                <div class="photo-frame">
-                    <div class="photo-frame">
-                        <img src="" alt="DK">
-                    </div>
-                <div class="member-details">
-                    <h2 class="member-name">Dokyeom</h2>
-                    <p class="music-quote">"Everyone, no matter what anyone says, you are the star of your life. Trust yourself and go!"</p>
-                    <span class="member-tag">Vocal & Producer</span>
-                </div>
-                </div>
-                <!-- Member 9: Mingyu -->
+
+        <!-- Member 8: DK -->
+        <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="DK">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Dokyeom</h2>
+                <p class="music-quote">"You are the star of your life. Trust yourself and go!"</p>
+                <span class="member-tag">Vocal Team</span>
+            </div>
+        </div>
+
+        <!-- Member 9: Mingyu -->
         <div class="polaroid-card">
             <div class="photo-frame">
                 <img src="" alt="Mingyu">
@@ -390,7 +458,7 @@
             <div class="member-details">
                 <h2 class="member-name">Seungkwan</h2>
                 <p class="music-quote">"Pouring my heart into every high note is my favorite way to connect with you."</p>
-                <span class="member-tag">Main Vocal</span>
+                <span class="member-tag">Vocal Team</span>
             </div>
         </div>
 
@@ -417,7 +485,7 @@
                 <span class="member-tag">Performance & Maknae</span>
             </div>
         </div>
-        
+
     </main>
 
 </body>
