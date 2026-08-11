@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whiteboard Scrapbook | Music & Memories</title>
+
+    <!-- Google Fonts for Handwritten Quotes & Headers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Root Variables & Base Styling --- */
+        :root {
+            --whiteboard-bg: #f8f6f0;
+            --grid-line: #e3dec3;
+            --polaroid-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --tape-pink: rgba(255, 182, 193, 0.7);
+            --tape-yellow: rgba(255, 235, 153, 0.75);
+            --tape-blue: rgba(179, 229, 252, 0.7);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--whiteboard-bg);
+            /* Whiteboard Grid Pattern */
+            background-image: 
+                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+            background-size: 32px 32px;
+            padding: 50px 20px 80px 20px;
+            position: relative;
+            overflow-x: hidden;
+            color: var(--text-main);
+        }
+
+        /* --- Whiteboard Border Frame --- */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 3px dashed #d5cfbd;
+            border-radius: 16px;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* --- Header Section --- */
+        .header-container {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-title {
+            font-family: 'Caveat', cursive;
+            font-size: 3.8rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.04);
+        }
+
+        .header-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            background: rgba(255, 255, 255, 0.8);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        /* --- Floating Animated Stickers --- */
+        .sticker {
+            position: absolute;
+            font-size: 2.2rem;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1));
+            animation: floatSlow 6s ease-in-out infinite alternate;
+        }
+
+        .st-1 { top: 6%; left: 4%; animation-duration: 5s; }
+        .st-2 { top: 12%; right: 5%; animation-duration: 7s; }
+        .st-3 { top: 48%; left: 2%; animation-duration: 6.5s; }
+        .st-4 { top: 52%; right: 3%; animation-duration: 5.5s; }
+        .st-5 { bottom: 8%; left: 6%; animation-duration: 8s; }
+        .st-6 { bottom: 6%; right: 7%; animation-duration: 6s; }
+
+        @keyframes floatSlow {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-20px) rotate(14deg);
+            }
+        }
+
+        /* --- Scrapbook Grid Container --- */
+        .scrapbook-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 320px));
+            gap: 50px 40px;
+            justify-content: center;
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* --- Polaroid Card Frame --- */
+        .polaroid-card {
+            background-color: var(--polaroid-bg);
+            padding: 16px 16px 24px 16px;
+            border-radius: 4px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08),
+                        0 2px 6px rgba(0, 0, 0, 0.04);
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Alternating Polaroid Tilt Angles */
+        .polaroid-card:nth-child(4n+1) { transform: rotate(-3.5deg); }
+        .polaroid-card:nth-child(4n+2) { transform: rotate(2.8deg); }
+        .polaroid-card:nth-child(4n+3) { transform: rotate(-2deg); }
+        .polaroid-card:nth-child(4n+4) { transform: rotate(3.2deg); }
+
+        /* Polaroid Hover Effect */
+        .polaroid-card:hover {
+            transform: rotate(0deg) scale(1.06) translateY(-8px);
+            box-shadow: 0 22px 40px rgba(0, 0, 0, 0.16),
+                        0 8px 16px rgba(0, 0, 0, 0.08);
+            z-index: 25;
+        }
+
+        /* Washi Tape Strip on Top of Polaroid */
+        .polaroid-card::before {
+            content: "";
+            position: absolute;
+            top: -14px;
+            width: 90px;
+            height: 28px;
+            background: var(--tape-yellow);
+            transform: rotate(-3deg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(2px);
+            z-index: 2;
+        }
+
+        .polaroid-card:nth-child(even)::before {
+            background: var(--tape-pink);
+            transform: rotate(2deg);
+        }
+
+        .polaroid-card:nth-child(3n)::before {
+            background: var(--tape-blue);
+            transform: rotate(-1deg);
+        }
+
+        /* Photo Wrapper */
+        .photo-frame {
+            width: 100%;
+            height: 270px;
+            overflow: hidden;
+            border-radius: 2px;
+            background-color: #eee;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .polaroid-card:hover .photo-frame img {
+            transform: scale(1.05);
+        }
+
+        /* Member Info & Quotes */
+        .member-details {
+            margin-top: 18px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .member-name {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 6px;
+        }
+
+        .music-quote {
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            color: #4a4a4a;
+            line-height: 1.35;
+            padding: 0 6px;
+        }
+
+        .member-tag {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 12px;
+            background-color: #f0f0f0;
+            color: #666;
+        }
+
+        /* Responsive Layout Tweaks */
+        @media (max-width: 600px) {
+            .header-title {
+                font-size: 2.8rem;
+            }
+            .scrapbook-grid {
+                gap: 40px 20px;
+            }
+            .sticker {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Stickers -->
+    <div class="sticker st-1">🎵</div>
+    <div class="sticker st-2">✨</div>
+    <div class="sticker st-3">🎧</div>
+    <div class="sticker st-4">💖</div>
+    <div class="sticker st-5">🎶</div>
+    <div class="sticker st-6">💫</div>
+    <div class="sticker st-7">💎</div>
+
+    <!-- Header Section -->
+    <header class="header-container">
+        <h1 class="header-title">Our Whiteboard of Memories</h1>
+        <p class="header-subtitle">Pinned notes, polaroids, and what music means to each of us 🤍</p>
+    </header>
+
+    <!-- Polaroid Scrapbook Grid -->
+    <main class="scrapbook-grid">
+
+        <!-- Member 1 -->
+        <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="S.Coups">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">S.Coups</h2>
+                <p class="music-quote">"Music keeps us grounded together through every storm."</p>
+                <span class="member-tag">Leader & Rap & Hip-Hop Team</span>
+            </div>
+        </div>
+
+        <!-- Member 2 -->
+         <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Jeonghan">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Jeonghan</h2>
+                <p class="music-quote">"Singing comforting songs is my way of wrapping everyone in a warm hug."</p>
+                <span class="member-tag">Vocal Team</span>
+            </div>
+        </div>
+
+        <!-- Member 3 -->
+         <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Joshua">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Joshua</h2>
+                <p class="music-quote">"Every note I sing is a piece of my heart shared with the world."</p>
+                <span class="member-tag">Vocal Team</span>
+            </div>
+         </div>
+        <!-- Member 4 -->
+    <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Jun">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Jun</h2>
+                <p class="music-quote">"Dance and music are inseparable; they breathe life into each other."</p>
+                <span class="member-tag">Performance Team</span>
+            </div>
+         <!-- Member 5 -->
+          <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Hoshi">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Hoshi</h2>
+                <p class="music-quote">"When the rhythm starts, my body moves before I even think."</p>
+                <span class="member-tag">Performance Team</span>
+            </div>
+        </div>
+           <!-- Member 6 -->
+            <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Wonwoo">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Wonwoo</h2>
+                <p class="music-quote">"Rap is my canvas; I paint my thoughts and feelings with words."</p>
+                <span class="member-tag">Hip-Hop Team</span>
+            </div>
+             <!-- Member 7 -->
+              <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Woozi">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Woozi</h2>
+                <p class="music-quote">"A quiet melody always becomes something we can share with the world."</p>
+                <span class="member-tag">Vocal & Producer</span>
+            </div>
+        </div>
+               <!-- Member 8 -->
+                <div class="photo-frame">
+                    <div class="photo-frame">
+                        <img src="" alt="DK">
+                    </div>
+                <div class="member-details">
+                    <h2 class="member-name">Dokyeom</h2>
+                    <p class="music-quote">"Everyone, no matter what anyone says, you are the star of your life. Trust yourself and go!"</p>
+                    <span class="member-tag">Vocal & Producer</span>
+                </div>
+                </div>
+                <!-- Member 9: Mingyu -->
+        <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Mingyu">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Mingyu</h2>
+                <p class="music-quote">"Music captures our moments so we can re-live every memory together."</p>
+                <span class="member-tag">Hip-Hop Team</span>
+            </div>
+        </div>
+
+        <!-- Member 10: The8 -->
+        <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="The8">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">The8</h2>
+                <p class="music-quote">"Art and melody are how I express the balance and peace inside my soul."</p>
+                <span class="member-tag">Performance Team</span>
+            </div>
+        </div>
+
+        <!-- Member 11: Seungkwan -->
+        <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Seungkwan">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Seungkwan</h2>
+                <p class="music-quote">"Pouring my heart into every high note is my favorite way to connect with you."</p>
+                <span class="member-tag">Main Vocal</span>
+            </div>
+        </div>
+
+        <!-- Member 12: Vernon -->
+        <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Vernon">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Vernon</h2>
+                <p class="music-quote">"Music gives us total freedom to create our own world without limits."</p>
+                <span class="member-tag">Hip-Hop Team</span>
+            </div>
+        </div>
+
+        <!-- Member 13: Dino -->
+        <div class="polaroid-card">
+            <div class="photo-frame">
+                <img src="" alt="Dino">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Dino</h2>
+                <p class="music-quote">"As the youngest, growing through music and dance alongside my brothers is everything."</p>
+                <span class="member-tag">Performance & Maknae</span>
+            </div>
+        </div>
+        
+    </main>
+
+</body>
+</html>
