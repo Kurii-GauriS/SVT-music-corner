@@ -12,8 +12,46 @@
 
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
+    <header>
+        <!-- Navigation Header -->
+    <div class="nav-container">
+        <a href="index.html" class="glass-btn">🏡 H♡me</a>
+        <a href="music.html" class="glass-btn">❤️Spotify💿</a>
+        <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
+        <a href="svt.html" class="glass-btn">💎𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷💎</a>
+        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
+    </div>
+    </header>
     <style>
+         /* Top Navigation Header */
+        .nav-container {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .glass-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(199, 8, 113, 0.25);
+            color: #a638c7;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
         :root {
             --rose-quartz: #f7cac9;
             --serenity: #92a8d1;
@@ -347,6 +385,7 @@
                 </div>
 
             </div>
+            
         </div>
 
     </div>
