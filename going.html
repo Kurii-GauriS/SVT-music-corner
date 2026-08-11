@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💎 SEVENTEEN | Official YouTube Playlist Player</title>
+    <title>💎 SEVENTEEN | YouTube Player & Going SEVENTEEN Playlist</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -17,8 +17,6 @@
         :root {
             --rose-quartz: #f7cac9;
             --serenity: #92a8d1;
-            --rose-quartz-dark: #f0b0af;
-            --serenity-dark: #7b95c4;
             --glass-bg: rgba(255, 255, 255, 0.35);
             --glass-border: rgba(255, 255, 255, 0.5);
             --text-main: #2d3748;
@@ -37,64 +35,62 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 25px 15px;
+            padding: 20px;
             color: var(--text-main);
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* --- Header --- */
         .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             color: #ffffff;
             text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            animation: fadeInDown 0.6s ease forwards;
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
         }
 
         .header p {
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             opacity: 0.95;
-            font-weight: 500;
         }
 
-        /* --- Main Player Container Card --- */
-        .player-card {
+        /* --- Main Layout Grid (Player Left, Sidebar Right) --- */
+        .main-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1250px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* --- Left Side: Player Card --- */
+        .player-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-radius: 24px;
+            border-radius: 20px;
             border: 2px solid var(--glass-border);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            animation: fadeInUp 0.7s ease forwards;
+            gap: 15px;
         }
 
-        /* --- Responsive Video Iframe Wrapper --- */
         .video-responsive-wrapper {
             position: relative;
             width: 100%;
             padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
             overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             background: #000;
-            border: 3px solid #ffffff;
+            border: 2px solid #ffffff;
         }
 
         .video-responsive-wrapper iframe {
@@ -106,138 +102,270 @@
             border: 0;
         }
 
-        /* --- Playlist Details Section --- */
-        .playlist-info {
-            width: 100%;
+        .player-info-bar {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             background: rgba(255, 255, 255, 0.5);
-            padding: 16px 22px;
-            border-radius: 16px;
+            padding: 12px 18px;
+            border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.7);
-            flex-wrap: wrap;
-            gap: 12px;
         }
 
-        .info-text h2 {
-            font-size: 1.25rem;
+        .player-info-bar h3 {
+            font-size: 1.05rem;
             font-weight: 800;
             color: #222;
         }
 
-        .info-text p {
-            font-size: 0.85rem;
-            color: #555;
-            font-weight: 600;
-            margin-top: 2px;
+        /* --- Right Side: Playlist Sidebar --- */
+        .sidebar-playlist {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            height: 520px;
         }
 
-        /* --- Action Buttons --- */
-        .actions {
+        .sidebar-title {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #222;
+            padding-left: 5px;
+        }
+
+        .playlist-items-container {
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 4px;
+            height: 100%;
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        .playlist-items-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .playlist-items-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+        }
+
+        /* Individual Video Item Row */
+        .playlist-item {
             display: flex;
             gap: 12px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            align-items: center;
         }
 
-        .btn {
+        .playlist-item:hover {
+            background: rgba(255, 255, 255, 0.75);
+            transform: translateX(3px);
+            border-color: #fff;
+        }
+
+        .playlist-item.active {
             background: #ffffff;
+            border-color: var(--serenity);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .item-thumbnail {
+            width: 110px;
+            height: 65px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #ddd;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .item-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #222;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.2;
+        }
+
+        .item-channel {
+            font-size: 0.72rem;
+            color: #555;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .item-meta {
+            font-size: 0.65rem;
+            color: #777;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            background: linear-gradient(135deg, var(--rose-quartz) 0%, var(--serenity) 100%);
             border: none;
-            padding: 11px 22px;
+            padding: 10px 20px;
             border-radius: 30px;
             font-weight: 800;
-            font-size: 0.9rem;
-            color: #333;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--rose-quartz) 0%, var(--serenity) 100%);
+            font-size: 0.85rem;
             color: #ffffff;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
 
         .btn:hover {
-            transform: translateY(-3deg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
-        .btn:active {
-            transform: translateY(-1deg);
-        }
-
-        /* --- Decorative Animations --- */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsive Mobile Tweak */
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.8rem; }
-            .player-card { padding: 15px; }
-            .playlist-info { flex-direction: column; text-align: center; }
-            .actions { width: 100%; justify-content: center; }
+        /* Responsive Layout for Tablets & Mobile */
+        @media (max-width: 950px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-playlist {
+                height: 400px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header class="header">
-        <h1>💎GOING SEVENTEEN Playlist🎲</h1>
-        <p>Sit back, relax & enjoy the Going SVT collection!</p>
+        <h1>💎 GOING SEVENTEEN Player</h1>
+        <p>Watch Full Episodes & Official Playlists</p>
     </header>
 
-    <!-- Main Player Card -->
-    <main class="player-card">
+    <!-- Main Grid Section -->
+    <div class="main-container">
 
-        <!-- Responsive YouTube Playlist Player -->
-        <div class="video-responsive-wrapper">
-           <iframe width="560" height="315" 
-           src="https://www.youtube.com/embed/videoseries?si=TA96lHu33jlK0cAN&amp;list=PLcWqRod5qrFoqaFie2OLtKnI4-27NNvDy" 
-           title="YouTube video player" 
-           frameborder="0" 
-           allow="accelerometer; 
-           autoplay; clipboard-write; 
-           encrypted-media; gyroscope; 
-           picture-in-picture; web-share" 
-           referrerpolicy="strict-origin-when-cross-origin" 
-           allowfullscreen>
-        </iframe>
-        </div>
-
-        <!-- Playlist Info & Controls -->
-        <div class="playlist-info">
-            <div class="info-text">
-                <h2>🎵 Official SEVENTEEN Tracklist</h2>
-                <p>Curated Playlist • YouTube Music</p>
+        <!-- LEFT: Video Player Window -->
+        <div class="player-card">
+            <div class="video-responsive-wrapper">
+                <iframe id="main-video-frame" 
+                    src="https://www.youtube.com/embed/videoseries?si=TA96lHu33jlK0cAN&amp;list=PLcWqRod5qrFoqaFie2OLtKnI4-27NNvDy" 
+                    title="SEVENTEEN Video Player" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
             </div>
-            <div class="actions">
-                <button class="btn btn-primary" onclick="triggerConfetti()">🎉 Celebrate</button>
-                <a class="btn" href="https://www.youtube.com/playlist?list=PLcWqRod5qrFoqaFie2OLtKnI4-27NNvDy" target="_blank" rel="noopener">
-                    ▶ Open on YouTube
-                </a>
+
+            <div class="player-info-bar">
+                <h3 id="current-playing-title">🎬 GOING SEVENTEEN (Full Playlist Series)</h3>
+                <button class="btn" onclick="triggerConfetti()">🎉 Celebrate</button>
             </div>
         </div>
 
-    </main>
+        <!-- RIGHT: YouTube-style Video Sidebar Playlist -->
+        <div class="sidebar-playlist">
+            <div class="sidebar-title">Playlist Episodes</div>
+            
+            <div class="playlist-items-container">
+                
+                <!-- Full Playlist Item -->
+                <div class="playlist-item active" onclick="playVideo('https://www.youtube.com/embed/videoseries?si=TA96lHu33jlK0cAN&amp;list=PLcWqRod5qrFoqaFie2OLtKnI4-27NNvDy', '🎬 GOING SEVENTEEN (Full Playlist Series)', this)">
+                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/Ky9Psr6-j_Y/hqdefault.jpg" alt="Thumbnail">
+                    <div class="item-details">
+                        <div class="item-title">GOING SEVENTEEN Full Series Playlist</div>
+                        <div class="item-channel">wonu me</div>
+                        <div class="item-meta">Full Playlist • Series</div>
+                    </div>
+                </div>
+
+                <!-- Episode 0 -->
+                <div class="playlist-item" onclick="playVideo('https://www.youtube.com/embed/Ky9Psr6-j_Y', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 0 Prologue', this)">
+                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/Ky9Psr6-j_Y/hqdefault.jpg" alt="Thumbnail">
+                    <div class="item-details">
+                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 0 Prologue</div>
+                        <div class="item-channel">wonu me</div>
+                        <div class="item-meta">708K views • 9 years ago</div>
+                    </div>
+                </div>
+
+                <!-- Episode 01 -->
+                <div class="playlist-item" onclick="playVideo('https://www.youtube.com/embed/ojHv5qslb4k', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 01', this)">
+                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/ojHv5qslb4k/hqdefault.jpg" alt="Thumbnail">
+                    <div class="item-details">
+                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 01</div>
+                        <div class="item-channel">wonu me</div>
+                        <div class="item-meta">385K views • 9 years ago</div>
+                    </div>
+                </div>
+
+                <!-- Episode 02 -->
+                <div class="playlist-item" onclick="playVideo('https://www.youtube.com/embed/Kt_LY0a6P5s', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 02', this)">
+                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/Kt_LY0a6P5s/hqdefault.jpg" alt="Thumbnail">
+                    <div class="item-details">
+                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 02</div>
+                        <div class="item-channel">wonu me</div>
+                        <div class="item-meta">294K views • 9 years ago</div>
+                    </div>
+                </div>
+
+                <!-- Episode 03 -->
+                <div class="playlist-item" onclick="playVideo('https://www.youtube.com/embed/LPlGiqnFiKc', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 03', this)">
+                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/LPlGiqnFiKc/hqdefault.jpg" alt="Thumbnail">
+                    <div class="item-details">
+                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 03</div>
+                        <div class="item-channel">wonu me</div>
+                        <div class="item-meta">263K views • 9 years ago</div>
+                    </div>
+                </div>
+
+                <!-- Episode 07 -->
+                <div class="playlist-item" onclick="playVideo('https://www.youtube.com/embed/RiWWHWR0cVo', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 07', this)">
+                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/RiWWHWR0cVo/hqdefault.jpg" alt="Thumbnail">
+                    <div class="item-details">
+                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 07</div>
+                        <div class="item-channel">wonu me</div>
+                        <div class="item-meta">234K views • 9 years ago</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        // Confetti Effect
+        // Switch main video frame on click
+        function playVideo(embedUrl, titleText, element) {
+            document.getElementById('main-video-frame').src = embedUrl;
+            document.getElementById('current-playing-title').innerText = titleText;
+
+            // Highlight selected playlist item
+            document.querySelectorAll('.playlist-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // Confetti Function
         function triggerConfetti() {
             confetti({
-                particleCount: 60,
+                particleCount: 50,
                 spread: 70,
                 origin: { y: 0.7 },
                 colors: ['#f7cac9', '#92a8d1', '#ffffff']
