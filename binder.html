@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVT Carat Land | 15-Page Interactive Photocard Binder</title>
+    <title>SVT Carat Land | Interactive 15-Page Binder Game</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,47 @@
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+    
+    <header>
+        <!-- Navigation Header -->
+    <div class="nav-container">
+        <a href="index.html" class="glass-btn">🏡 H♡me</a>
+        <a href="music.html" class="glass-btn">❤️Spotify💿</a>
+        <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
+        <a href="svt.html" class="glass-btn">💎𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷💎</a>
+        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
+    </div>
+    </header>
     <style>
+         /* Top Navigation Header */
+        .nav-container {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .glass-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(199, 8, 113, 0.25);
+            color: #a638c7;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
         :root {
             --rose-quartz: #f7cac9;
             --serenity: #92a8d1;
@@ -88,6 +128,63 @@
             display: flex;
             position: relative;
             border: 8px solid #ffffff;
+            transition: transform 0.4s ease;
+        }
+
+        /* --- CLOSED COVER VIEW (Page 0) --- */
+        .binder-cover-view {
+            width: 480px;
+            height: 500px;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 8px solid #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            position: relative;
+            text-align: center;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .cover-photo-frame {
+            width: 100%;
+            height: 350px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: 4px solid var(--rose-quartz);
+            background-color: #eee;
+        }
+
+        .cover-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cover-title {
+            margin-top: 18px;
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            color: #222;
+            line-height: 1.1;
+        }
+
+        .cover-subtitle {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--serenity);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         /* Spine Rings */
@@ -215,6 +312,12 @@
             padding: 18px;
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: opacity 0.3s ease;
+        }
+
+        .tray-container.hidden {
+            opacity: 0.4;
+            pointer-events: none;
         }
 
         .tray-title {
@@ -327,43 +430,19 @@
 
     <!-- Page Navigation Bar -->
     <div class="page-navigation">
-        <button class="nav-btn" id="prev-btn" onclick="changePage(-1)">◀ Prev Page</button>
-        <span class="page-indicator" id="page-display">Page 1 / 15</span>
-        <button class="nav-btn" id="next-btn" onclick="changePage(1)">Next Page ▶</button>
+        <button class="nav-btn" id="prev-btn" onclick="changePage(-1)">◀ Close Book</button>
+        <span class="page-indicator" id="page-display">Cover Page</span>
+        <button class="nav-btn" id="next-btn" onclick="changePage(1)">Open Binder ▶</button>
     </div>
 
-    <!-- Binder Area -->
-    <div class="binder-wrapper">
-        <div class="binder">
-            <!-- Spine Rings -->
-            <div class="binder-spine">
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-                <div class="ring"></div>
-            </div>
-
-            <!-- Left Page (4 Slots) -->
-            <div class="binder-page left-page">
-                <div class="slot" data-slot="1"><span class="slot-hint">Sleeve 1</span></div>
-                <div class="slot" data-slot="2"><span class="slot-hint">Sleeve 2</span></div>
-                <div class="slot" data-slot="3"><span class="slot-hint">Sleeve 3</span></div>
-                <div class="slot" data-slot="4"><span class="slot-hint">Sleeve 4</span></div>
-            </div>
-
-            <!-- Right Page (4 Slots) -->
-            <div class="binder-page right-page">
-                <div class="slot" data-slot="5"><span class="slot-hint">Sleeve 5</span></div>
-                <div class="slot" data-slot="6"><span class="slot-hint">Sleeve 6</span></div>
-                <div class="slot" data-slot="7"><span class="slot-hint">Sleeve 7</span></div>
-                <div class="slot" data-slot="8"><span class="slot-hint">Sleeve 8</span></div>
-            </div>
-        </div>
+    <!-- Binder Area Container -->
+    <div class="binder-wrapper" id="binder-container">
+        <!-- Rendered via JS (Cover or Open Pages) -->
     </div>
 
     <!-- Photocard Tray -->
-    <div class="tray-container">
-        <div class="tray-title">📦 Photocard Deck (Drag Cards into Binder Slots Above)</div>
+    <div class="tray-container" id="tray-wrapper">
+        <div class="tray-title" id="tray-title-text">📦 Photocard Deck (Open Binder to Place Cards)</div>
         <div class="tray-cards" id="tray"></div>
     </div>
 
@@ -384,12 +463,12 @@
         // 4 Versions Per Member = 52 Total Photocards
         const cardVersions = ["Carat Land Ver.", "Vocal/Unit Ver.", "Selfie Ver.", "Rare Ver."];
 
-        let currentPage = 1;
+        let currentPage = 0; // Page 0 = Closed Book Cover
         const totalPages = 15;
-        let binderState = {}; // Stores placed card IDs per page slot: { 'p1_s1': cardObj }
+        let binderState = {}; 
         let allPhotocards = [];
 
-        // Generate 52 Photocards (13 members * 4 versions)
+        // Generate 52 Photocards
         function generatePhotocards() {
             let idCount = 1;
             allPhotocards = [];
@@ -399,7 +478,7 @@
                         id: `pc-${idCount}`,
                         name: member,
                         version: ver,
-                        img: "https://via.placeholder.com/105x155.png?text=" + encodeURIComponent(member + " - " + ver)
+                        img: "https://i.pinimg.com/736x/ac/44/52/ac445272636bee7d19a9f98f9d8f6fea.jpg"
                     });
                     idCount++;
                 });
@@ -410,31 +489,86 @@
         function initGame() {
             generatePhotocards();
             binderState = {};
-            currentPage = 1;
+            currentPage = 0; // Starts at Cover
             updateUI();
         }
 
         // Render Page & Tray
         function updateUI() {
-            // Update Page Display & Controls
-            document.getElementById('page-display').innerText = `Page ${currentPage} / ${totalPages}`;
-            document.getElementById('prev-btn').disabled = (currentPage === 1);
-            document.getElementById('next-btn').disabled = (currentPage === totalPages);
+            const binderContainer = document.getElementById('binder-container');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const pageDisplay = document.getElementById('page-display');
+            const trayWrapper = document.getElementById('tray-wrapper');
+            const trayTitleText = document.getElementById('tray-title-text');
 
-            // Render Binder Slots for Current Page
-            document.querySelectorAll('.slot').forEach(slot => {
-                const slotNum = slot.dataset.slot;
-                const slotKey = `p${currentPage}_s${slotNum}`;
+            // --- PAGE 0: CLOSED COVER VIEW ---
+            if (currentPage === 0) {
+                pageDisplay.innerText = "Cover Page";
+                prevBtn.disabled = true;
+                prevBtn.innerText = "◀ Closed";
+                nextBtn.innerText = "Open Binder ▶";
+                trayWrapper.classList.add('hidden');
+                trayTitleText.innerText = "🔒 Open Binder to Start Organizing Cards!";
 
-                if (binderState[slotKey]) {
-                    const cardData = binderState[slotKey];
-                    slot.innerHTML = createCardElementHTML(cardData, false);
-                } else {
-                    slot.innerHTML = `<span class="slot-hint">Sleeve ${slotNum}</span>`;
-                }
-            });
+                binderContainer.innerHTML = `
+                    <div class="binder-cover-view">
+                        <div class="cover-photo-frame">
+                            <img src="https://i.pinimg.com/1200x/57/50/1d/57501d5c4e6160f3d33baa12773ccb6f.jpg" alt="SEVENTEEN Group Cover">
+                        </div>
+                        <h2 class="cover-title">CARAT LAND OFFICIAL BINDER</h2>
+                        <div class="cover-subtitle">SEVENTEEN • 13 Members Collection</div>
+                    </div>
+                `;
+            } 
+            // --- PAGES 1 TO 15: OPEN BINDER VIEW ---
+            else {
+                pageDisplay.innerText = `Page ${currentPage} / ${totalPages}`;
+                prevBtn.disabled = false;
+                prevBtn.innerText = (currentPage === 1) ? "◀ Close Book" : "◀ Prev Page";
+                nextBtn.innerText = "Next Page ▶";
+                nextBtn.disabled = (currentPage === totalPages);
+                trayWrapper.classList.remove('hidden');
+                trayTitleText.innerText = "📦 Photocard Deck (Drag Cards into Binder Slots Above)";
 
-            // Render Tray Cards (Only unplaced cards)
+                binderContainer.innerHTML = `
+                    <div class="binder">
+                        <div class="binder-spine">
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                            <div class="ring"></div>
+                        </div>
+                        <div class="binder-page left-page">
+                            <div class="slot" data-slot="1"><span class="slot-hint">Sleeve 1</span></div>
+                            <div class="slot" data-slot="2"><span class="slot-hint">Sleeve 2</span></div>
+                            <div class="slot" data-slot="3"><span class="slot-hint">Sleeve 3</span></div>
+                            <div class="slot" data-slot="4"><span class="slot-hint">Sleeve 4</span></div>
+                        </div>
+                        <div class="binder-page right-page">
+                            <div class="slot" data-slot="5"><span class="slot-hint">Sleeve 5</span></div>
+                            <div class="slot" data-slot="6"><span class="slot-hint">Sleeve 6</span></div>
+                            <div class="slot" data-slot="7"><span class="slot-hint">Sleeve 7</span></div>
+                            <div class="slot" data-slot="8"><span class="slot-hint">Sleeve 8</span></div>
+                        </div>
+                    </div>
+                `;
+
+                // Fill current page slots
+                document.querySelectorAll('.slot').forEach(slot => {
+                    const slotNum = slot.dataset.slot;
+                    const slotKey = `p${currentPage}_s${slotNum}`;
+
+                    if (binderState[slotKey]) {
+                        const cardData = binderState[slotKey];
+                        slot.innerHTML = createCardElementHTML(cardData);
+                    }
+                });
+
+                setupSlotListeners();
+            }
+
+            // Render Tray Cards (Unplaced)
             const tray = document.getElementById('tray');
             tray.innerHTML = '';
 
@@ -459,9 +593,6 @@
 
             // Update Score Count
             document.getElementById('collected-count').innerText = placedCardIds.length;
-
-            // Reattach Drag & Drop to Slots
-            setupSlotListeners();
         }
 
         function createCardElementHTML(cardData) {
@@ -479,7 +610,7 @@
         // Page Navigation
         function changePage(direction) {
             currentPage += direction;
-            if (currentPage < 1) currentPage = 1;
+            if (currentPage < 0) currentPage = 0;
             if (currentPage > totalPages) currentPage = totalPages;
             updateUI();
         }
@@ -513,10 +644,9 @@
 
             if (cardData) {
                 binderState[slotKey] = cardData;
-                triggerConfetti(); // Trigger Confetti on successful drop
+                triggerConfetti();
                 updateUI();
 
-                // Check full binder completion (52 cards)
                 if (Object.keys(binderState).length === 52) {
                     setTimeout(() => {
                         triggerBigConfetti();
