@@ -3,532 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whiteboard Scrapbook | SEVENTEEN Music & Memories</title>
-
-    <!-- Google Fonts for Handwritten Quotes & Headers -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <header>
-        <!-- Navigation Header -->
-    <div class="nav-container">
-        <a href="index.html" class="glass-btn">🏡 H♡me</a>
-        <a href="music.html" class="glass-btn">❤️Spotify💿</a>
-        <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
-        <a href="svt.html" class="glass-btn">💎𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷💎</a>
-        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
-    </div>
-    </header>
+    <title>Seventeen Fanclub | Member Login</title>
     <style>
-         /* Top Navigation Header */
-        .nav-container {
-            margin-bottom: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .glass-btn {
-            display: inline-block;
-            padding: 10px 22px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(199, 8, 113, 0.25);
-            color: #a638c7;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-        /* --- Root Variables & Base Styling --- */
-        :root {
-            --whiteboard-bg: #fbbfbe;
-            --grid-line: #bbdaf5;
-            --polaroid-bg: #ffffff;
-            --text-main: #2b2b2b;
-            --tape-pink: rgba(255, 142, 210, 0.7);
-            --tape-yellow: rgba(246, 207, 144, 0.75);
-            --tape-blue: rgba(134, 203, 234, 0.7);
-        }
-
         * {
             box-sizing: border-box;
-            margin: 1px;
-            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--whiteboard-bg);
-            /* Whiteboard Grid Pattern */
-            background-image: 
-                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-            background-size: 32px 32px;
-            padding: 50px 20px 80px 20px;
-            position: relative;
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden;
-            color: var(--text-main);
+            overflow: hidden;
+            /* K-Pop Band Background Image */
+            background: url('https://i.pinimg.com/originals/c4/78/50/c47850005840a2526ec4664961bfa086.jpg') no-repeat center center fixed;
+            background-size: cover;
         }
 
-        /* --- Whiteboard Border Frame --- */
-        body::after {
+        /* Dark overlay to make the login card stand out */
+        body::before {
             content: "";
             position: fixed;
-            top: 12px;
-            left: 12px;
-            right: 12px;
-            bottom: 12px;
-            border: 3px dashed #d5cfbd;
-            border-radius: 16px;
-            pointer-events: none;
-            z-index: 100;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 5, 20, 0.55);
+            z-index: -1;
         }
 
-        /* --- Header Section --- */
-        .header-container {
+        /* Glassmorphism Card Container */
+        .login-container {
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto 30px auto;
-            position: relative;
-            z-index: 10;
-        }
-
-        .header-title {
-            font-family: 'Caveat', cursive;
-            font-size: 3.8rem;
-            color: #1a1a1a;
-            margin-bottom: 10px;
-            line-height: 1.1;
-            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.04);
-        }
-
-        .header-subtitle {
-            font-size: 1.1rem;
-            color: #666;
-            background: rgba(255, 255, 255, 0.85);
-            display: inline-block;
-            padding: 6px 18px;
+            padding: 35px 30px;
+            width: 90%;
+            max-width: 400px;
+            background: rgba(44, 42, 72, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
             border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
+                        0 0 20px rgba(236, 72, 153, 0.2);
+            color: #ffffff;
         }
 
-        /* --- Featured Hero Section (Big Image First) --- */
-        .hero-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 60px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .hero-polaroid {
-            background-color: var(--polaroid-bg);
-            padding: 20px 20px 30px 20px;
-            border-radius: 6px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12),
-                        0 4px 10px rgba(0, 0, 0, 0.05);
-            width: 100% , auto;
-            max-width: 720px;
-            height: auto;
-            position: relative;
-            transform: rotate(-1.2deg);
-            transition: all 0.4s ease;
-        }
-
-        .hero-polaroid:hover {
-            transform: rotate(0deg) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
-        }
-
-        .hero-polaroid::before {
-            content: "";
-            position: absolute;
-            top: -16px;
-            left: 50%;
-            transform: translateX(-50%) rotate(1deg);
-            width: 140px;
-            height: 32px;
-            background: var(--tape-pink);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            z-index: 2;
-        }
-
-        .hero-photo-frame {
-            width: 100%;
-            height: 380px;
-            overflow: hidden;
-            border-radius: 4px;
-            background-color: #eee;
-        }
-
-        .hero-photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* --- Floating Animated Stickers --- */
-        .sticker {
-            position: absolute;
-            font-size: 2.2rem;
-            user-select: none;
-            pointer-events: none;
-            z-index: 1;
-            filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1));
-            animation: floatSlow 6s ease-in-out infinite alternate;
-        }
-
-        .st-1 { top: 6%; left: 4%; animation-duration: 5s; }
-        .st-2 { top: 12%; right: 5%; animation-duration: 7s; }
-        .st-3 { top: 48%; left: 2%; animation-duration: 6.5s; }
-        .st-4 { top: 52%; right: 3%; animation-duration: 5.5s; }
-        .st-5 { bottom: 8%; left: 6%; animation-duration: 8s; }
-        .st-6 { bottom: 6%; right: 7%; animation-duration: 6s; }
-        .st-7 { top: 30%; right: 4%; animation-duration: 7.5s; }
-
-        @keyframes floatSlow {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-20px) rotate(14deg); }
-        }
-
-        /* --- Scrapbook Grid Container --- */
-        .scrapbook-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 310px));
-            gap: 50px 35px;
-            justify-content: center;
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 5;
-        }
-
-        /* --- Polaroid Card Frame --- */
-        .polaroid-card {
-            background-color: var(--polaroid-bg);
-            padding: 16px 16px 24px 16px;
-            border-radius: 4px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08),
-                        0 2px 6px rgba(0, 0, 0, 0.04);
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* Alternating Polaroid Tilt Angles */
-        .polaroid-card:nth-child(4n+1) { transform: rotate(-3.5deg); }
-        .polaroid-card:nth-child(4n+2) { transform: rotate(2.8deg); }
-        .polaroid-card:nth-child(4n+3) { transform: rotate(-2deg); }
-        .polaroid-card:nth-child(4n+4) { transform: rotate(3.2deg); }
-
-        /* Polaroid Hover Effect */
-        .polaroid-card:hover {
-            transform: rotate(0deg) scale(1.06) translateY(-8px);
-            box-shadow: 0 22px 40px rgba(0, 0, 0, 0.16),
-                        0 8px 16px rgba(0, 0, 0, 0.08);
-            z-index: 25;
-        }
-
-        /* Washi Tape Strip on Top of Polaroid */
-        .polaroid-card::before {
-            content: "";
-            position: absolute;
-            top: -14px;
-            width: 90px;
-            height: 28px;
-            background: var(--tape-yellow);
-            transform: rotate(-3deg);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(2px);
-            z-index: 2;
-        }
-
-        .polaroid-card:nth-child(even)::before {
-            background: var(--tape-pink);
-            transform: rotate(2deg);
-        }
-
-        .polaroid-card:nth-child(3n)::before {
-            background: var(--tape-blue);
-            transform: rotate(-1deg);
-        }
-
-        /* Photo Wrapper */
-        .photo-frame {
-            width: 100%;
-            height: 270px;
-            overflow: hidden;
-            border-radius: 2px;
-            background-color: #eee;
-            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.08);
-            position: relative;
-        }
-
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .polaroid-card:hover .photo-frame img {
-            transform: scale(1.05);
-        }
-
-        /* Member Info & Quotes */
-        .member-details {
-            margin-top: 18px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .member-name {
-            font-family: 'Caveat', cursive;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #111;
-            margin-bottom: 6px;
-        }
-
-        .music-quote {
-            font-family: 'Caveat', cursive;
-            font-size: 1.25rem;
-            color: #4a4a4a;
-            line-height: 1.35;
-            padding: 0 6px;
-        }
-
-        .member-tag {
+        .disc-logo {
+            font-size: 70px;
             display: inline-block;
-            margin-top: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            border-radius: 12px;
-            background-color: #f0f0f0;
-            color: #666;
+            animation: spin 6s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+            margin-bottom: 5px;
         }
 
-        /* Responsive Layout Tweaks */
-        @media (max-width: 768px) {
-            .header-title { font-size: 2.8rem; }
-            .hero-photo-frame { height: 260px; }
-            .scrapbook-grid { gap: 40px 20px; }
-            .sticker { font-size: 1.6rem; }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h2 {
+            font-size: 26px;
+            margin: 0 0 5px 0;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff71ce, #01cdfe);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 13px;
+            color: #e0e0e0;
+            margin: 0 0 25px 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form Styling */
+        .input-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .input-group input:focus {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: #ff71ce;
+            box-shadow: 0 0 12px rgba(255, 113, 206, 0.5);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-bottom: 22px;
+            color: #ccc;
+        }
+
+        .form-actions a {
+            color: #ff71ce;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .form-actions a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px 0;
+            background: linear-gradient(135deg, #ff3399, #9356d0);
+            border: none;
+            border-radius: 30px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 51, 153, 0.4);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 51, 153, 0.7);
+            background: linear-gradient(135deg, #ff52a8, #8a36d9);
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #bbb;
+        }
+
+        .footer-text a {
+            color: #01cdfe;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Background Stickers -->
-    <div class="sticker st-1">🎵</div>
-    <div class="sticker st-2">✨</div>
-    <div class="sticker st-3">🎧</div>
-    <div class="sticker st-4">💖</div>
-    <div class="sticker st-5">🎶</div>
-    <div class="sticker st-6">💫</div>
-    <div class="sticker st-7">💎</div>
+<div class="login-container">
+    <div class="disc-logo">💿</div>
+    <h2>SVT Fanclub Login</h2>
+    <p class="subtitle">Enter the groove & step into the world</p>
 
-    <!-- Header Section -->
-    <header class="header-container">
-        <h1 class="header-title">Welcome to Caratland</h1>
-        <p class="header-subtitle">💖Step by step, we’ve come this far. Let’s keep going together.🤍</p>
-    </header>
-
-    <!-- Big Featured Group Polaroid -->
-    <section class="hero-container">
-        <div class="hero-polaroid">
-            <div class="hero-photo-frame">
-                <img src="https://i.pinimg.com/736x/c3/d9/51/c3d9517e20960cf0c4e78fe496472a23.jpg" alt="SEVENTEEN Group Photo">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">SEVENTEEN (세븐틴)</h2>
-                <p class="music-quote">"13 Members, 3 Units, 1 Team. Making music together forever."</p>
-                <span class="member-tag">TEAM SVT</span>
-            </div>
+    <form action="index.html" method="GET">
+        <div class="input-group">
+            <input type="text" placeholder="Fan ID or Email" required>
         </div>
-    </section>
-
-    <!-- Polaroid Scrapbook Grid (13 Members) -->
-    <main class="scrapbook-grid">
-
-        <!-- Member 1: S.Coups -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="S.Coups">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">S.Coups</h2>
-                <p class="music-quote">"Music keeps us grounded together through every storm."</p>
-                <span class="member-tag">Leader & Hip-Hop Team</span>
-            </div>
+        
+        <div class="input-group">
+            <input type="password" placeholder="Password" required>
         </div>
 
-        <!-- Member 2: Jeonghan -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Jeonghan">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Jeonghan</h2>
-                <p class="music-quote">"Singing comforting songs is my way of wrapping everyone in a warm hug."</p>
-                <span class="member-tag">Vocal Team</span>
-            </div>
+        <div class="form-actions">
+            <label style="cursor: pointer;">
+                <input type="checkbox" style="accent-color: #ff71ce;"> Remember me
+            </label>
+            <a href="#">Forgot password?</a>
         </div>
 
-        <!-- Member 3: Joshua -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Joshua">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Joshua</h2>
-                <p class="music-quote">"Every note I sing is a piece of my heart shared with the world."</p>
-                <span class="member-tag">Vocal Team</span>
-            </div>
-        </div>
+        <button type="submit" class="login-btn">ENTER THE GROOVE</button>
+    </form>
 
-        <!-- Member 4: Jun -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Jun">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Jun</h2>
-                <p class="music-quote">"Dance and music are inseparable; they breathe life into each other."</p>
-                <span class="member-tag">Performance Team</span>
-            </div>
-        </div>
+    <div class="footer-text">
+        Don't have an ID? <a href="#">Join the Fandom</a>
+    </div>
+</div>
 
-        <!-- Member 5: Hoshi -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Hoshi">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Hoshi</h2>
-                <p class="music-quote">"When the rhythm starts, my body moves before I even think."</p>
-                <span class="member-tag">Performance Team</span>
-            </div>
-        </div>
-
-        <!-- Member 6: Wonwoo -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Wonwoo">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Wonwoo</h2>
-                <p class="music-quote">"Rap is my canvas; I paint my thoughts and feelings with words."</p>
-                <span class="member-tag">Hip-Hop Team</span>
-            </div>
-        </div>
-
-        <!-- Member 7: Woozi -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Woozi">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Woozi</h2>
-                <p class="music-quote">"A quiet melody always becomes something we can share with the world."</p>
-                <span class="member-tag">Vocal & Producer</span>
-            </div>
-        </div>
-
-        <!-- Member 8: DK -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="DK">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Dokyeom</h2>
-                <p class="music-quote">"You are the star of your life. Trust yourself and go!"</p>
-                <span class="member-tag">Vocal Team</span>
-            </div>
-        </div>
-
-        <!-- Member 9: Mingyu -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Mingyu">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Mingyu</h2>
-                <p class="music-quote">"Music captures our moments so we can re-live every memory together."</p>
-                <span class="member-tag">Hip-Hop Team</span>
-            </div>
-        </div>
-
-        <!-- Member 10: The8 -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="The8">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">The8</h2>
-                <p class="music-quote">"Art and melody are how I express the balance and peace inside my soul."</p>
-                <span class="member-tag">Performance Team</span>
-            </div>
-        </div>
-
-        <!-- Member 11: Seungkwan -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Seungkwan">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Seungkwan</h2>
-                <p class="music-quote">"Pouring my heart into every high note is my favorite way to connect with you."</p>
-                <span class="member-tag">Vocal Team</span>
-            </div>
-        </div>
-
-        <!-- Member 12: Vernon -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Vernon">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Vernon</h2>
-                <p class="music-quote">"Music gives us total freedom to create our own world without limits."</p>
-                <span class="member-tag">Hip-Hop Team</span>
-            </div>
-        </div>
-
-        <!-- Member 13: Dino -->
-        <div class="polaroid-card">
-            <div class="photo-frame">
-                <img src="" alt="Dino">
-            </div>
-            <div class="member-details">
-                <h2 class="member-name">Dino</h2>
-                <p class="music-quote">"As the youngest, growing through music and dance alongside my brothers is everything."</p>
-                <span class="member-tag">Performance & Maknae</span>
-            </div>
-        </div>
-
-    </main>
+<script>
+    // Offline redirect handling from original script
+    window.addEventListener("offline", () => {
+        window.location.href = "404.html";
+    });
+</script>
 
 </body>
 </html>
