@@ -5,23 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whiteboard Scrapbook | SEVENTEEN Music & Memories</title>
 
-    <!-- Google Fonts for Handwritten Quotes & Headers -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <header>
-        <!-- Navigation Header -->
-    <div class="nav-container">
-        <a href="index.html" class="glass-btn">🏡 H♡me</a>
-        <a href="music.html" class="glass-btn">❤️Spotify💿</a>
-        <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
-        <a href="svt.html" class="glass-btn">💎𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷💎</a>
-        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
-    </div>
-    </header>
     <style>
-         /* Top Navigation Header */
+        /* Top Navigation Header */
         .nav-container {
             margin-bottom: 30px;
             display: flex;
@@ -50,6 +40,7 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
+
         /* --- Root Variables & Base Styling --- */
         :root {
             --whiteboard-bg: #fbbfbe;
@@ -63,7 +54,7 @@
 
         * {
             box-sizing: border-box;
-            margin: 1px;
+            margin: 0;
             padding: 0;
         }
 
@@ -78,8 +69,6 @@
             background-size: 32px 32px;
             padding: 50px 20px 80px 20px;
             position: relative;
-            height: 100%;
-            width: 100%;
             overflow-x: hidden;
             color: var(--text-main);
         }
@@ -126,7 +115,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
-        /* --- Featured Hero Section (Big Image First) --- */
+        /* --- Featured Hero Section --- */
         .hero-container {
             display: flex;
             justify-content: center;
@@ -141,9 +130,8 @@
             border-radius: 6px;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12),
                         0 4px 10px rgba(0, 0, 0, 0.05);
-            width: 100% , auto;
+            width: 100%;
             max-width: 720px;
-            height: auto;
             position: relative;
             transform: rotate(-1.2deg);
             transition: all 0.4s ease;
@@ -329,16 +317,114 @@
             color: #666;
         }
 
+        /* --- FULL WIDTH ROW FOR SPOTIFY & DECOR --- */
+        .full-width-section {
+            grid-column: 1 / -1; /* Spans across all grid columns */
+            width: 100%;
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* Spotify Polaroid Customization */
+        .spotify-polaroid {
+            max-width: 380px;
+            width: 100%;
+            transform: rotate(-1.5deg) !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .spotify-frame {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .polaroid-caption {
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .polaroid-caption .album-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .polaroid-caption .album-date {
+            font-size: 0.85rem;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        /* Scrapbook Sticky Note Decor */
+        .sticky-note-decor {
+            position: relative;
+            width: 260px;
+            background: #fff8c6;
+            padding: 24px 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transform: rotate(2.5deg);
+            border-radius: 2px;
+            color: #333;
+            text-align: center;
+        }
+
+        .sticky-note-decor .tape {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-1deg);
+            width: 80px;
+            height: 24px;
+            background: var(--tape-pink);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .sticky-note-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.5rem;
+            line-height: 1.3;
+            color: #222;
+        }
+
+        .sticky-note-tag {
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: #555;
+        }
+
         /* Responsive Layout Tweaks */
         @media (max-width: 768px) {
             .header-title { font-size: 2.8rem; }
             .hero-photo-frame { height: 260px; }
-            .scrapbook-grid { gap: 40px 20px; }
+            .scrapbook-grid { gap: 40px 40px; }
             .sticker { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="glass-btn">🏡 H♡me</a>
+            <a href="music.html" class="glass-btn">❤️Spotify💿</a>
+            <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
+            <a href="svt.html" class="glass-btn">💎𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷💎</a>
+            <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
+        </div>
+    </header>
 
     <!-- Floating Background Stickers -->
     <div class="sticker st-1">🎵</div>
@@ -349,11 +435,11 @@
     <div class="sticker st-6">💫</div>
     <div class="sticker st-7">💎</div>
 
-    <!-- Header Section -->
-    <header class="header-container">
+    <!-- Header Title Section -->
+    <div class="header-container">
         <h1 class="header-title">Welcome to Caratland</h1>
-        <p class="header-subtitle">💖Step by step, we’ve come this far. Let’s keep going together.🤍</p>
-    </header>
+        <p class="header-subtitle">💖 Step by step, we’ve come this far. Let’s keep going together. 🤍</p>
+    </div>
 
     <!-- Big Featured Group Polaroid -->
     <section class="hero-container">
@@ -369,13 +455,13 @@
         </div>
     </section>
 
-    <!-- Polaroid Scrapbook Grid (13 Members) -->
+    <!-- Polaroid Scrapbook Grid -->
     <main class="scrapbook-grid">
 
         <!-- Member 1: S.Coups -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="S.Coups">
+                <img src="https://i.pinimg.com/736x/09/e5/23/09e523f6ebef6e53c442434e38ba835f.jpg" alt="S.Coups">
             </div>
             <div class="member-details">
                 <h2 class="member-name">S.Coups</h2>
@@ -387,7 +473,7 @@
         <!-- Member 2: Jeonghan -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Jeonghan">
+                <img src="https://i.pinimg.com/736x/21/2c/3f/212c3f8103131713589b257121b6a3bd.jpg" alt="Jeonghan">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Jeonghan</h2>
@@ -399,7 +485,7 @@
         <!-- Member 3: Joshua -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Joshua">
+                <img src="https://i.pinimg.com/736x/f6/bc/11/f6bc11f32a7e786b5c3e72cfbb7c2680.jpg" alt="Joshua">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Joshua</h2>
@@ -411,7 +497,7 @@
         <!-- Member 4: Jun -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Jun">
+                <img src="https://i.pinimg.com/736x/2b/38/20/2b38202d6092d6e35384666f44d852bb.jpg" alt="Jun">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Jun</h2>
@@ -423,7 +509,7 @@
         <!-- Member 5: Hoshi -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Hoshi">
+                <img src="https://i.pinimg.com/736x/88/44/2c/88442c525389cb4321dd0ef82c2b7405.jpg" alt="Hoshi">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Hoshi</h2>
@@ -435,7 +521,7 @@
         <!-- Member 6: Wonwoo -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Wonwoo">
+                <img src="https://i.pinimg.com/736x/01/5e/11/015e1176bc5a6f2d65a2d04a60fef04e.jpg" alt="Wonwoo">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Wonwoo</h2>
@@ -447,7 +533,7 @@
         <!-- Member 7: Woozi -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Woozi">
+                <img src="https://i.pinimg.com/736x/1a/f6/32/1af6328bcfae5c1d3c0b1ef3bdf2d591.jpg" alt="Woozi">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Woozi</h2>
@@ -459,7 +545,7 @@
         <!-- Member 8: DK -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="DK">
+                <img src="https://i.pinimg.com/736x/f9/cb/82/f9cb82a632c0d892d11eefcb876fb32b.jpg" alt="DK">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Dokyeom</h2>
@@ -471,7 +557,7 @@
         <!-- Member 9: Mingyu -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Mingyu">
+                <img src="https://i.pinimg.com/736x/0b/48/4d/0b484d852a356230f2c4ef23b72bc2aa.jpg" alt="Mingyu">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Mingyu</h2>
@@ -483,7 +569,7 @@
         <!-- Member 10: The8 -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="The8">
+                <img src="https://i.pinimg.com/736x/60/a4/bc/60a4bcbc8d5f3089d31bfdb5df25555d.jpg" alt="The8">
             </div>
             <div class="member-details">
                 <h2 class="member-name">The8</h2>
@@ -495,7 +581,7 @@
         <!-- Member 11: Seungkwan -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Seungkwan">
+                <img src="https://i.pinimg.com/736x/43/e7/76/43e77606774e30efb250dd687310e53a.jpg" alt="Seungkwan">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Seungkwan</h2>
@@ -507,7 +593,7 @@
         <!-- Member 12: Vernon -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Vernon">
+                <img src="https://i.pinimg.com/736x/8f/3e/2a/8f3e2a095982e5b72e5a1b329c2bd043.jpg" alt="Vernon">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Vernon</h2>
@@ -519,13 +605,86 @@
         <!-- Member 13: Dino -->
         <div class="polaroid-card">
             <div class="photo-frame">
-                <img src="" alt="Dino">
+                <img src="https://i.pinimg.com/736x/d9/15/8e/d9158e23589b3f3b438db0f24e93fb24.jpg" alt="Dino">
             </div>
             <div class="member-details">
                 <h2 class="member-name">Dino</h2>
                 <p class="music-quote">"As the youngest, growing through music and dance alongside my brothers is everything."</p>
                 <span class="member-tag">Performance & Maknae</span>
             </div>
+        </div>
+        <!-- Hip-Hop Team -->
+         <div class="polaroid-card">
+         <div class="polaroid-caption">
+            <div class="photo-frame">
+                
+                <img src="https://i.pinimg.com/originals/02/1a/af/021aaf3e4974039b019ee09963f1fbac.jpg" alt="Hip-Hop Team">
+            </div>
+            <div class="member-details">
+                <h2 class="member-name">Hip-Hop Team</h2>
+                <p class="music-quote">"We hope that people are able to find some happiness through us and our music."</p>
+                <span class="member-tag">Hip-Hop Team</span>
+         </div>
+         </div>
+        </div>
+        <!-- Vocal Team -->
+<div class="polaroid-card">
+    <div class="polaroid-caption">
+        <div class="photo-frame">
+            <img src="https://i.pinimg.com/736x/ee/e9/c2/eee9c2c3dd24e863f2e21f92ba91bbed.jpg" alt="Vocal Team">
+        </div>
+        <div class="member-details">
+            <h2 class="member-name">Vocal Team</h2>
+            <p class="music-quote">"Singing with genuine emotion is how we send warm comfort directly to your heart."</p>
+            <span class="member-tag">Vocal Team</span>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Team -->
+<div class="polaroid-card">
+    <div class="polaroid-caption">
+        <div class="photo-frame">
+            <img src="https://i.pinimg.com/originals/aa/00/da/aa00daf79ff5a5a88f95f896b73fefd6.jpg" alt="Performance Team">
+        </div>
+        <div class="member-details">
+            <h2 class="member-name">Performance Team</h2>
+            <p class="music-quote">"We turn music into movement, expressing stories through every dance step."</p>
+            <span class="member-tag">Performance Team</span>
+        </div>
+    </div>
+</div>
+        <!-- 🎀 NEW ROW: Spotify Player + Scrapbook Sticky Note -->
+        <div class="full-width-section">
+            
+            <!-- Spotify Polaroid Card -->
+            <div class="polaroid-card spotify-polaroid">
+                <div class="spotify-frame">
+                    <iframe data-testid="embed-iframe" 
+                        style="border-radius:12px; border: none;"
+                        src="https://open.spotify.com/embed/artist/7nqOGRxlXj7N2JYbgNEjYH?utm_source=generator&theme=0&si=4e8fe5e289034d47" 
+                        width="100%" 
+                        height="380" 
+                        frameBorder="0" 
+                        allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                
+                <div class="polaroid-caption">
+                    <h2 class="album-title">🎀 SEVENTEEN</h2>
+                    <span class="album-date">Top Spotify Tracks</span>
+                </div>
+            </div>
+
+            <!-- Sticky Note Decor to Fill the Blank Space -->
+            <div class="sticky-note-decor">
+                <div class="tape"></div>
+                <p class="sticky-note-text">"Say the name! SEVENTEEN!" 💎✨</p>
+                <div class="sticky-note-tag">🎧 Carat Favorites</div>
+            </div>
+
         </div>
 
     </main>
