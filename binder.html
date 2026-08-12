@@ -13,47 +13,7 @@
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    
-    <header>
-        <!-- Navigation Header -->
-    <div class="nav-container">
-        <a href="index.html" class="glass-btn">🏡 H♡me</a>
-        <a href="scrapbook.html" class="glass-btn">📖Scrapbook</a>
-        <a href="music.html" class="glass-btn">❤️Spotify💿</a>
-        <a href="svt.html" class="glass-btn">💎𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷💎</a>
-        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
-    </div>
-    </header>
     <style>
-         /* Top Navigation Header */
-        .nav-container {
-            margin-bottom: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .glass-btn {
-            display: inline-block;
-            padding: 10px 22px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(199, 8, 113, 0.25);
-            color: #a638c7;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
         :root {
             --rose-quartz: #f7cac9;
             --serenity: #92a8d1;
@@ -78,8 +38,40 @@
             align-items: center;
             justify-content: flex-start;
             padding: 20px;
+            padding-bottom: 110px; /* Buffer space for fixed Spotify player */
             overflow-x: hidden;
             color: #333;
+        }
+
+        /* Top Navigation Header */
+        .nav-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .glass-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #4a2574;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         /* --- Header & Score --- */
@@ -417,11 +409,69 @@
             display: flex;
             gap: 12px;
         }
+
+        /* --- Mini Spotify Player Widget --- */
+        .spotify-widget {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 1000;
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            width: 320px;
+            height: 480px;
+        }
+
+        .spotify-widget.minimized {
+            height: 250px;
+            width: 250px;
+            border-radius: 20px;
+        }
+
+        .spotify-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #121212;
+            padding: 6px 14px;
+            color: #1ed760;
+            font-size: 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .spotify-toggle-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .spotify-widget iframe {
+            width: 100%;
+            height: 480px;
+            border: 0;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header Navigation -->
+    <div class="nav-container">
+        <a href="index.html" class="glass-btn">🏡 H♡me</a>
+        <a href="scrapbook.html" class="glass-btn">📖 Scrapbook</a>
+        <a href="music.html" class="glass-btn">❤️ Spotify💿</a>
+        <a href="svt.html" class="glass-btn">💎 𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷 💎</a>
+        <a href="going.html" class="glass-btn">❤︎ Going Seventeen 💎</a>
+    </div>
+
+    <!-- Header Title -->
     <header class="header">
         <h1>💎 SEVENTEEN 15-Page Collector Binder</h1>
         <p>13 Members • 4 Photocards Each • 52 Cards Total to Collect!</p>
@@ -437,7 +487,7 @@
 
     <!-- Binder Area Container -->
     <div class="binder-wrapper" id="binder-container">
-        <!-- Rendered via JS (Cover or Open Pages) -->
+        <!-- Rendered via JS -->
     </div>
 
     <!-- Photocard Tray -->
@@ -446,10 +496,25 @@
         <div class="tray-cards" id="tray"></div>
     </div>
 
-    <!-- Controls -->
+    <!-- Game Controls -->
     <div class="controls">
         <button class="nav-btn" onclick="triggerConfetti()">🎉 Celebrate Confetti</button>
         <button class="nav-btn" onclick="resetBinder()">🔄 Reset Collection</button>
+    </div>
+
+    <!-- Floating Mini Spotify Player -->
+    <div class="spotify-widget" id="spotify-player">
+        <div class="spotify-header" onclick="toggleSpotify()">
+            <span>🎵 SVT Playlist</span>
+            <button class="spotify-toggle-btn" id="spotify-toggle-icon">▼</button>
+        </div>
+       <iframe data-testid="embed-iframe" style="border-radius:12px" 
+       src="https://open.spotify.com/embed/album/2Jrp37x38qZqtyrIrfxN4H?utm_source=generator&si=97aab8471b8b46b1" 
+       width="100%" height="352" 
+       frameBorder="0" allowfullscreen="" 
+       allow="autoplay; clipboard-write; 
+       encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+    </iframe>
     </div>
 
     <script>
@@ -468,7 +533,7 @@
         let binderState = {}; 
         let allPhotocards = [];
 
-        // Generate 52 Photocards
+        // Generate 52 Photocards with Unique Images
         function generatePhotocards() {
             let idCount = 1;
             allPhotocards = [];
@@ -478,7 +543,8 @@
                         id: `pc-${idCount}`,
                         name: member,
                         version: ver,
-                        img: "https://i.pinimg.com/736x/ac/44/52/ac445272636bee7d19a9f98f9d8f6fea.jpg"
+                        // Reliable seed-based image service ensuring 52 unique images
+                        img: `https://picsum.photos/seed/svt-pc-${idCount}/300/450`
                     });
                     idCount++;
                 });
@@ -595,9 +661,10 @@
             document.getElementById('collected-count').innerText = placedCardIds.length;
         }
 
+        // Helper to generate photocard element HTML
         function createCardElementHTML(cardData) {
             return `
-                <div class="photocard" id="${cardData.id}">
+                <div class="photocard" id="${cardData.id}" draggable="true" ondragstart="dragStart(event)">
                     <img src="${cardData.img}" alt="${cardData.name}">
                     <div class="card-info">
                         <div class="card-name">${cardData.name}</div>
@@ -643,6 +710,13 @@
             const cardData = allPhotocards.find(c => c.id === cardId);
 
             if (cardData) {
+                // If moving card from another slot, remove it from old position
+                for (let key in binderState) {
+                    if (binderState[key].id === cardId) {
+                        delete binderState[key];
+                    }
+                }
+
                 binderState[slotKey] = cardData;
                 triggerConfetti();
                 updateUI();
@@ -654,6 +728,14 @@
                     }, 400);
                 }
             }
+        }
+
+        // Spotify Toggle Functionality
+        function toggleSpotify() {
+            const widget = document.getElementById('spotify-player');
+            const icon = document.getElementById('spotify-toggle-icon');
+            widget.classList.toggle('minimized');
+            icon.innerText = widget.classList.contains('minimized') ? '▲' : '▼';
         }
 
         // Confetti Effects
