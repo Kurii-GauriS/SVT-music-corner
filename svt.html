@@ -9,7 +9,37 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 
+
     <style>
+                /* Top Navigation Header */
+        .nav-container {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .glass-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(199, 8, 113, 0.25);
+            color: #a638c7;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
         :root {
             --bg-color: #f7f3ee;
             --accent-color: #e07a5f;
@@ -27,98 +57,77 @@
             padding: 20px;
             margin: 0;
             
-            /* Custom Background Image Applied Here */
+            /* Custom Background Image */
             background-image: url('https://i.pinimg.com/736x/33/41/e5/3341e5759d02ccaecf733752f39785ef.jpg');
-            background-size: fill;
-            background-position: center;
+            background-size: auto;
+            background-position: fill;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            min-height: 100vh;
         }
 
         h1 {
             font-size: 1.8rem;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .instructions {
-            font-size: 0.95rem;
-            color: #666;
-            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: #444;
+            margin-bottom: 10px;
+            line-height: 1.4;
         }
 
+        /* --- 3-Column Layout Workspace --- */
         .workspace {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: row;
             gap: 25px;
             justify-content: center;
             align-items: flex-start;
-            max-width: 1000px;
+            max-width: 1100px;
             width: 100%;
         }
 
-        /* --- Camera Viewport --- */
-        .camera-container {
-            position: relative;
-            width: 480px;
-            height: 360px;
-            border-radius: 12px;
-            overflow: hidden;
+        /* Left Side: Photo Strip Preview */
+        .preview-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 240px;
         }
 
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scaleX(-1); /* Mirror camera */
+        #stripCanvas {
+            background: #ffffff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Overlay canvas for live hand drawing */
-        #drawCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* --- INSTAGRAM-STYLE AESTHETIC FILTERS --- */
-        .filter-warm-glow { 
-            filter: sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg); 
-        }
-        .filter-indie { 
-            filter: contrast(1.1) brightness(1.05) saturate(1.3) sepia(0.15); 
-        }
-        .filter-cyber-pink { 
-            filter: hue-rotate(310deg) saturate(1.4) contrast(1.1); 
-        }
-        .filter-vintage-mono { 
-            filter: grayscale(1) contrast(1.2) brightness(0.95); 
-        }
-        .filter-none { 
-            filter: none; 
-        }
-
-        /* --- Sidebar Controls --- */
+        /* Center: Controls Sidebar */
         .controls {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            width: 260px;
+            gap: 12px;
+            width: 280px;
             background: var(--card-bg);
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         label {
             font-size: 0.85rem;
             font-weight: 600;
-            color: #555;
+            color: #333;
         }
 
         select, input[type="color"], button {
@@ -143,6 +152,25 @@
             border: none;
         }
 
+        /* Floating Emoji Picker Grid */
+        .sticker-palette {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .sticker-btn {
+            font-size: 1.2rem;
+            padding: 5px 8px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: #f9f9f9;
+        }
+
+        .sticker-btn:hover {
+            background: #eee;
+        }
+
         .btn {
             background: #222;
             color: #fff;
@@ -161,6 +189,41 @@
             border: none;
         }
 
+        /* Right Side: Camera Viewport */
+        .camera-container {
+            position: relative;
+            width: 480px;
+            height: 360px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+            background: #000;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Mirror camera */
+        }
+
+        /* Canvas overlays */
+        #drawCanvas, #stickerCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* --- INSTAGRAM-STYLE AESTHETIC FILTERS --- */
+        .filter-warm-glow { filter: sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg); }
+        .filter-indie { filter: contrast(1.1) brightness(1.05) saturate(1.3) sepia(0.15); }
+        .filter-cyber-pink { filter: hue-rotate(310deg) saturate(1.4) contrast(1.1); }
+        .filter-vintage-mono { filter: grayscale(1) contrast(1.2) brightness(0.95); }
+        .filter-none { filter: none; }
+
         /* Countdown Display */
         .countdown {
             position: absolute;
@@ -174,41 +237,43 @@
             display: none;
             pointer-events: none;
         }
-
-        /* Photo Strip Preview */
-        .preview-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        #stripCanvas {
-            background: #ffffff;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-            border-radius: 4px;
-            flex-direction: column;
-            display: flex;
-        }
     </style>
 </head>
 <body>
+    
+    <!-- Navigation Header -->
+    <div class="nav-container">
+        <a href="index.html" class="glass-btn">🏡 H♡me</a>
+        <a href="scrapbook.html" class="glass-btn">📖Scrapbook</a>
+        <a href="music.html" class="glass-btn">❤️Spotify💿</a>
+        <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
+        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
+    </div>
 
     <h1>✨ Custom Background & Hand Doodle Booth</h1>
+
     <div class="workspace">
-        <!-- Live Camera View with Custom Image Background -->
-        <div class="camera-container" id="camContainer">
-            <video id="video" autoplay playsinline muted></video>
-            <canvas id="drawCanvas"></canvas>
-            <div id="countdown" class="countdown">3</div>
+        <!-- 1. Left Side: Photo Output Preview -->
+        <div class="preview-area">
+            <h3>Photo Output</h3>
+            <canvas id="stripCanvas" width="220" height="620"></canvas>
+            <button class="btn" id="downloadBtn" style="display:none; margin-top:5px; width:100%;">Download PNG 📥</button>
         </div>
 
-        <!-- Controls Side Panel -->
+        <!-- 2. Center: Filters & Controls -->
         <div class="controls">
-            <div class="control-group">
-                <label>Instagram Aesthetic Filter:</label>
-                 <p class="instructions">👈 <strong>Point Index Finger</strong> to DRAW | 🤏 <strong>Pinch Thumb + Index</strong> to STOP drawing</p>
+            <p class="instructions">👈 <strong>Point Index Finger</strong> to DRAW<br>🤏 <strong>Pinch Thumb + Index</strong> to STOP</p>
 
+            <div class="control-group">
+                <label>Photo Mode Layout:</label>
+                <select id="modeSelect">
+                    <option value="strip">3-Photo Strip Vertical 📸</option>
+                    <option value="polaroid">Single Polaroid Frame 🖼️</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Instagram Filter:</label>
                 <select id="filterSelect">
                     <option value="filter-warm-glow">Warm Honey Glow 🍯</option>
                     <option value="filter-indie">Indie Soft Grain 🎨</option>
@@ -219,6 +284,18 @@
             </div>
 
             <div class="control-group">
+                <label>Floating Emoji Stickers:</label>
+                <div class="sticker-palette">
+                    <button class="sticker-btn" onclick="addSticker('✨')">✨</button>
+                    <button class="sticker-btn" onclick="addSticker('💖')">💖</button>
+                    <button class="sticker-btn" onclick="addSticker('🌸')">🌸</button>
+                    <button class="sticker-btn" onclick="addSticker('⭐')">⭐</button>
+                    <button class="sticker-btn" onclick="addSticker('🎀')">🎀</button>
+                    <button class="sticker-btn" onclick="addSticker('🔥')">🔥</button>
+                </div>
+            </div>
+
+            <div class="control-group">
                 <label>Hand Drawing Brush:</label>
                 <div class="color-picker-row">
                     <input type="color" id="brushColor" value="#ff758f">
@@ -226,15 +303,17 @@
                 </div>
             </div>
 
+            <button class="btn btn-clear" id="clearStickerBtn">Clear Stickers 🧼</button>
             <button class="btn btn-clear" id="clearDrawBtn">Clear Doodles 🧹</button>
-            <button class="btn" id="snapBtn" style="background: var(--accent-color);">Take Photo Strip 📸</button>
+            <button class="btn" id="snapBtn" style="background: var(--accent-color); margin-top:5px;">Take Photo 📸</button>
         </div>
 
-        <!-- Output Canvas -->
-        <div class="preview-area">
-            <h3>Photo Strip Output</h3>
-            <canvas id="stripCanvas" width="220" height="620"></canvas>
-            <button class="btn" id="downloadBtn" style="display:none; margin-top:5px;">Download PNG 📥</button>
+        <!-- 3. Right Side: Live Camera View Container -->
+        <div class="camera-container" id="camContainer">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="drawCanvas"></canvas>
+            <canvas id="stickerCanvas"></canvas>
+            <div id="countdown" class="countdown">3</div>
         </div>
     </div>
 
@@ -242,12 +321,16 @@
         const video = document.getElementById('video');
         const drawCanvas = document.getElementById('drawCanvas');
         const drawCtx = drawCanvas.getContext('2d');
+        const stickerCanvas = document.getElementById('stickerCanvas');
+        const stickerCtx = stickerCanvas.getContext('2d');
         const camContainer = document.getElementById('camContainer');
 
         const filterSelect = document.getElementById('filterSelect');
+        const modeSelect = document.getElementById('modeSelect');
         const brushColor = document.getElementById('brushColor');
         const brushSize = document.getElementById('brushSize');
         const clearDrawBtn = document.getElementById('clearDrawBtn');
+        const clearStickerBtn = document.getElementById('clearStickerBtn');
         const snapBtn = document.getElementById('snapBtn');
         const countdownEl = document.getElementById('countdown');
 
@@ -259,13 +342,14 @@
         let capturedFrames = [];
         let prevX = null;
         let prevY = null;
+        let floatingStickers = [];
 
-        // Preload custom background image for export baking
+        // Preload custom background image
         const bgImage = new Image();
         bgImage.crossOrigin = "anonymous";
         bgImage.src = 'https://i.pinimg.com/736x/33/41/e5/3341e5759d02ccaecf733752f39785ef.jpg';
 
-        // 1. Initialize MediaPipe Hand Tracker
+        // 1. Initialize MediaPipe Hands
         const hands = new Hands({
             locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
         });
@@ -291,10 +375,37 @@
         camera.start().then(() => {
             drawCanvas.width = camContainer.clientWidth;
             drawCanvas.height = camContainer.clientHeight;
+            stickerCanvas.width = camContainer.clientWidth;
+            stickerCanvas.height = camContainer.clientHeight;
             video.className = activeFilter;
+            adjustCanvasSize();
         });
 
-        // 3. Process Live Hand Motion
+        // Add Floating Stickers
+        function addSticker(emoji) {
+            const padding = 50;
+            const x = Math.random() * (stickerCanvas.width - padding * 2) + padding;
+            const y = Math.random() * (stickerCanvas.height - padding * 2) + padding;
+            floatingStickers.push({ emoji, x, y, size: 36 });
+            drawStickers();
+        }
+
+        function drawStickers() {
+            stickerCtx.clearRect(0, 0, stickerCanvas.width, stickerCanvas.height);
+            floatingStickers.forEach(s => {
+                stickerCtx.font = `${s.size}px sans-serif`;
+                stickerCtx.textAlign = 'center';
+                stickerCtx.textBaseline = 'middle';
+                stickerCtx.fillText(s.emoji, s.x, s.y);
+            });
+        }
+
+        clearStickerBtn.addEventListener('click', () => {
+            floatingStickers = [];
+            stickerCtx.clearRect(0, 0, stickerCanvas.width, stickerCanvas.height);
+        });
+
+        // Hand Gesture Tracking
         function onHandResults(results) {
             if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
                 const landmarks = results.multiHandLandmarks[0];
@@ -340,18 +451,31 @@
             video.className = activeFilter;
         });
 
-        // 4. Capture 3 Photos Sequence
+        modeSelect.addEventListener('change', adjustCanvasSize);
+
+        function adjustCanvasSize() {
+            if (modeSelect.value === 'polaroid') {
+                stripCanvas.width = 240;
+                stripCanvas.height = 300;
+            } else {
+                stripCanvas.width = 220;
+                stripCanvas.height = 620;
+            }
+        }
+
+        // Photo Capture Logic
         snapBtn.addEventListener('click', async () => {
             snapBtn.disabled = true;
             capturedFrames = [];
+            const photoCount = modeSelect.value === 'polaroid' ? 1 : 3;
 
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < photoCount; i++) {
                 await runCountdown(3);
                 captureCurrentFrame();
                 await new Promise(r => setTimeout(r, 500));
             }
 
-            renderStrip();
+            renderOutput();
             snapBtn.disabled = false;
         });
 
@@ -374,14 +498,12 @@
             });
         }
 
-        // Merge background image, video frame, filter tone, and hand-drawn canvas
         function captureCurrentFrame() {
             const tempCanvas = document.createElement('canvas');
             tempCanvas.width = drawCanvas.width;
             tempCanvas.height = drawCanvas.height;
             const tCtx = tempCanvas.getContext('2d');
 
-            // Draw background image first
             if (bgImage.complete && bgImage.naturalWidth !== 0) {
                 tCtx.drawImage(bgImage, 0, 0, tempCanvas.width, tempCanvas.height);
             }
@@ -396,49 +518,70 @@
                 tCtx.filter = 'grayscale(1) contrast(1.2) brightness(0.95)';
             }
 
-            // Overlay mirrored camera feed
+            // Mirror video
             tCtx.save();
             tCtx.translate(tempCanvas.width, 0);
             tCtx.scale(-1, 1);
             tCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
             tCtx.restore();
 
-            // Overlay hand doodles
+            // Overlay doodles & stickers
             tCtx.filter = 'none';
             tCtx.drawImage(drawCanvas, 0, 0);
+            tCtx.drawImage(stickerCanvas, 0, 0);
 
             capturedFrames.push(tempCanvas);
         }
 
-        // 5. Build final photo strip
-        function renderStrip() {
-            const padding = 15;
-            const photoW = 190;
-            const photoH = 142;
-            const topMargin = 20;
+        function renderOutput() {
+            if (modeSelect.value === 'polaroid') {
+                // Render Single Polaroid Layout
+                stripCtx.fillStyle = '#fdfbf7';
+                stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
 
-            stripCtx.fillStyle = '#fdfbf7';
-            stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
+                const margin = 15;
+                const photoW = stripCanvas.width - (margin * 2);
+                const photoH = 200;
 
-            capturedFrames.forEach((frame, idx) => {
-                const y = topMargin + idx * (photoH + padding);
-                stripCtx.drawImage(frame, padding, y, photoW, photoH);
-                
-                stripCtx.strokeStyle = 'rgba(0,0,0,0.08)';
-                stripCtx.lineWidth = 1;
-                stripCtx.strokeRect(padding, y, photoW, photoH);
-            });
+                stripCtx.drawImage(capturedFrames[0], margin, margin, photoW, photoH);
+                stripCtx.strokeStyle = 'rgba(0,0,0,0.1)';
+                stripCtx.strokeRect(margin, margin, photoW, photoH);
 
-            stripCtx.font = '14px -apple-system, sans-serif';
-            stripCtx.fillStyle = '#666';
-            stripCtx.textAlign = 'center';
-            const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            stripCtx.fillText(`✨ ${dateStr} • HAND DOODLE ✨`, stripCanvas.width / 2, stripCanvas.height - 35);
+                stripCtx.font = '14px -apple-system, cursive, sans-serif';
+                stripCtx.fillStyle = '#444';
+                stripCtx.textAlign = 'center';
+                const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                stripCtx.fillText(`✨ ${dateStr} Memory ✨`, stripCanvas.width / 2, stripCanvas.height - 30);
+            } else {
+                // Render 3-Photo Strip Layout
+                const padding = 15;
+                const photoW = 190;
+                const photoH = 142;
+                const topMargin = 20;
+
+                stripCtx.fillStyle = '#fdfbf7';
+                stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
+
+                capturedFrames.forEach((frame, idx) => {
+                    const y = topMargin + idx * (photoH + padding);
+                    stripCtx.drawImage(frame, padding, y, photoW, photoH);
+                    
+                    stripCtx.strokeStyle = 'rgba(0,0,0,0.08)';
+                    stripCtx.lineWidth = 1;
+                    stripCtx.strokeRect(padding, y, photoW, photoH);
+                });
+
+                stripCtx.font = '14px -apple-system, sans-serif';
+                stripCtx.fillStyle = '#666';
+                stripCtx.textAlign = 'center';
+                const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                stripCtx.fillText(`✨ ${dateStr} • HAND DOODLE ✨`, stripCanvas.width / 2, stripCanvas.height - 35);
+            }
 
             downloadBtn.style.display = 'inline-block';
             downloadBtn.onclick = () => {
                 const a = document.createElement('a');
-                a.download = `hand-doodle-strip-${Date.now()}.png`;
+                a.download = `photo-booth-${Date.now()}.png`;
                 a.href = stripCanvas.toDataURL();
                 a.click();
             };
