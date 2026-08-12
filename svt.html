@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hand Tracking & IG Filter Photo Booth</title>
+
+    <!-- Load MediaPipe Hands Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --bg-color: #f7f3ee;
+            --accent-color: #e07a5f;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .instructions {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .workspace {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* --- Camera Viewport --- */
+        .camera-container {
+            position: relative;
+            width: 480px;
+            height: 360px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Mirror camera */
+        }
+
+        /* Overlay canvas for live hand drawing */
+        #drawCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- INSTAGRAM-STYLE AESTHETIC FILTERS --- */
+        .filter-warm-glow { 
+            filter: sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg); 
+        }
+        .filter-indie { 
+            filter: contrast(1.1) brightness(1.05) saturate(1.3) sepia(0.15); 
+        }
+        .filter-cyber-pink { 
+            filter: hue-rotate(310deg) saturate(1.4) contrast(1.1); 
+        }
+        .filter-vintage-mono { 
+            filter: grayscale(1) contrast(1.2) brightness(0.95); 
+        }
+        .filter-none { 
+            filter: none; 
+        }
+
+        /* --- Sidebar Controls --- */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 260px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        select, input[type="color"], button {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .color-picker-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-picker-row input[type="color"] {
+            padding: 2px;
+            width: 40px;
+            height: 35px;
+            border: none;
+        }
+
+        .btn {
+            background: #222;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #444;
+        }
+
+        .btn-clear {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+        }
+
+        /* Countdown Display */
+        .countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6rem;
+            color: #fff;
+            font-weight: 800;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            display: none;
+            pointer-events: none;
+        }
+
+        /* Photo Strip Preview */
+        .preview-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #stripCanvas {
+            background: #ffffff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>✨ Real-Hand Tracking & IG Photo Booth</h1>
+    <p class="instructions">👈 <strong>Point Index Finger</strong> to DRAW | 🤏 <strong>Pinch Thumb + Index</strong> to STOP drawing</p>
+
+    <div class="workspace">
+        <!-- Live Camera View -->
+        <div class="camera-container" id="camContainer">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="drawCanvas"></canvas>
+            <div id="countdown" class="countdown">3</div>
+        </div>
+
+        <!-- Controls Side Panel -->
+        <div class="controls">
+            <div class="control-group">
+                <label>Instagram Aesthetic Filter:</label>
+                <select id="filterSelect">
+                    <option value="filter-warm-glow">Warm Honey Glow 🍯</option>
+                    <option value="filter-indie">Indie Soft Grain 🎨</option>
+                    <option value="filter-cyber-pink">Cyber Pink Tone 🌸</option>
+                    <option value="filter-vintage-mono">Vintage Film Noir 🖤</option>
+                    <option value="filter-none">Original Feed</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Hand Drawing Brush:</label>
+                <div class="color-picker-row">
+                    <input type="color" id="brushColor" value="#ff758f">
+                    <input type="range" id="brushSize" min="3" max="25" value="8">
+                </div>
+            </div>
+
+            <button class="btn btn-clear" id="clearDrawBtn">Clear Doodles 🧹</button>
+            <button class="btn" id="snapBtn" style="background: var(--accent-color);">Take Photo Strip 📸</button>
+        </div>
+
+        <!-- Output Canvas -->
+        <div class="preview-area">
+            <h3>Photo Strip Output</h3>
+            <canvas id="stripCanvas" width="220" height="620"></canvas>
+            <button class="btn" id="downloadBtn" style="display:none; margin-top:5px;">Download PNG 📥</button>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const drawCanvas = document.getElementById('drawCanvas');
+        const drawCtx = drawCanvas.getContext('2d');
+        const camContainer = document.getElementById('camContainer');
+
+        const filterSelect = document.getElementById('filterSelect');
+        const brushColor = document.getElementById('brushColor');
+        const brushSize = document.getElementById('brushSize');
+        const clearDrawBtn = document.getElementById('clearDrawBtn');
+        const snapBtn = document.getElementById('snapBtn');
+        const countdownEl = document.getElementById('countdown');
+
+        const stripCanvas = document.getElementById('stripCanvas');
+        const stripCtx = stripCanvas.getContext('2d');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let activeFilter = 'filter-warm-glow';
+        let capturedFrames = [];
+        let prevX = null;
+        let prevY = null;
+
+        // 1. Initialize MediaPipe Hand Tracker
+        const hands = new Hands({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+        });
+
+        hands.setOptions({
+            maxNumHands: 1,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.6,
+            minTrackingConfidence: 0.6
+        });
+
+        hands.onResults(onHandResults);
+
+        // 2. Camera Processing Loop
+        const camera = new Camera(video, {
+            onFrame: async () => {
+                await hands.send({ image: video });
+            },
+            width: 640,
+            height: 480
+        });
+
+        camera.start().then(() => {
+            drawCanvas.width = camContainer.clientWidth;
+            drawCanvas.height = camContainer.clientHeight;
+            video.className = activeFilter;
+        });
+
+        // 3. Process Live Hand Motion
+        function onHandResults(results) {
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                const landmarks = results.multiHandLandmarks[0];
+
+                // Index finger tip (Landmark #8)
+                const indexTip = landmarks[8];
+                // Thumb tip (Landmark #4)
+                const thumbTip = landmarks[4];
+
+                // Convert normalized values (0.0 - 1.0) to canvas pixel values (flipped horizontally to match camera mirror)
+                const x = (1 - indexTip.x) * drawCanvas.width;
+                const y = indexTip.y * drawCanvas.height;
+
+                // Calculate pinch distance between index finger and thumb
+                const thumbX = (1 - thumbTip.x) * drawCanvas.width;
+                const thumbY = thumbTip.y * drawCanvas.height;
+                const pinchDistance = Math.hypot(x - thumbX, y - thumbY);
+
+                // If pinch distance is SMALL (< 35px), stop drawing (Pinch gesture = lift pen)
+                if (pinchDistance < 35) {
+                    prevX = null;
+                    prevY = null;
+                } else {
+                    // Draw continuous line following index finger
+                    if (prevX !== null && prevY !== null) {
+                        drawCtx.beginPath();
+                        drawCtx.moveTo(prevX, prevY);
+                        drawCtx.lineTo(x, y);
+                        drawCtx.strokeStyle = brushColor.value;
+                        drawCtx.lineWidth = brushSize.value;
+                        drawCtx.lineCap = 'round';
+                        drawCtx.stroke();
+                    }
+                    prevX = x;
+                    prevY = y;
+                }
+            } else {
+                prevX = null;
+                prevY = null;
+            }
+        }
+
+        clearDrawBtn.addEventListener('click', () => {
+            drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+        });
+
+        filterSelect.addEventListener('change', (e) => {
+            activeFilter = e.target.value;
+            video.className = activeFilter;
+        });
+
+        // 4. Capture 3 Photos Sequence
+        snapBtn.addEventListener('click', async () => {
+            snapBtn.disabled = true;
+            capturedFrames = [];
+
+            for (let i = 0; i < 3; i++) {
+                await runCountdown(3);
+                captureCurrentFrame();
+                await new Promise(r => setTimeout(r, 500));
+            }
+
+            renderStrip();
+            snapBtn.disabled = false;
+        });
+
+        function runCountdown(sec) {
+            return new Promise((resolve) => {
+                let count = sec;
+                countdownEl.style.display = 'block';
+                countdownEl.textContent = count;
+
+                const timer = setInterval(() => {
+                    count--;
+                    if (count > 0) {
+                        countdownEl.textContent = count;
+                    } else {
+                        clearInterval(timer);
+                        countdownEl.style.display = 'none';
+                        resolve();
+                    }
+                }, 1000);
+            });
+        }
+
+        // Combine video feed, filter tone, and hand-drawn canvas into one photo frame
+        function captureCurrentFrame() {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = drawCanvas.width;
+            tempCanvas.height = drawCanvas.height;
+            const tCtx = tempCanvas.getContext('2d');
+
+            if (activeFilter === 'filter-warm-glow') {
+                tCtx.filter = 'sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg)';
+            } else if (activeFilter === 'filter-indie') {
+                tCtx.filter = 'contrast(1.1) brightness(1.05) saturate(1.3) sepia(0.15)';
+            } else if (activeFilter === 'filter-cyber-pink') {
+                tCtx.filter = 'hue-rotate(310deg) saturate(1.4) contrast(1.1)';
+            } else if (activeFilter === 'filter-vintage-mono') {
+                tCtx.filter = 'grayscale(1) contrast(1.2) brightness(0.95)';
+            }
+
+            // Draw mirrored camera frame
+            tCtx.save();
+            tCtx.translate(tempCanvas.width, 0);
+            tCtx.scale(-1, 1);
+            tCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
+            tCtx.restore();
+
+            // Overlay hand doodles
+            tCtx.filter = 'none';
+            tCtx.drawImage(drawCanvas, 0, 0);
+
+            capturedFrames.push(tempCanvas);
+        }
+
+        // 5. Build final photo strip
+        function renderStrip() {
+            const padding = 15;
+            const photoW = 190;
+            const photoH = 142;
+            const topMargin = 20;
+
+            stripCtx.fillStyle = '#fdfbf7';
+            stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
+
+            capturedFrames.forEach((frame, idx) => {
+                const y = topMargin + idx * (photoH + padding);
+                stripCtx.drawImage(frame, padding, y, photoW, photoH);
+                
+                stripCtx.strokeStyle = 'rgba(0,0,0,0.08)';
+                stripCtx.lineWidth = 1;
+                stripCtx.strokeRect(padding, y, photoW, photoH);
+            });
+
+            stripCtx.font = '14px -apple-system, sans-serif';
+            stripCtx.fillStyle = '#666';
+            stripCtx.textAlign = 'center';
+            const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            stripCtx.fillText(`✨ ${dateStr} • HAND DOODLE ✨`, stripCanvas.width / 2, stripCanvas.height - 35);
+
+            downloadBtn.style.display = 'inline-block';
+            downloadBtn.onclick = () => {
+                const a = document.createElement('a');
+                a.download = `hand-doodle-strip-${Date.now()}.png`;
+                a.href = stripCanvas.toDataURL();
+                a.click();
+            };
+        }
+    </script>
+</body>
+</html>
