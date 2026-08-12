@@ -306,6 +306,8 @@
 
             <div class="player-info-bar">
                 <h3 id="current-playing-title">going seventeen 2020-2026</h3>
+                    <button class="btn" onclick="prevVideo()">⏮️ Prev</button>
+                    <button class="btn" onclick="nextVideo()">Next ⏭️</button>
                 <button class="btn" onclick="triggerConfetti()">🎉 Celebrate</button>
             </div>
         </div>
@@ -369,7 +371,26 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderPlaylist();
         });
+    function playVideoAt(index) {
+            if (player && player.playVideoAt) {
+                player.playVideoAt(index);
+                player.unMute();
+            }
+        }
 
+        function nextVideo() {
+            if (player && player.nextVideo) {
+                player.nextVideo();
+                player.unMute();
+            }
+        }
+
+        function prevVideo() {
+            if (player && player.previousVideo) {
+                player.previousVideo();
+                player.unMute();
+            }
+        }
         function triggerConfetti() {
             if (typeof confetti === 'function') {
                 confetti({
