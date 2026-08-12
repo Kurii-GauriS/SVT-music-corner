@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hand Tracking & IG Filter Photo Booth</title>
+    <title>AI Hand Tracking & Custom Background Photo Booth</title>
 
     <!-- Load MediaPipe Hands Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
@@ -25,6 +25,12 @@
             align-items: center;
             padding: 20px;
             margin: 0;
+            
+            /* Custom Background Image Applied Here */
+            background-image: url('https://i.pinimg.com/736x/33/41/e5/3341e5759d02ccaecf733752f39785ef.jpg');
+            background-size: fill;
+            background-position: center;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
 
         h1 {
@@ -55,8 +61,6 @@
             height: 360px;
             border-radius: 12px;
             overflow: hidden;
-            background: #000;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
 
         video {
@@ -187,11 +191,11 @@
 </head>
 <body>
 
-    <h1>✨ Real-Hand Tracking & IG Photo Booth</h1>
+    <h1>✨ Custom Background & Hand Doodle Booth</h1>
     <p class="instructions">👈 <strong>Point Index Finger</strong> to DRAW | 🤏 <strong>Pinch Thumb + Index</strong> to STOP drawing</p>
 
     <div class="workspace">
-        <!-- Live Camera View -->
+        <!-- Live Camera View with Custom Image Background -->
         <div class="camera-container" id="camContainer">
             <video id="video" autoplay playsinline muted></video>
             <canvas id="drawCanvas"></canvas>
@@ -253,6 +257,11 @@
         let prevX = null;
         let prevY = null;
 
+        // Preload custom background image for export baking
+        const bgImage = new Image();
+        bgImage.crossOrigin = "anonymous";
+        bgImage.src = 'https://i.pinimg.com/736x/33/41/e5/3341e5759d02ccaecf733752f39785ef.jpg';
+
         // 1. Initialize MediaPipe Hand Tracker
         const hands = new Hands({
             locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
@@ -287,26 +296,20 @@
             if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
                 const landmarks = results.multiHandLandmarks[0];
 
-                // Index finger tip (Landmark #8)
                 const indexTip = landmarks[8];
-                // Thumb tip (Landmark #4)
                 const thumbTip = landmarks[4];
 
-                // Convert normalized values (0.0 - 1.0) to canvas pixel values (flipped horizontally to match camera mirror)
                 const x = (1 - indexTip.x) * drawCanvas.width;
                 const y = indexTip.y * drawCanvas.height;
 
-                // Calculate pinch distance between index finger and thumb
                 const thumbX = (1 - thumbTip.x) * drawCanvas.width;
                 const thumbY = thumbTip.y * drawCanvas.height;
                 const pinchDistance = Math.hypot(x - thumbX, y - thumbY);
 
-                // If pinch distance is SMALL (< 35px), stop drawing (Pinch gesture = lift pen)
                 if (pinchDistance < 35) {
                     prevX = null;
                     prevY = null;
                 } else {
-                    // Draw continuous line following index finger
                     if (prevX !== null && prevY !== null) {
                         drawCtx.beginPath();
                         drawCtx.moveTo(prevX, prevY);
@@ -368,12 +371,17 @@
             });
         }
 
-        // Combine video feed, filter tone, and hand-drawn canvas into one photo frame
+        // Merge background image, video frame, filter tone, and hand-drawn canvas
         function captureCurrentFrame() {
             const tempCanvas = document.createElement('canvas');
             tempCanvas.width = drawCanvas.width;
             tempCanvas.height = drawCanvas.height;
             const tCtx = tempCanvas.getContext('2d');
+
+            // Draw background image first
+            if (bgImage.complete && bgImage.naturalWidth !== 0) {
+                tCtx.drawImage(bgImage, 0, 0, tempCanvas.width, tempCanvas.height);
+            }
 
             if (activeFilter === 'filter-warm-glow') {
                 tCtx.filter = 'sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg)';
@@ -385,7 +393,7 @@
                 tCtx.filter = 'grayscale(1) contrast(1.2) brightness(0.95)';
             }
 
-            // Draw mirrored camera frame
+            // Overlay mirrored camera feed
             tCtx.save();
             tCtx.translate(tempCanvas.width, 0);
             tCtx.scale(-1, 1);
