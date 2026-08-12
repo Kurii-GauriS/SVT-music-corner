@@ -139,12 +139,21 @@
             padding: 12px 18px;
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.7);
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .player-info-bar h3 {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: #222;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
         }
 
         /* --- Right Side: Playlist Sidebar --- */
@@ -231,7 +240,7 @@
             font-weight: 700;
             color: #222;
             display: -webkit-box;
-            -webkitline-clamp: 2;
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             line-height: 1.2;
@@ -247,7 +256,7 @@
         .btn {
             background: linear-gradient(135deg, var(--rose-quartz) 0%, var(--serenity) 100%);
             border: none;
-            padding: 10px 20px;
+            padding: 10px 16px;
             border-radius: 30px;
             font-weight: 800;
             font-size: 0.85rem;
@@ -286,35 +295,36 @@
 
     <header class="header">
         <h1>💎 GOING SEVENTEEN 2020-2026</h1>
-        <p>Playlist by judith g • 237 Videos</p>
+        <p>Playlist by judith g • 13 Featured Videos</p>
     </header>
 
     <div class="main-container">
-        <!-- LEFT: Embedded YouTube Playlist Player -->
+        <!-- LEFT: Embedded YouTube Player -->
         <div class="player-card">
             <div class="video-responsive-wrapper">
-    
                 <iframe id="playlist-iframe"
-    src="https://www.youtube.com/embed/videoseries?si=twCQFO8BDEC9OoHF&amp;list=PLKz4-03B3FoseT1cHKClif-Bv0RVCcwQJ&amp;autoplay=1" 
-    title="GOING SEVENTEEN 2020-2026 Playlist" 
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin" 
-    allowfullscreen>
-</iframe>
+                    src="https://www.youtube.com/embed/PXf59S2kFag?autoplay=1" 
+                    title="GOING SEVENTEEN Player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
             </div>
 
             <div class="player-info-bar">
-                <h3 id="current-playing-title">going seventeen 2020-2026</h3>
+                <h3 id="current-playing-title">[GOING SEVENTEEN 2020] EP.1 MYSTERY MYSTERY #1</h3>
+                <div class="controls">
                     <button class="btn" onclick="prevVideo()">⏮️ Prev</button>
                     <button class="btn" onclick="nextVideo()">Next ⏭️</button>
-                <button class="btn" onclick="triggerConfetti()">🎉 Celebrate</button>
+                    <button class="btn" onclick="triggerConfetti()">🎉 Celebrate</button>
+                </div>
             </div>
         </div>
 
-        <!-- RIGHT: Featured 11 Episodes Quick Selection -->
+        <!-- RIGHT: Featured Episodes Sidebar -->
         <div class="sidebar-playlist">
-            <div class="sidebar-title">Featured Episodes (11 Videos)</div>
+            <div class="sidebar-title">Featured Episodes</div>
             <div class="playlist-items-container" id="playlist-container">
                 <!-- Dynamically populated via JS -->
             </div>
@@ -322,7 +332,6 @@
     </div>
 
     <script>
-        // 11 Featured Episodes from the Playlist
         const playlistData = [
             { id: "PXf59S2kFag", title: "[GOING SEVENTEEN 2020] EP.1 MYSTERY MYSTERY #1", channel: "SEVENTEEN" },
             { id: "V5Ms5o3k26k", title: "[GOING SEVENTEEN 2020] EP.2 MYSTERY MYSTERY #2", channel: "SEVENTEEN" },
@@ -335,11 +344,19 @@
             { id: "mk3c9y05zLY", title: "[GOING SEVENTEEN 2020] EP.9 Insomnia-Zero #2", channel: "SEVENTEEN" },
             { id: "o0aQTWjqGIk", title: "[GOING SEVENTEEN 2020] EP.10 SEVENTEEN BRAIN SURVIVAL #1", channel: "SEVENTEEN" },
             { id: "ZbfHpnri1Ko", title: "[GOING SEVENTEEN 2020] EP.11 SEVENTEEN BRAIN SURVIVAL #2", channel: "SEVENTEEN" },
-            { id: "jS7RmsQ-QrU", title: "[GOING SEVENTEEN 2020] EP.12  SVT ESCAPE ROOM #1", channel: "SEVENTEEN" },
-            {id: "ZB4ABOJfpy8", title: "[GOING SEVENTEEN 2020] EP.13 SVT ESCAPE ROOM #2", channel: "SEVENTEEN" }
+            { id: "jS7RmsQ-QrU", title: "[GOING SEVENTEEN 2020] EP.12 SVT ESCAPE ROOM #1", channel: "SEVENTEEN" },
+            { id: "ZB4ABOJfpy8", title: "[GOING SEVENTEEN 2020] EP.13 SVT ESCAPE ROOM #2", channel: "SEVENTEEN" }
         ];
 
         let currentIndex = 0;
+
+        function updatePlayer() {
+            const video = playlistData[currentIndex];
+            const iframe = document.getElementById('playlist-iframe');
+            iframe.src = `https://www.youtube.com/embed/${video.id}?autoplay=1`;
+            document.getElementById('current-playing-title').innerText = video.title;
+            renderPlaylist();
+        }
 
         function renderPlaylist() {
             const container = document.getElementById('playlist-container');
@@ -349,7 +366,7 @@
             playlistData.forEach((video, index) => {
                 const item = document.createElement('div');
                 item.className = `playlist-item ${index === currentIndex ? 'active' : ''}`;
-                item.onclick = () => selectVideo(index, video);
+                item.onclick = () => selectVideo(index);
 
                 item.innerHTML = `
                     <img class="item-thumbnail" src="https://i.ytimg.com/vi/${video.id}/hqdefault.jpg" alt="Thumbnail">
@@ -362,37 +379,21 @@
             });
         }
 
-        function selectVideo(index, video) {
+        function selectVideo(index) {
             currentIndex = index;
-            const iframe = document.getElementById('playlist-iframe');
-            iframe.src = `https://www.youtube.com/embed/${video.id}?autoplay=1`;
-            document.getElementById('current-playing-title').innerText = video.title;
-            renderPlaylist();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderPlaylist();
-        });
-    function playVideoAt(index) {
-            if (player && player.playVideoAt) {
-                player.playVideoAt(index);
-                player.unMute();
-            }
+            updatePlayer();
         }
 
         function nextVideo() {
-            if (player && player.nextVideo) {
-                player.nextVideo();
-                player.unMute();
-            }
+            currentIndex = (currentIndex + 1) % playlistData.length;
+            updatePlayer();
         }
 
         function prevVideo() {
-            if (player && player.previousVideo) {
-                player.previousVideo();
-                player.unMute();
-            }
+            currentIndex = (currentIndex - 1 + playlistData.length) % playlistData.length;
+            updatePlayer();
         }
+
         function triggerConfetti() {
             if (typeof confetti === 'function') {
                 confetti({
@@ -403,6 +404,10 @@
                 });
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPlaylist();
+        });
     </script>
 </body>
 </html>
