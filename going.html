@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💎 SEVENTEEN | YouTube Player & Going SEVENTEEN Playlist</title>
+    <title>💎 SEVENTEEN | GOING SEVENTEEN Player</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,48 +13,7 @@
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <header>
-        <!-- Navigation Header -->
-        <div class="nav-container">
-            <a href="index.html" class="glass-btn">🏡 H♡me</a>
-            <a href="scrapbook.html" class="glass-btn">📖Scrapbook</a>
-            <a href="music.html" class="glass-btn">❤️Spotify💿</a>
-            <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
-            <a href="svt.html" class="glass-btn">💎𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷💎</a>
-        </div>
-    </header>
-    
     <style>
-        /* Top Navigation Header */
-        .nav-container {
-            margin-bottom: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .glass-btn {
-            display: inline-block;
-            padding: 10px 22px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(199, 8, 113, 0.25);
-            color: #a638c7;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
         :root {
             --rose-quartz: #f7cac9;
             --serenity: #92a8d1;
@@ -79,6 +38,35 @@
             padding: 20px;
             color: var(--text-main);
             overflow-x: hidden;
+        }
+
+        .nav-container {
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .glass-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #5b317a;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .header {
@@ -154,7 +142,7 @@
         }
 
         .player-info-bar h3 {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 800;
             color: #222;
         }
@@ -170,7 +158,7 @@
             padding: 15px;
             display: flex;
             flex-direction: column;
-            height: 520px;
+            height: 560px;
         }
 
         .sidebar-title {
@@ -256,11 +244,6 @@
             font-weight: 600;
         }
 
-        .item-meta {
-            font-size: 0.65rem;
-            color: #777;
-        }
-
         .btn {
             background: linear-gradient(135deg, var(--rose-quartz) 0%, var(--serenity) 100%);
             border: none;
@@ -292,101 +275,129 @@
 </head>
 <body>
 
+    <!-- Header Links -->
+    <div class="nav-container">
+        <a href="index.html" class="glass-btn">🏡 H♡me</a>
+        <a href="music.html" class="glass-btn">❤️Spotify💿</a>
+        <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
+        <a href="svt.html" class="glass-btn">💎𝓼𝓮𝓿𝓮𝓷𝓽𝓮𝓮𝓷💎</a>
+        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
+    </div>
+
     <header class="header">
         <h1>💎 GOING SEVENTEEN Player</h1>
-        <p>Watch Full Episodes & Official Playlists</p>
+        <p>Featured Playlist (11 Episodes)</p>
     </header>
 
     <div class="main-container">
         <!-- LEFT: Video Player Window -->
         <div class="player-card">
             <div class="video-responsive-wrapper">
-                <iframe id="main-video-frame" 
-                    src="https://www.youtube.com/embed/Ky9Psr6-j_Y?enablejsapi=1" 
-                    title="SEVENTEEN Video Player" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-                </iframe>
+                <div id="youtube-player"></div>
             </div>
 
             <div class="player-info-bar">
-                <h3 id="current-playing-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 0 Prologue</h3>
+                <h3 id="current-playing-title">Loading...</h3>
                 <button class="btn" onclick="triggerConfetti()">🎉 Celebrate</button>
             </div>
         </div>
 
-        <!-- RIGHT: Sidebar Playlist -->
+        <!-- RIGHT: Playlist Sidebar (Strictly 11 Videos) -->
         <div class="sidebar-playlist">
-            <div class="sidebar-title">Playlist Episodes</div>
-            
-            <div class="playlist-items-container">
-                <!-- Episode 0 -->
-                <div class="playlist-item active" onclick="playVideo('Ky9Psr6-j_Y', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 0 Prologue', this)">
-                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/Ky9Psr6-j_Y/hqdefault.jpg" alt="Thumbnail">
-                    <div class="item-details">
-                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 0 Prologue</div>
-                        <div class="item-channel">wonu me</div>
-                        <div class="item-meta">708K views • 9 years ago</div>
-                    </div>
-                </div>
-
-                <!-- Episode 01 -->
-                <div class="playlist-item" onclick="playVideo('ojHv5qslb4k', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 01', this)">
-                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/ojHv5qslb4k/hqdefault.jpg" alt="Thumbnail">
-                    <div class="item-details">
-                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 01</div>
-                        <div class="item-channel">wonu me</div>
-                        <div class="item-meta">385K views • 9 years ago</div>
-                    </div>
-                </div>
-
-                <!-- Episode 02 -->
-                <div class="playlist-item" onclick="playVideo('Kt_LY0a6P5s', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 02', this)">
-                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/Kt_LY0a6P5s/hqdefault.jpg" alt="Thumbnail">
-                    <div class="item-details">
-                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 02</div>
-                        <div class="item-channel">wonu me</div>
-                        <div class="item-meta">294K views • 9 years ago</div>
-                    </div>
-                </div>
-
-                <!-- Episode 03 -->
-                <div class="playlist-item" onclick="playVideo('LPlGiqnFiKc', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 03', this)">
-                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/LPlGiqnFiKc/hqdefault.jpg" alt="Thumbnail">
-                    <div class="item-details">
-                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 03</div>
-                        <div class="item-channel">wonu me</div>
-                        <div class="item-meta">263K views • 9 years ago</div>
-                    </div>
-                </div>
-
-                <!-- Episode 07 -->
-                <div class="playlist-item" onclick="playVideo('RiWWHWR0cVo', '[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 07', this)">
-                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/RiWWHWR0cVo/hqdefault.jpg" alt="Thumbnail">
-                    <div class="item-details">
-                        <div class="item-title">[ENGSUB] SEVENTEEN - GOING SEVENTEEN EP 07</div>
-                        <div class="item-channel">wonu me</div>
-                        <div class="item-meta">234K views • 9 years ago</div>
-                    </div>
-                </div>
+            <div class="sidebar-title">Up Next (11 Videos)</div>
+            <div class="playlist-items-container" id="playlist-container">
+                <!-- Dynamically rendered via JavaScript -->
             </div>
         </div>
     </div>
 
+    <!-- YouTube Iframe API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
-        // Switch main video frame directly by Video ID
-        function playVideo(videoId, titleText, element) {
-            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        // Array of 11 Videos from Going Seventeen
+        const playlistData = [
+            { id: "b3f2i7E4oT8", title: "[GOING SEVENTEEN] EP.154 Red Ball #1", channel: "SEVENTEEN" },
+            { id: "eJ7T29-847k", title: "[GOING SEVENTEEN] EP.153 No Rules #2", channel: "SEVENTEEN" },
+            { id: "C39mP5f_o-E", title: "[GOING SEVENTEEN] EP.152 No Rules #1", channel: "SEVENTEEN" },
+            { id: "xV21Q9mHk5g", title: "[GOING SEVENTEEN] EP.151 Digging Clams & Making Bets #2", channel: "SEVENTEEN" },
+            { id: "Y5M2045m-L0", title: "[GOING SEVENTEEN] EP.150 Digging Clams & Making Bets #1", channel: "SEVENTEEN" },
+            { id: "L02A3K4m9s1", title: "[GOING SEVENTEEN] EP.149 Mafiapoly #2", channel: "SEVENTEEN" },
+            { id: "p04M85nO392", title: "[GOING SEVENTEEN] EP.148 Mafiapoly #1", channel: "SEVENTEEN" },
+            { id: "k1m49x9V043", title: "[GOING SEVENTEEN] EP.147 Chat, Chat #2", channel: "SEVENTEEN" },
+            { id: "X13k94m9s02", title: "[GOING SEVENTEEN] EP.146 Chat, Chat #1", channel: "SEVENTEEN" },
+            { id: "A28n48m2011", title: "[GOING SEVENTEEN] EP.145 Let's Go Home #2", channel: "SEVENTEEN" },
+            { id: "K39m2104599", title: "[GOING SEVENTEEN] EP.144 Let's Go Home #1", channel: "SEVENTEEN" }
+        ];
 
-            document.getElementById('main-video-frame').src = embedUrl;
-            document.getElementById('current-playing-title').innerText = titleText;
+        let player;
+        let currentIndex = 0;
 
-            // Highlight active playlist item
-            document.querySelectorAll('.playlist-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
+        // Render Sidebar Items
+        function renderPlaylist() {
+            const container = document.getElementById('playlist-container');
+            container.innerHTML = '';
+
+            playlistData.forEach((video, index) => {
+                const item = document.createElement('div');
+                item.className = `playlist-item ${index === currentIndex ? 'active' : ''}`;
+                item.onclick = () => selectVideo(index);
+
+                item.innerHTML = `
+                    <img class="item-thumbnail" src="https://i.ytimg.com/vi/${video.id}/hqdefault.jpg" alt="Thumbnail">
+                    <div class="item-details">
+                        <div class="item-title">${video.title}</div>
+                        <div class="item-channel">${video.channel}</div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
         }
 
-        // Confetti Function
+        // Initialize YouTube Player API
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                videoId: playlistData[0].id,
+                playerVars: {
+                    'autoplay': 1,
+                    'rel': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady() {
+            document.getElementById('current-playing-title').innerText = playlistData[currentIndex].title;
+            renderPlaylist();
+        }
+
+        // Listen for when video ends -> Auto-play next item
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                playNextVideo();
+            }
+        }
+
+        // Select specific video from the sidebar
+        function selectVideo(index) {
+            currentIndex = index;
+            player.loadVideoById(playlistData[currentIndex].id);
+            document.getElementById('current-playing-title').innerText = playlistData[currentIndex].title;
+            renderPlaylist();
+        }
+
+        // Auto play next video logic
+        function playNextVideo() {
+            if (currentIndex + 1 < playlistData.length) {
+                currentIndex++;
+                selectVideo(currentIndex);
+            }
+        }
+
+        // Confetti Trigger Function
         function triggerConfetti() {
             confetti({
                 particleCount: 50,
