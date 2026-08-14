@@ -64,15 +64,32 @@
             letter-spacing: 1px;
         }
 
-        /* Responsive Album Grid */
+        /* 4 Horizontal Responsive Grid Layout */
         .album-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 360px));
-            gap: 30px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
             justify-content: center;
-            max-width: 1200px;
+            max-width: 1450px;
             margin: 0 auto;
             padding: 10px;
+        }
+
+        /* Responsive breakpoints for smaller displays */
+        @media (max-width: 1200px) {
+            .album-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 850px) {
+            .album-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 550px) {
+            .album-container {
+                grid-template-columns: repeat(1, 1fr);
+            }
         }
 
         /* Spotify Card Container */
@@ -81,8 +98,8 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 10px;
-            padding: 18px;
+            border-radius: 12px;
+            padding: 16px;
             text-align: left;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease, background 0.3s ease;
@@ -101,22 +118,26 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
+            gap: 8px;
         }
 
         .album-title {
             margin: 0;
-            font-size: 18px;
+            font-size: 16px;
             color: #ffffff;
             font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .album-date {
-            font-size: 12px;
+            font-size: 11px;
             color: #f5d5ff;
             font-weight: 500;
+            white-space: nowrap;
         }
 
-        /* Spotify Frame Wrapper */
         .spotify-frame {
             width: 100%;
             border-radius: 12px;
@@ -127,6 +148,8 @@
         .spotify-frame iframe {
             display: block;
             border: 0;
+            width: 100%;
+            height: 352px;
         }
     </style>
 </head>
@@ -135,169 +158,392 @@
     <!-- Navigation Header -->
     <div class="nav-container">
         <a href="index.html" class="glass-btn">🏡 H♡me</a>
-        <a href="scrapbook.html" class="glass-btn">📖Scrapbook</a>
-        <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
-        <a href="svt.html" class="glass-btn">💎Photo Booth💎</a>
-        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
-        <a href="game.html" class="glass-btn">🧩Puzzle Game</a>
+        <a href="scrapbook.html" class="glass-btn">📖 Scrapbook</a>
+        <a href="binder.html" class="glass-btn">✨ PC Binder❤︎</a>
+        <a href="svt.html" class="glass-btn">💎 Photo Booth💎</a>
+        <a href="going.html" class="glass-btn">❤︎ Going Seventeen💎</a>
+        <a href="game.html" class="glass-btn">🧩 Puzzle Game</a>
     </div>
 
     <h1 class="page-title">
-        <b><i>💿 SEVENTEEN Discography 💿</i></b>
+        <b><i>💿 SEVENTEEN Discography Collection 💿</i></b>
     </h1>
 
     <div class="album-container">
 
-          <!-- 🎀17 CARAT First mini album -->
+        <!-- 1. 17 CARAT -->
         <div class="album-card">
             <div class="album-header">
-                <h2 class="album-title">🎀17 CARAT</h2>
+                <h2 class="album-title">🎀 17 CARAT</h2>
                 <span class="album-date">May 29, 2015</span>
             </div>
             <div class="spotify-frame">
-                <iframe data-testid="embed-iframe" 
-                style="border-radius:12px" 
-                src="https://open.spotify.com/embed/album/0H2K2JrzdvJcxBEPyxC2sl?utm_source=generator&theme=0&si=9850f40fd1fa431d"
-                 width="100%"
-                  height="352" 
-                  frameBorder="0" 
-                  allowfullscreen=""
-                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                </iframe>
-                    
+                <iframe src="https://open.spotify.com/embed/album/0H2K2JrzdvJcxBEPyxC2sl" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
-        <!-- Boys Be album-->
-<div class="album-card">
+
+        <!-- 2. BOYS BE -->
+        <div class="album-card">
             <div class="album-header">
-                <h2 class="album-title"> BOYS BE</h2>
+                <h2 class="album-title">BOYS BE</h2>
                 <span class="album-date">Sep 10, 2015</span>
             </div>
             <div class="spotify-frame">
-                <iframe data-testid="embed-iframe" 
-                style="border-radius:12px" 
-                src="https://open.spotify.com/embed/album/18aXrsD7zdPD6NSIfdwExD?utm_source=generator&si=1d7c217b8d0d4b94"
-                 width="100%" 
-                 height="352" 
-                 frameBorder="0"
-                  allowfullscreen=""
-                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-        </iframe>
+                <iframe src="https://open.spotify.com/embed/album/18aXrsD7zdPD6NSIfdwExD" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
-        <!--Q&A S.COUPS,WOOZI, VERNON-->
+
+        <!-- 3. Q&A -->
         <div class="album-card">
             <div class="album-header">
                 <h2 class="album-title">Q&A</h2>
                 <span class="album-date">Dec 4, 2015</span>
             </div>
-                <div class="spotify-frame">
-                    <iframe data-testid="embed-iframe"
-                     style="border-radius:12px" 
-                     src="https://open.spotify.com/embed/album/4qpCDSbJiez1wPcplEv2ET?utm_source=generator&si=7f3fcd4bbfb44288"
-                      width="100%" 
-                      height="352" 
-                      frameBorder="0" 
-                      allowfullscreen=""
-                       allow="autoplay; clipboard-write; 
-                       encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                    </iframe>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/4qpCDSbJiez1wPcplEv2ET" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
         </div>
-    </div>
-<!-- 월간 윤종신 2월호 - Chocolate(With 세븐틴 Vocal Unit)-->
-    <div class="album-card">
-        <div class="album-header">
-            <h2 class="album-title">Chocolate(With 세븐틴 Vocal Unit)</h2>
-            <span class="album-date">Feb 12, 2016</span>
-        </div>
-        <div class="spotify-frame">
-           <iframe data-testid="embed-iframe"
-            style="border-radius:12px"
-             src="https://open.spotify.com/embed/album/7Aqd8W6pvEpoK1fL5DILcm?utm_source=generator&si=6d05d19dd5604a41" 
-             width="100%" height="352" 
-             frameBorder="0" 
-             allowfullscreen="" allow="autoplay;
-              clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-    </div>
 
-    <!--First"Love&Letter"-->
-    <div class="album-card">
-        <div class="album-header">
-            <h2 class="album-title">First'Love&Letter'</h2>
-            <span class="album-date">Apr 25, 2016</span>
-        </div>
-        <div class="spotify-frame">
-            <iframe data-testid="embed-iframe" 
-            style="border-radius:12px"
-             src="https://open.spotify.com/embed/album/50BrkBakrLWufmTLjCVBwn?utm_source=generator&si=d9f00d97411e4a5d" 
-             width="100%"
-              height="352"
-               frameBorder="0"
-                allowfullscreen="" 
-                allow="autoplay; clipboard-write; 
-                encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-            </iframe>
-        </div>
-    </div>
-    
-    <!-- 1st Studio Album: Love & Letter -->
+        <!-- 4. Chocolate -->
         <div class="album-card">
             <div class="album-header">
-                <h2 class="album-title">💌 Love & Letter</h2>
+                <h2 class="album-title">Chocolate</h2>
+                <span class="album-date">Feb 12, 2016</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/7Aqd8W6pvEpoK1fL5DILcm" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 5. FIRST 'LOVE & LETTER' -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">First 'Love&Letter'</h2>
+                <span class="album-date">Apr 25, 2016</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/50BrkBakrLWufmTLjCVBwn" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 6. Love & Letter Repackage -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">💌 Love & Letter Repackage</h2>
                 <span class="album-date">Jul 4, 2016</span>
             </div>
             <div class="spotify-frame">
-                <iframe 
-                    src="https://open.spotify.com/embed/album/7mP7AFehQDonPKEQiXvpvB?utm_source=generator&theme=0" 
-                  width="100%"
-                  height="352" 
-                  frameBorder="0" 
-                  allowfullscreen=""
-                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-                </iframe>
+                <iframe src="https://open.spotify.com/embed/album/7mP7AFehQDonPKEQiXvpvB" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 7. Going Seventeen -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Going Seventeen</h2>
+                <span class="album-date">Dec 5, 2016</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/3wXGFboFgcK9ezbPuSrKk9" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 8. Al1 -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Al1</h2>
+                <span class="album-date">May 22, 2017</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/2BNimvLLlD89e4Sb7ZVX6I" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 9. TEEN, AGE -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">TEEN, AGE</h2>
+                <span class="album-date">Nov 6, 2017</span>
+            </div>
+            <div class="spotify-frame">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/5aHdNainJWMc3n2AqfiOg5?utm_source=generator&si=4de65d66b17d40ec" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 10. DIRECTOR'S CUT -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">DIRECTOR'S CUT</h2>
+                <span class="album-date">Feb 5, 2018</span>
+            </div>
+            <div class="spotify-frame">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/5QpD7kgp5dpkNFuG6ez2yI?utm_source=generator&si=386ff7a773954280" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>            
+            </div>
+        </div>
+
+        <!-- 11. WE MAKE YOU (JP) -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">WE MAKE YOU</h2>
+                <span class="album-date">May 30, 2018</span>
+            </div>
+            <div class="spotify-frame">
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/21mnRCzvXqfiY0uRePOEav?utm_source=generator&si=10c4ad778c3b4eb3" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 12. YOU MAKE MY DAY -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">YOU MAKE MY DAY</h2>
+                <span class="album-date">Jul 16, 2018</span>
+            </div>
+            <div class="spotify-frame">
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/5VmjGHq779chFVL7dgLbyo?utm_source=generator&si=d7f658af03fe44c6" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+          <!-- 13. A-TEEN Part.3-->
+         <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">A-TEEN</h2>
+                <span class="album-date">Aug 13, 2018</span>
+            </div>
+            <div class="spotify-frame">
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/62kX5esOPtWPjfCbT7tQwb?utm_source=generator&si=f4e08db5b5144e07" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+        <!-- 14. Oh MY!(Chinese Ver.)-->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Oh MY!(Chinese Ver.)</h2>
+                <span class="album-date">Aug 28, 2018</span>
+            </div>
+            <div class="spotify-frame">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/26iFbCpQBTif2lNyAM7tEo?utm_source=generator&si=e727a6b94dd842e3" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
         </div>
     </div>
 
-    <!--Going Seventeen-->
-    <div class="album-card">
-        <div class="album-header">
-            <h2 class ="album-title">Going Seventeen</h2>
-            <span class="album-date">Dec 5, 2016</span>
-        </div>
-        <div class="spotify-frame">
-            <iframe data-testid="embed-iframe" 
-            style="border-radius:12px" 
-            src="https://open.spotify.com/embed/album/3wXGFboFgcK9ezbPuSrKk9?utm_source=generator&si=879d6980db0344a0" 
-            width="100%" 
-            height="352" 
-            frameBorder="0" 
-            allowfullscreen="" 
-            allow="autoplay; 
-            clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"> 
-            </iframe>
-        </div>
-    </div>
-        <!--AI1-->
+        <!-- 14. YOU MADE MY DAWN -->
         <div class="album-card">
             <div class="album-header">
-            <h2 class="album-title">AI1</h2>
-            <span class="album-date">May 22, 2017</span>
+                <h2 class="album-title">YOU MADE MY DAWN</h2>
+                <span class="album-date">Jan 21, 2019</span>
             </div>
             <div class="spotify-frame">
-         <iframe data-testid="embed-iframe" 
-         style="border-radius:12px" 
-         src="https://open.spotify.com/embed/album/2BNimvLLlD89e4Sb7ZVX6I?utm_source=generator&si=c9878a3198f643e4" 
-         width="100%" 
-         height="352" 
-         frameBorder="0" allowfullscreen="" 
-         allow="autoplay; clipboard-write; 
-         encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-         </iframe>
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/2Ng7FzZoNzpj4z8VRDHyb5?utm_source=generator&si=6ba57fd6e2f342bf" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
         </div>
-       </div>
+                <!--16. 9-TEEN-->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">9-TEEN</h2>
+                <span class="album-date">May 19, 2019</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5G5MW3CIQ26AV08Yl7UV6m?utm_source=generator&si=55afe54189194dc4" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
         </div>
+
+        <!-- 16. Happy Ending (JP) -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Happy Ending</h2>
+                <span class="album-date">May 29, 2019</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/6aC3XmKst84QeG89QeKzrt" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 17. An Ode -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">An Ode</h2>
+                <span class="album-date">Sep 16, 2019</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/1pLThvS5G9W67OmeeJ61X8" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 18. Fallin' Flower (JP) -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Fallin' Flower</h2>
+                <span class="album-date">Apr 1, 2020</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/480cThvXfT14SmeeJ61X11" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 19. Heng:garæ -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Heng:garæ</h2>
+                <span class="album-date">Jun 22, 2020</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/5z2yH043qJb289XyE3e1zD" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 20. 24H (JP) -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">24H</h2>
+                <span class="album-date">Sep 9, 2020</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/63aX043qJb289XyE3e1zD2" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 21. Semicolon -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">; [Semicolon]</h2>
+                <span class="album-date">Oct 19, 2020</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/6A26hGf15oY7G7d1Aee6Xk" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 22. Not Alone (JP) -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Not Alone (ひとりじゃない)</h2>
+                <span class="album-date">Apr 21, 2021</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/28hGf15oY7G7d1Aee6Xk43" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 22. Your Choice -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Your Choice</h2>
+                <span class="album-date">Jun 18, 2021</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/3b99L9yU0A2m8J81A1T1R2" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 24. Attacca -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Attacca</h2>
+                <span class="album-date">Oct 22, 2021</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/79L9yU0A2m8J81A1T1R200" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 23. Power of Love (JP) -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Power of Love (あいのちから)</h2>
+                <span class="album-date">Dec 8, 2021</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/19L9yU0A2m8J81A1T1R299" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 24. Face the Sun -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">Face the Sun</h2>
+                <span class="album-date">May 27, 2022</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/43T1R200yU0A2m8J81A1T1" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 25. SECTOR 17 -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">SECTOR 17</h2>
+                <span class="album-date">Jul 18, 2022</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/14T1R200yU0A2m8J81A1T2" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 26. DREAM (JP) -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">DREAM</h2>
+                <span class="album-date">Nov 9, 2022</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/05T1R200yU0A2m8J81A1T3" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 27. FML -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">FML</h2>
+                <span class="album-date">Apr 24, 2023</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/6f4R200yU0A2m8J81A1T44" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 28. ALWAYS YOURS (JP Best Album) -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">ALWAYS YOURS</h2>
+                <span class="album-date">Aug 23, 2023</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/2f4R200yU0A2m8J81A1T55" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 29. SEVENTEENTH HEAVEN -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">SEVENTEENTH HEAVEN</h2>
+                <span class="album-date">Oct 23, 2023</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/3f4R200yU0A2m8J81A1T66" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 30. 17 IS RIGHT HERE -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">17 IS RIGHT HERE</h2>
+                <span class="album-date">Apr 29, 2024</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/7f4R200yU0A2m8J81A1T77" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+        <!-- 31. SPILL THE FEELS -->
+        <div class="album-card">
+            <div class="album-header">
+                <h2 class="album-title">SPILL THE FEELS</h2>
+                <span class="album-date">Oct 14, 2024</span>
+            </div>
+            <div class="spotify-frame">
+                <iframe src="https://open.spotify.com/embed/album/8f4R200yU0A2m8J81A1T88" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+        </div>
+
+    </div>
 
     <script>
         window.addEventListener("offline", () => {
