@@ -329,12 +329,22 @@
     <!-- Game Controls Bar -->
     <div class="game-controls">
         <select id="image-select" class="glass-btn" onchange="initGame()">
-            <option value="https://picsum.photos/seed/svt-group-cover/600/600">💎 SEVENTEEN Group</option>
-            <option value="https://picsum.photos/seed/svt-scoups/600/600">👑 S.Coups</option>
-            <option value="https://picsum.photos/seed/svt-hoshi/600/600">🐯 Hoshi</option>
-            <option value="https://picsum.photos/seed/svt-woozi/600/600">🍚 Woozi</option>
-            <option value="https://picsum.photos/seed/svt-mingyu/600/600">🐶 Mingyu</option>
-            <option value="https://picsum.photos/seed/svt-jeonghan/600/600">😇 Jeonghan</option>
+            <option value="">💎 SEVENTEEN Group</option>
+            <option value="">👑 S.Coups</option>
+            <option value="">😇 Jeonghan</option>
+            <option value="">🎨 Joshua</option>
+            <option value="">🦁 Jun</option>
+            <option value="">🐯 Hoshi</option>
+            <option value="">🐰 Wonwoo</option>
+            <option value="">🍚 Woozi</option>
+            <option value="">🐧 DK</option>
+            <option value="">🐶 Mingyu</option>
+            <option value="">🐱 The8</option>
+            <option value="">😵 Seungkwan</option>
+            <option value="">🐻 Vernon</option>
+            <option value="">🦖 Dino</option>
+
+            
         </select>
 
         <select id="grid-select" class="glass-btn" onchange="initGame()">
@@ -373,11 +383,12 @@
         <div class="spotify-header" onclick="toggleSpotify()">
             <span>🎵 SVT Playlist</span>
             <button class="spotify-toggle-btn" id="spotify-toggle-icon">▼</button>
-        </div>
-        <iframe 
-            src="https://open.spotify.com/embed/track/2132L13O1I333633?utm_source=generator&theme=0" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy">
+        </div><iframe data-testid="embed-iframe" style="border-radius:12px" 
+        src="https://open.spotify.com/embed/album/6160Q4MxABBaeqMW5AZss4?utm_source=generator&si=10dbb962a7ad4928" 
+        width="100%" height="152"
+         frameBorder="0" allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+          loading="lazy">
         </iframe>
     </div>
 
