@@ -153,6 +153,9 @@
             justify-content: center;
             position: relative;
             transition: all 0.2s ease;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
         }
 
         .puzzle-slot.drag-over {
@@ -165,6 +168,7 @@
             font-weight: 800;
             color: rgba(0, 0, 0, 0.25);
             pointer-events: none;
+            position: absolute;
         }
 
         /* Shuffled Tray / Deck */
@@ -212,7 +216,7 @@
             z-index: 10;
         }
 
-        .slot .puzzle-piece {
+        .puzzle-slot .puzzle-piece {
             width: 100% !important;
             height: 100% !important;
             box-shadow: none;
@@ -328,8 +332,7 @@
 
     <!-- Game Controls Bar -->
     <div class="game-controls">
-        <select id="image-select" 
-        class="glass-btn" onchange="initGame()">
+        <select id="image-select" class="glass-btn" onchange="initGame()">
             <option value="https://i.pinimg.com/736x/f9/04/0e/f9040ea0134ec7bbf87d028f69fd6ffa.jpg">💎 SEVENTEEN Group</option>
             <option value="https://i.pinimg.com/736x/1f/1a/2c/1f1a2cc8b80db87ee0f511de84cd7f37.jpg">👑 S.Coups</option>
             <option value="https://i.pinimg.com/1200x/74/50/66/745066ce344fc669a49ee95a920c44ee.jpg">😇 Jeonghan</option>
@@ -382,14 +385,13 @@
         <div class="spotify-header" onclick="toggleSpotify()">
             <span>🎵 SVT Playlist</span>
             <button class="spotify-toggle-btn" id="spotify-toggle-icon">▼</button>
-        </div><iframe data-testid="embed-iframe" style="border-radius:12px" 
-        src="https://open.spotify.com/embed/album/6160Q4MxABBaeqMW5AZss4?utm_source=generator&si=10dbb962a7ad4928" 
-        width="100%" height="152"
-         frameBorder="0" allowfullscreen=""
-        allow="autoplay;
-        clipboard-write; encrypted-media; 
-        fullscreen; picture-in-picture" 
-          loading="lazy">
+        </div>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" 
+            src="https://open.spotify.com/embed/album/6160Q4MxABBaeqMW5AZss4?utm_source=generator&si=10dbb962a7ad4928&autoplay=1" 
+            width="100%" height="152"
+            frameBorder="0" allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
         </iframe>
     </div>
 
@@ -402,7 +404,7 @@
         let timerInterval = null;
         let secondsElapsed = 0;
 
-        const BOARD_SIZE = 360; // Total px size of puzzle board
+        const BOARD_SIZE = 348; // Total px size inside inner board padding
 
         // Initialize Puzzle Game
         function initGame() {
@@ -478,8 +480,8 @@
             const posX = -col * piecePxSize;
             const posY = -row * piecePxSize;
 
-            piece.style.width = `${piecePxSize - 10}px`;
-            piece.style.height = `${piecePxSize - 10}px`;
+            piece.style.width = `${piecePxSize}px`;
+            piece.style.height = `${piecePxSize}px`;
             piece.style.backgroundImage = `url('${currentImageUrl}')`;
             piece.style.backgroundSize = `${BOARD_SIZE}px ${BOARD_SIZE}px`;
             piece.style.backgroundPosition = `${posX}px ${posY}px`;
@@ -503,10 +505,19 @@
 
             if (!piece) return;
 
-            // If slot already occupied, move existing piece back to tray
+            // Remove piece from previous board slot tracking if it was moved from another slot
+            for (let s in boardState) {
+                if (boardState[s] === parseInt(piece.dataset.pieceIndex)) {
+                    delete boardState[s];
+                }
+            }
+
+            // If target slot is already occupied, move existing piece back to tray
             if (this.querySelector('.puzzle-piece')) {
                 const existingPiece = this.querySelector('.puzzle-piece');
+                const existingIdx = parseInt(existingPiece.dataset.pieceIndex);
                 document.getElementById('tray').appendChild(existingPiece);
+                delete boardState[slotIdx];
             }
 
             // Append piece into board slot
@@ -535,10 +546,7 @@
 
             if (isCorrect) {
                 clearInterval(timerInterval);
-                setTimeout(() => {
-                    triggerBigConfetti();
-                    alert(`🎉 CONGRATULATIONS CARAT!💎\nYou solved the puzzle in ${moves} moves and ${formatTime(secondsElapsed)}!`);
-                }, 300);
+                triggerBigConfetti();
             }
         }
 
