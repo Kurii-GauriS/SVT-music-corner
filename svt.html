@@ -3,43 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hand Tracking & Custom Background Photo Booth</title>
+    <title>Doodle & Sticker Photo Booth</title>
 
     <!-- Load MediaPipe Hands Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 
-
     <style>
-                /* Top Navigation Header */
-        .nav-container {
-            margin-bottom: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .glass-btn {
-            display: inline-block;
-            padding: 10px 22px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(199, 8, 113, 0.25);
-            color: #a638c7;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
         :root {
             --bg-color: #f7f3ee;
             --accent-color: #e07a5f;
@@ -51,30 +21,58 @@
             background-color: var(--bg-color);
             color: #000000;
             display: flex;
-            text-shadow: #f7f3ee 0px 1px 2px;
             flex-direction: column;
             align-items: center;
             padding: 20px;
             margin: 0;
-            
-            /* Custom Background Image */
-            background-image: url('https://i.pinimg.com/736x/33/41/e5/3341e5759d02ccaecf733752f39785ef.jpg');
-            background-size: auto;
-            background-position: fill;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            background-image: radial-gradient(#e07a5f 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
             min-height: 100vh;
+        }
+
+        /* Top Navigation Header */
+        .nav-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .glass-btn {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(224, 122, 95, 0.3);
+            color: #444;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             font-size: 1.8rem;
-            margin-bottom: 20px;
+            margin: 0 0 15px 0;
             text-align: center;
         }
 
         .instructions {
             font-size: 0.85rem;
-            color: #444;
-            margin-bottom: 10px;
+            color: #555;
+            background: rgba(224, 122, 95, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin: 0 0 10px 0;
             line-height: 1.4;
         }
 
@@ -82,7 +80,7 @@
         .workspace {
             display: flex;
             flex-direction: row;
-            gap: 25px;
+            gap: 20px;
             justify-content: center;
             align-items: flex-start;
             max-width: 1100px;
@@ -98,12 +96,15 @@
             width: 240px;
         }
 
+        .preview-area h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
         #stripCanvas {
             background: #ffffff;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
+            border-radius: 6px;
         }
 
         /* Center: Controls Sidebar */
@@ -113,9 +114,9 @@
             gap: 12px;
             width: 280px;
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 18px;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
         .control-group {
@@ -125,16 +126,18 @@
         }
 
         label {
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.82rem;
+            font-weight: 700;
             color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         select, input[type="color"], button {
-            padding: 10px;
+            padding: 9px;
             border-radius: 8px;
             border: 1px solid #ddd;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             outline: none;
             cursor: pointer;
         }
@@ -150,25 +153,27 @@
             width: 40px;
             height: 35px;
             border: none;
+            background: none;
         }
 
-        /* Floating Emoji Picker Grid */
+        /* Sticker Palette */
         .sticker-palette {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .sticker-btn {
-            font-size: 1.2rem;
-            padding: 5px 8px;
-            border: 1px solid #ccc;
+            font-size: 1.1rem;
+            padding: 4px 8px;
+            border: 1px solid #e2e8f0;
             border-radius: 6px;
-            background: #f9f9f9;
+            background: #f8fafc;
         }
 
         .sticker-btn:hover {
-            background: #eee;
+            background: #edf2f7;
+            transform: scale(1.08);
         }
 
         .btn {
@@ -184,9 +189,15 @@
         }
 
         .btn-clear {
-            background: #ef4444;
-            color: #fff;
-            border: none;
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+            font-size: 0.8rem;
+            padding: 6px;
+        }
+
+        .btn-clear:hover {
+            background: #fecaca;
         }
 
         /* Right Side: Camera Viewport */
@@ -196,7 +207,7 @@
             height: 360px;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
             background: #000;
         }
 
@@ -204,7 +215,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transform: scaleX(-1); /* Mirror camera */
+            transform: scaleX(-1);
         }
 
         /* Canvas overlays */
@@ -218,11 +229,15 @@
         }
 
         /* --- INSTAGRAM-STYLE AESTHETIC FILTERS --- */
-        .filter-warm-glow { filter: sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg); }
-        .filter-indie { filter: contrast(1.1) brightness(1.05) saturate(1.3) sepia(0.15); }
-        .filter-cyber-pink { filter: hue-rotate(310deg) saturate(1.4) contrast(1.1); }
-        .filter-vintage-mono { filter: grayscale(1) contrast(1.2) brightness(0.95); }
         .filter-none { filter: none; }
+        .filter-warm-glow { filter: sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg); }
+        .filter-indie { filter: contrast(1.15) brightness(1.05) saturate(1.3) sepia(0.12); }
+        .filter-cyber-pink { filter: hue-rotate(310deg) saturate(1.4) contrast(1.1); }
+        .filter-vintage-mono { filter: grayscale(1) contrast(1.25) brightness(0.95); }
+        .filter-golden-hour { filter: sepia(0.4) saturate(1.5) contrast(1.05) brightness(1.05); }
+        .filter-retro-film { filter: contrast(1.2) saturate(0.85) sepia(0.2) hue-rotate(-10deg); }
+        .filter-soft-dream { filter: brightness(1.12) contrast(0.9) saturate(1.1) sepia(0.08); }
+        .filter-emerald { filter: hue-rotate(80deg) saturate(1.2) contrast(1.1); }
 
         /* Countdown Display */
         .countdown {
@@ -233,7 +248,7 @@
             font-size: 6rem;
             color: #fff;
             font-weight: 800;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            text-shadow: 0 4px 15px rgba(0,0,0,0.7);
             display: none;
             pointer-events: none;
         }
@@ -244,10 +259,10 @@
     <!-- Navigation Header -->
     <div class="nav-container">
         <a href="index.html" class="glass-btn">🏡 H♡me</a>
-        <a href="scrapbook.html" class="glass-btn">📖Scrapbook</a>
-        <a href="music.html" class="glass-btn">❤️Spotify💿</a>
-        <a href="binder.html" class="glass-btn">✨PC Binder❤︎</a>
-        <a href="going.html" class="glass-btn">❤︎Going Seventeen💎</a>
+        <a href="scrapbook.html" class="glass-btn">📖 Scrapbook</a>
+        <a href="music.html" class="glass-btn">❤️ Spotify💿</a>
+        <a href="binder.html" class="glass-btn">✨ PC Binder❤︎</a>
+        <a href="going.html" class="glass-btn">❤︎ Going Seventeen💎</a>
     </div>
 
     <h1>✨ Custom Background & Hand Doodle Booth</h1>
@@ -262,7 +277,10 @@
 
         <!-- 2. Center: Filters & Controls -->
         <div class="controls">
-            <p class="instructions">👈 <strong>Point Index Finger</strong> to DRAW<br>🤏 <strong>Pinch Thumb + Index</strong> to STOP</p>
+            <p class="instructions">
+                ☝️ <strong>Index Finger Up</strong>: Draw/Doodle<br>
+                🤏 <strong>Pinch Thumb + Index</strong>: Stop/Pause
+            </p>
 
             <div class="control-group">
                 <label>Photo Mode Layout:</label>
@@ -273,14 +291,30 @@
             </div>
 
             <div class="control-group">
-                <label>Instagram Filter:</label>
+                <label>Instagram Filters:</label>
                 <select id="filterSelect">
-                    <option value="filter-warm-glow">Warm Honey Glow 🍯</option>
-                    <option value="filter-indie">Indie Soft Grain 🎨</option>
+                    <option value="filter-warm-glow">Honey Warm Glow 🍯</option>
+                    <option value="filter-golden-hour">Golden Hour Sunset 🌅</option>
+                    <option value="filter-soft-dream">Soft Pastel Dream ☁️</option>
+                    <option value="filter-indie">Indie Film Grain 🎨</option>
+                    <option value="filter-retro-film">Retro 90s Film 📽️</option>
                     <option value="filter-cyber-pink">Cyber Pink Tone 🌸</option>
-                    <option value="filter-vintage-mono">Vintage Film Noir 🖤</option>
-                    <option value="filter-none">Original Feed</option>
+                    <option value="filter-emerald">Vintage Emerald 🌿</option>
+                    <option value="filter-vintage-mono">Film Noir Mono 🖤</option>
+                    <option value="filter-none">Original Feed 📷</option>
                 </select>
+            </div>
+
+            <div class="control-group">
+                <label>Brush Type & Color:</label>
+                <select id="brushTypeSelect">
+                    <option value="solid">Continuous Solid Line ✏️</option>
+                    <option value="glitter">Glitter Sparkle Pen ✨</option>
+                </select>
+                <div class="color-picker-row">
+                    <input type="color" id="brushColor" value="#ff758f">
+                    <input type="range" id="brushSize" min="3" max="25" value="8">
+                </div>
             </div>
 
             <div class="control-group">
@@ -292,20 +326,17 @@
                     <button class="sticker-btn" onclick="addSticker('⭐')">⭐</button>
                     <button class="sticker-btn" onclick="addSticker('🎀')">🎀</button>
                     <button class="sticker-btn" onclick="addSticker('🔥')">🔥</button>
+                    <button class="sticker-btn" onclick="addSticker('👑')">👑</button>
+                    <button class="sticker-btn" onclick="addSticker('🍀')">🍀</button>
                 </div>
             </div>
 
-            <div class="control-group">
-                <label>Hand Drawing Brush:</label>
-                <div class="color-picker-row">
-                    <input type="color" id="brushColor" value="#ff758f">
-                    <input type="range" id="brushSize" min="3" max="25" value="8">
-                </div>
+            <div style="display:flex; gap:8px;">
+                <button class="btn btn-clear" id="clearStickerBtn" style="flex:1;">Clear Stickers 🧼</button>
+                <button class="btn btn-clear" id="clearDrawBtn" style="flex:1;">Clear Doodles 🧹</button>
             </div>
-
-            <button class="btn btn-clear" id="clearStickerBtn">Clear Stickers 🧼</button>
-            <button class="btn btn-clear" id="clearDrawBtn">Clear Doodles 🧹</button>
-            <button class="btn" id="snapBtn" style="background: var(--accent-color); margin-top:5px;">Take Photo 📸</button>
+            
+            <button class="btn" id="snapBtn" style="background: var(--accent-color); margin-top:5px; padding:12px;">Take Photo 📸</button>
         </div>
 
         <!-- 3. Right Side: Live Camera View Container -->
@@ -327,6 +358,7 @@
 
         const filterSelect = document.getElementById('filterSelect');
         const modeSelect = document.getElementById('modeSelect');
+        const brushTypeSelect = document.getElementById('brushTypeSelect');
         const brushColor = document.getElementById('brushColor');
         const brushSize = document.getElementById('brushSize');
         const clearDrawBtn = document.getElementById('clearDrawBtn');
@@ -344,12 +376,42 @@
         let prevY = null;
         let floatingStickers = [];
 
-        // Preload custom background image
-        const bgImage = new Image();
-        bgImage.crossOrigin = "anonymous";
-        bgImage.src = 'https://i.pinimg.com/736x/33/41/e5/3341e5759d02ccaecf733752f39785ef.jpg';
+        // CSS Filter mapping for Canvas Captures
+        const filterStyles = {
+            'filter-none': 'none',
+            'filter-warm-glow': 'sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg)',
+            'filter-golden-hour': 'sepia(0.4) saturate(1.5) contrast(1.05) brightness(1.05)',
+            'filter-soft-dream': 'brightness(1.12) contrast(0.9) saturate(1.1) sepia(0.08)',
+            'filter-indie': 'contrast(1.15) brightness(1.05) saturate(1.3) sepia(0.12)',
+            'filter-retro-film': 'contrast(1.2) saturate(0.85) sepia(0.2) hue-rotate(-10deg)',
+            'filter-cyber-pink': 'hue-rotate(310deg) saturate(1.4) contrast(1.1)',
+            'filter-emerald': 'hue-rotate(80deg) saturate(1.2) contrast(1.1)',
+            'filter-vintage-mono': 'grayscale(1) contrast(1.25) brightness(0.95)'
+        };
 
-        // 1. Initialize MediaPipe Hands
+        // Resize overlay canvases on viewport sync
+        function syncCanvasDimensions() {
+            const w = camContainer.clientWidth;
+            const h = camContainer.clientHeight;
+            
+            if (drawCanvas.width !== w || drawCanvas.height !== h) {
+                // Preserve existing drawings on resize
+                const tempDraw = document.createElement('canvas');
+                tempDraw.width = drawCanvas.width;
+                tempDraw.height = drawCanvas.height;
+                tempDraw.getContext('2d').drawImage(drawCanvas, 0, 0);
+
+                drawCanvas.width = w;
+                drawCanvas.height = h;
+                stickerCanvas.width = w;
+                stickerCanvas.height = h;
+
+                drawCtx.drawImage(tempDraw, 0, 0, w, h);
+                drawStickers();
+            }
+        }
+
+        // Initialize MediaPipe Hands
         const hands = new Hands({
             locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
         });
@@ -363,7 +425,6 @@
 
         hands.onResults(onHandResults);
 
-        // 2. Camera Processing Loop
         const camera = new Camera(video, {
             onFrame: async () => {
                 await hands.send({ image: video });
@@ -373,15 +434,14 @@
         });
 
         camera.start().then(() => {
-            drawCanvas.width = camContainer.clientWidth;
-            drawCanvas.height = camContainer.clientHeight;
-            stickerCanvas.width = camContainer.clientWidth;
-            stickerCanvas.height = camContainer.clientHeight;
+            syncCanvasDimensions();
             video.className = activeFilter;
             adjustCanvasSize();
         });
 
-        // Add Floating Stickers
+        window.addEventListener('resize', syncCanvasDimensions);
+
+        // Add Floating Emoji Stickers
         function addSticker(emoji) {
             const padding = 50;
             const x = Math.random() * (stickerCanvas.width - padding * 2) + padding;
@@ -405,33 +465,60 @@
             stickerCtx.clearRect(0, 0, stickerCanvas.width, stickerCanvas.height);
         });
 
-        // Hand Gesture Tracking
+        // Glitter Pen Sparkle Effect Generator
+        function drawGlitter(x, y, color, size) {
+            const particleCount = 8;
+            for (let i = 0; i < particleCount; i++) {
+                const offsetX = (Math.random() - 0.5) * size * 2.2;
+                const offsetY = (Math.random() - 0.5) * size * 2.2;
+                const radius = Math.random() * (size / 3) + 1;
+
+                drawCtx.beginPath();
+                drawCtx.arc(x + offsetX, y + offsetY, radius, 0, Math.PI * 2);
+                drawCtx.fillStyle = Math.random() > 0.4 ? color : '#ffffff';
+                drawCtx.shadowBlur = 6;
+                drawCtx.shadowColor = color;
+                drawCtx.fill();
+            }
+            drawCtx.shadowBlur = 0; // Reset
+        }
+
+        // Gesture Tracking Handler
         function onHandResults(results) {
+            syncCanvasDimensions();
+
             if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
                 const landmarks = results.multiHandLandmarks[0];
-
                 const indexTip = landmarks[8];
                 const thumbTip = landmarks[4];
 
+                // Mirrored coordinates matching video mirror
                 const x = (1 - indexTip.x) * drawCanvas.width;
                 const y = indexTip.y * drawCanvas.height;
 
                 const thumbX = (1 - thumbTip.x) * drawCanvas.width;
                 const thumbY = thumbTip.y * drawCanvas.height;
+                
                 const pinchDistance = Math.hypot(x - thumbX, y - thumbY);
 
-                if (pinchDistance < 35) {
+                // Pinch gesture acts as pen lift
+                if (pinchDistance < 32) {
                     prevX = null;
                     prevY = null;
                 } else {
                     if (prevX !== null && prevY !== null) {
-                        drawCtx.beginPath();
-                        drawCtx.moveTo(prevX, prevY);
-                        drawCtx.lineTo(x, y);
-                        drawCtx.strokeStyle = brushColor.value;
-                        drawCtx.lineWidth = brushSize.value;
-                        drawCtx.lineCap = 'round';
-                        drawCtx.stroke();
+                        if (brushTypeSelect.value === 'glitter') {
+                            drawGlitter(x, y, brushColor.value, parseFloat(brushSize.value));
+                        } else {
+                            drawCtx.beginPath();
+                            drawCtx.moveTo(prevX, prevY);
+                            drawCtx.lineTo(x, y);
+                            drawCtx.strokeStyle = brushColor.value;
+                            drawCtx.lineWidth = brushSize.value;
+                            drawCtx.lineCap = 'round';
+                            drawCtx.lineJoin = 'round';
+                            drawCtx.stroke();
+                        }
                     }
                     prevX = x;
                     prevY = y;
@@ -472,7 +559,7 @@
             for (let i = 0; i < photoCount; i++) {
                 await runCountdown(3);
                 captureCurrentFrame();
-                await new Promise(r => setTimeout(r, 500));
+                await new Promise(r => setTimeout(r, 400));
             }
 
             renderOutput();
@@ -504,28 +591,17 @@
             tempCanvas.height = drawCanvas.height;
             const tCtx = tempCanvas.getContext('2d');
 
-            if (bgImage.complete && bgImage.naturalWidth !== 0) {
-                tCtx.drawImage(bgImage, 0, 0, tempCanvas.width, tempCanvas.height);
-            }
+            // Apply Instagram CSS filter during frame capture
+            tCtx.filter = filterStyles[activeFilter] || 'none';
 
-            if (activeFilter === 'filter-warm-glow') {
-                tCtx.filter = 'sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg)';
-            } else if (activeFilter === 'filter-indie') {
-                tCtx.filter = 'contrast(1.1) brightness(1.05) saturate(1.3) sepia(0.15)';
-            } else if (activeFilter === 'filter-cyber-pink') {
-                tCtx.filter = 'hue-rotate(310deg) saturate(1.4) contrast(1.1)';
-            } else if (activeFilter === 'filter-vintage-mono') {
-                tCtx.filter = 'grayscale(1) contrast(1.2) brightness(0.95)';
-            }
-
-            // Mirror video
+            // Draw video (Mirrored)
             tCtx.save();
             tCtx.translate(tempCanvas.width, 0);
             tCtx.scale(-1, 1);
             tCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
             tCtx.restore();
 
-            // Overlay doodles & stickers
+            // Overlay doodles & stickers (Unfiltered)
             tCtx.filter = 'none';
             tCtx.drawImage(drawCanvas, 0, 0);
             tCtx.drawImage(stickerCanvas, 0, 0);
@@ -534,8 +610,9 @@
         }
 
         function renderOutput() {
+            stripCtx.clearRect(0, 0, stripCanvas.width, stripCanvas.height);
+
             if (modeSelect.value === 'polaroid') {
-                // Render Single Polaroid Layout
                 stripCtx.fillStyle = '#fdfbf7';
                 stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
 
@@ -543,17 +620,19 @@
                 const photoW = stripCanvas.width - (margin * 2);
                 const photoH = 200;
 
-                stripCtx.drawImage(capturedFrames[0], margin, margin, photoW, photoH);
+                if (capturedFrames[0]) {
+                    stripCtx.drawImage(capturedFrames[0], margin, margin, photoW, photoH);
+                }
+                
                 stripCtx.strokeStyle = 'rgba(0,0,0,0.1)';
                 stripCtx.strokeRect(margin, margin, photoW, photoH);
 
-                stripCtx.font = '14px -apple-system, cursive, sans-serif';
+                stripCtx.font = '13px -apple-system, sans-serif';
                 stripCtx.fillStyle = '#444';
                 stripCtx.textAlign = 'center';
-                const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                stripCtx.fillText(`✨ ${dateStr} Memory ✨`, stripCanvas.width / 2, stripCanvas.height - 30);
+                const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                stripCtx.fillText(`✨ ${dateStr} ✨`, stripCanvas.width / 2, stripCanvas.height - 25);
             } else {
-                // Render 3-Photo Strip Layout
                 const padding = 15;
                 const photoW = 190;
                 const photoH = 142;
@@ -571,18 +650,18 @@
                     stripCtx.strokeRect(padding, y, photoW, photoH);
                 });
 
-                stripCtx.font = '14px -apple-system, sans-serif';
+                stripCtx.font = '12px -apple-system, sans-serif';
                 stripCtx.fillStyle = '#666';
                 stripCtx.textAlign = 'center';
-                const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                stripCtx.fillText(`✨ ${dateStr} • HAND DOODLE ✨`, stripCanvas.width / 2, stripCanvas.height - 35);
+                const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                stripCtx.fillText(`✨ ${dateStr} • PHOTO BOOTH ✨`, stripCanvas.width / 2, stripCanvas.height - 25);
             }
 
             downloadBtn.style.display = 'inline-block';
             downloadBtn.onclick = () => {
                 const a = document.createElement('a');
                 a.download = `photo-booth-${Date.now()}.png`;
-                a.href = stripCanvas.toDataURL();
+                a.href = stripCanvas.toDataURL('image/png');
                 a.click();
             };
         }
