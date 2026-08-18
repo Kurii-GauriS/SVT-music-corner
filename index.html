@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seventeen Fanclub|Member Login</title>
+    <title>Seventeen Fanclub | Profile Setup</title>
     <style>
         * {
             box-sizing: border-box;
@@ -16,13 +16,11 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
-            /* K-Pop Band Background Image */
+            padding: 20px 0;
             background: url('https://i.pinimg.com/originals/c4/78/50/c47850005840a2526ec4664961bfa086.jpg') no-repeat center center fixed;
             background-size: cover;
         }
 
-        /* Dark overlay to make the login card stand out */
         body::before {
             content: "";
             position: fixed;
@@ -30,17 +28,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 5, 20, 0.55);
+            background: rgba(10, 5, 20, 0.65);
             z-index: -1;
         }
 
-        /* Glassmorphism Card Container */
-        .login-container {
+        .container {
             text-align: center;
-            padding: 35px 30px;
+            padding: 30px 25px;
             width: 90%;
-            max-width: 400px;
-            background: rgba(44, 42, 72, 0.65);
+            max-width: 550px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: rgba(44, 42, 72, 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 105, 180, 0.3);
@@ -50,21 +49,17 @@
             color: #ffffff;
         }
 
-        .disc-logo {
-            font-size: 70px;
-            display: inline-block;
-            animation: spin 6s linear infinite;
-            filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
-            margin-bottom: 5px;
+        /* Custom Scrollbar for Container */
+        .container::-webkit-scrollbar {
+            width: 6px;
         }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .container::-webkit-scrollbar-thumb {
+            background: #ff71ce;
+            border-radius: 10px;
         }
 
         h2 {
-            font-size: 26px;
+            font-size: 24px;
             margin: 0 0 5px 0;
             font-weight: 700;
             letter-spacing: 1.5px;
@@ -79,58 +74,108 @@
         p.subtitle {
             font-size: 13px;
             color: #e0e0e0;
-            margin: 0 0 25px 0;
-            letter-spacing: 0.5px;
+            margin: 0 0 20px 0;
         }
 
-        /* Form Styling */
         .input-group {
-            margin-bottom: 18px;
+            margin-bottom: 15px;
             text-align: left;
         }
 
-        .input-group input {
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: #ff71ce;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-group input, .input-group textarea {
             width: 100%;
-            padding: 14px 18px;
+            padding: 12px 16px;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
+            border-radius: 15px;
             color: #fff;
             font-size: 14px;
             outline: none;
             transition: all 0.3s ease;
         }
 
-        .input-group input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+        .input-group textarea {
+            resize: none;
+            height: 60px;
         }
 
-        .input-group input:focus {
+        .input-group input:focus, .input-group textarea:focus {
             background: rgba(255, 255, 255, 0.18);
             border-color: #ff71ce;
-            box-shadow: 0 0 12px rgba(255, 113, 206, 0.5);
+            box-shadow: 0 0 10px rgba(255, 113, 206, 0.5);
         }
 
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            margin-bottom: 22px;
+        .section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #01cdfe;
+            margin: 20px 0 10px 0;
+            text-align: left;
+        }
+
+        /* Member Grid Selection */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .member-card {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .member-card input {
+            display: none;
+        }
+
+        .member-card img {
+            width: 100%;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .member-card span {
+            display: block;
+            font-size: 11px;
+            margin-top: 4px;
             color: #ccc;
         }
 
-        .form-actions a {
+        /* Hover & Selected States */
+        .member-card:hover img {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .member-card input:checked + img {
+            border-color: #ff71ce;
+            opacity: 1;
+            box-shadow: 0 0 12px #ff71ce;
+            transform: scale(1.1);
+        }
+
+        .member-card input:checked ~ span {
             color: #ff71ce;
-            text-decoration: none;
-            transition: color 0.2s;
+            font-weight: bold;
         }
 
-        .form-actions a:hover {
-            text-decoration: underline;
-        }
-
-        .login-btn {
+        .submit-btn {
             width: 100%;
             padding: 14px 0;
             background: linear-gradient(135deg, #ff3399, #9356d0);
@@ -145,62 +190,133 @@
             box-shadow: 0 4px 15px rgba(255, 51, 153, 0.4);
         }
 
-        .login-btn:hover {
+        .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 51, 153, 0.7);
-            background: linear-gradient(135deg, #ff52a8, #8a36d9);
-        }
-
-        .footer-text {
-            margin-top: 20px;
-            font-size: 13px;
-            color: #bbb;
-        }
-
-        .footer-text a {
-            color: #01cdfe;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .footer-text a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-<div class="login-container">
-    <div class="disc-logo">💿</div>
-    <h2>SVT Fanclub Login</h2>
-    <p class="subtitle">Enter the groove & step into the world</p>
+<div class="container">
+    <h2>Create Your Profile</h2>
+    <p class="subtitle">Join the fandom & pick your bias</p>
 
     <form action="scrapbook.html" method="GET">
         <div class="input-group">
-            <input type="text" placeholder="Fan ID or Email" required>
+            <label for="username">Display Name</label>
+            <input type="text" id="username" placeholder="e.g. Carat_17" required>
         </div>
-        
+
         <div class="input-group">
-            <input type="password" placeholder="Password" required>
+            <label for="bio">Short Bio</label>
+            <textarea id="bio" placeholder="Tell us why you love Seventeen..."></textarea>
         </div>
 
-        <div class="form-actions">
-            <label style="cursor: pointer;">
-                <input type="checkbox" style="accent-color: #ff71ce;"> Remember me
+        <div class="section-title">Select Your Bias Image</div>
+        
+        <div class="member-grid">
+            <label class="member-card">
+                <input type="radio" name="bias" value="S.Coups" required>
+                <img src="" alt="S.Coups">
+                <span>S.Coups</span>
             </label>
-            <a href="#">Forgot password?</a>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Jeonghan">
+                <img src="" alt="Jeonghan">
+                <span>Jeonghan</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Joshua">
+                <img src="" alt="Joshua">
+                <span>Joshua</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Jun">
+                <img src="" alt="Jun">
+                <span>Jun</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Hoshi">
+                <img src="" alt="Hoshi">
+                <span>Hoshi</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Wonwoo">
+                <img src="" alt="Wonwoo">
+                <span>Wonwoo</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Woozi">
+                <img src="" alt="Woozi">
+                <span>Woozi</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="DK">
+                <img src="" alt="DK">
+                <span>DK</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Mingyu">
+                <img src="" alt="Mingyu">
+                <span>Mingyu</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="The8">
+                <img src="" alt="The8">
+                <span>The8</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Seungkwan">
+                <img src="" alt="Seungkwan">
+                <span>Seungkwan</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Vernon">
+                <img src="" alt="Vernon">
+                <span>Vernon</span>
+            </label>
+            <label class="member-card">
+                <input type="radio" name="bias" value="Dino">
+                <img src="" alt="Dino">
+                <span>Dino</span>
+            </label>
         </div>
 
-        <button type="submit" class="login-btn">ENTER THE GROOVE</button>
+        <button type="submit" class="submit-btn">ENTER THE GROOVE</button>
     </form>
-
-    <div class="footer-text">
-        Don't have an ID? <a href="#">Join the Fandom</a>
-    </div>
 </div>
 
 <script>
-    // Offline redirect handling from original script
+    window.addEventListener("offline", () => {
+        window.location.href = "404.html";
+    });
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent standard page jump
+
+        // Capture values
+        const username = document.getElementById('username').value;
+        const bio = document.getElementById('bio').value;
+        const selectedBias = document.querySelector('input[name="bias"]:checked');
+
+        if (selectedBias) {
+            const memberCard = selectedBias.closest('.member-card');
+            const memberImgSrc = memberCard.querySelector('img').src;
+            const memberName = selectedBias.value;
+
+            // Save to localStorage
+            localStorage.setItem('userProfile', JSON.stringify({
+                name: username,
+                bio: bio,
+                biasName: memberName,
+                biasImage: memberImgSrc
+            }));
+
+            // Redirect to scrapbook page
+            window.location.href = 'scrapbook.html';
+        }
+    });
+
     window.addEventListener("offline", () => {
         window.location.href = "404.html";
     });
