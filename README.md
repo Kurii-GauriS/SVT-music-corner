@@ -202,6 +202,29 @@ The scrapbook celebrates all thirteen members:
 | Dino      | Performance Team • Maknae |
 
 ---
+## Svt-Game/
+│
+├── Game.html<br>
+├── style.css<br>
+├── game.js<br>
+└── assets/<br>
+    └── members/<br>
+        ├── scoups.png<br>
+        ├── jeonghan.png<br>
+        ├── joshua.png<br>
+        ├── jun.png<br>
+        ├── hoshi.png<br>
+        ├── wonwoo.png<br>
+        ├── woozi.png<br>
+        ├── dk.png<br>
+        ├── mingyu.png<br>
+        ├── the8.png<br>
+        ├── seungkwan.png<br>
+        ├── vernon.png<br>
+        └── dino.png<br>
+
+---
+
 
 ## 🌱 Project Goals
 
