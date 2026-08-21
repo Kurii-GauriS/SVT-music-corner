@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SVT Plush Fly</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game-wrapper">
+
+        <!-- GAME -->
+
+        <section class="game-container">
+
+            <canvas id="gameCanvas"></canvas>
+
+            <!-- SCORE -->
+
+            <div class="score-board">
+
+                <div class="score-box">
+                    <span>SCORE</span>
+                    <strong id="score">0</strong>
+                </div>
+
+                <div class="score-box">
+                    <span>BEST</span>
+                    <strong id="best">0</strong>
+                </div>
+
+            </div>
+
+
+            <!-- PAUSE -->
+
+            <button id="pauseBtn" class="pause-btn">
+                ⏸
+            </button>
+
+
+            <!-- CENTER MESSAGE -->
+
+            <div id="gameMessage" class="game-message">
+
+                <h1>SVT PLUSH FLY ✨</h1>
+
+                <p>
+                    Choose your member and fly!
+                </p>
+
+                <button id="startBtn">
+                    START GAME
+                </button>
+
+            </div>
+
+
+            <!-- MEMBER SELECTION -->
+
+            <div class="member-panel">
+
+                <h2>♡ SELECT YOUR MEMBER ♡</h2>
+
+                <div id="memberGrid" class="member-grid"></div>
+
+            </div>
+
+
+            <!-- TIP -->
+
+            <div class="tip">
+                👆 Tap / Space to fly higher!
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="game.js"></script>
+
+</body>
+
+</html>
