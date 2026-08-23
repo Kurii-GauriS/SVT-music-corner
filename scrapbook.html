@@ -1,0 +1,2435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SEVENTEEN Music & Memories</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        /* =========================================
+           ROOT VARIABLES
+        ========================================= */
+
+        :root {
+            --whiteboard-bg: #fbbfbe;
+            --grid-line: #bbdaf5;
+            --polaroid-bg: #ffffff;
+
+            --text-main: #2b2b2b;
+
+            --tape-pink: rgba(255, 142, 210, 0.7);
+            --tape-yellow: rgba(246, 207, 144, 0.75);
+            --tape-blue: rgba(134, 203, 234, 0.7);
+        }
+
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            width: 100%;
+
+            font-family: 'Plus Jakarta Sans', sans-serif;
+
+            background-color: var(--whiteboard-bg);
+
+            /* Whiteboard Grid */
+            background-image:
+                linear-gradient(
+                    to right,
+                    var(--grid-line) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    to bottom,
+                    var(--grid-line) 1px,
+                    transparent 1px
+                );
+
+            background-size: 32px 32px;
+
+            padding: 50px 20px 80px;
+
+            position: relative;
+
+            overflow-x: hidden;
+
+            color: var(--text-main);
+        }
+
+
+        /* =========================================
+           WHITEBOARD BORDER
+        ========================================= */
+
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+
+            border: 3px dashed #d5cfbd;
+
+            border-radius: 16px;
+
+            pointer-events: none;
+
+            z-index: 100;
+        }
+
+
+        /* =========================================
+           HEADER / NAVIGATION
+        ========================================= */
+
+        header {
+            width: 100%;
+
+            position: relative;
+
+            z-index: 200;
+
+            margin-bottom: 35px;
+        }
+
+
+        .nav-container {
+            width: 100%;
+
+            max-width: 1450px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 5px;
+        }
+
+
+        .glass-btn {
+            display: inline-block;
+
+            padding: 10px 22px;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(199, 8, 113, 0.25);
+
+            color: #a638c7;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            transition: all 0.3s ease;
+
+            white-space: nowrap;
+        }
+
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* =========================================
+           👤 PROFILE
+        ========================================= */
+
+        .profile-mini {
+
+            position: fixed;
+
+            top: 22px;
+            right: 28px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 8px 14px 8px 8px;
+
+            background: rgba(255, 255, 255, 0.72);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border: 2px solid rgba(255, 113, 206, 0.45);
+
+            border-radius: 50px;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.12),
+                0 0 18px rgba(255, 113, 206, 0.18);
+
+            z-index: 999;
+
+            transition: all 0.3s ease;
+        }
+
+
+        .profile-mini .user-avatar {
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 3px solid #ff71ce;
+
+            box-shadow:
+                0 0 10px rgba(255, 113, 206, 0.45);
+
+            background: #fff;
+
+            transition: transform 0.3s ease;
+        }
+
+
+        .profile-mini:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.15),
+                0 0 25px rgba(255, 113, 206, 0.3);
+        }
+
+
+        .profile-mini:hover .user-avatar {
+
+            transform:
+                scale(1.08)
+                rotate(3deg);
+        }
+
+
+        .profile-mini .user-name {
+
+            display: block;
+
+            font-family: 'Caveat', cursive;
+
+            font-size: 1.25rem;
+
+            color: #a638c7;
+
+            line-height: 1;
+        }
+
+
+        .profile-mini small {
+
+            display: block;
+
+            margin-top: 3px;
+
+            font-family:
+                'Plus Jakarta Sans',
+                sans-serif;
+
+            font-size: 0.68rem;
+
+            color: #777;
+        }
+
+
+        .profile-mini .user-bias {
+
+            color: #ff4fa3;
+
+            font-weight: 700;
+        }
+
+
+        .profile-mini::after {
+
+            content: "💎";
+
+            position: absolute;
+
+            top: -9px;
+            right: 5px;
+
+            font-size: 14px;
+
+            transform: rotate(12deg);
+        }
+
+
+        /* =========================================
+           HEADER TITLE
+        ========================================= */
+
+        .header-container {
+
+            text-align: center;
+
+            width: 100%;
+
+            max-width: 800px;
+
+            margin:
+                0 auto 30px;
+
+            position: relative;
+
+            z-index: 10;
+        }
+
+
+        .header-title {
+
+            font-family: 'Caveat', cursive;
+
+            font-size: 3.8rem;
+
+            color: #1a1a1a;
+
+            margin-bottom: 10px;
+
+            line-height: 1.1;
+
+            text-shadow:
+                2px 2px 0px rgba(0, 0, 0, 0.04);
+        }
+
+
+        .header-subtitle {
+
+            font-size: 1.1rem;
+
+            color: #666;
+
+            background:
+                rgba(255, 255, 255, 0.85);
+
+            display: inline-block;
+
+            padding: 6px 18px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.03);
+
+            max-width: 100%;
+        }
+
+
+        /* =========================================
+           FLOATING STICKERS
+        ========================================= */
+
+        .sticker {
+
+            position: absolute;
+
+            font-size: 2.2rem;
+
+            user-select: none;
+
+            pointer-events: none;
+
+            z-index: 1;
+
+            filter:
+                drop-shadow(
+                    2px 4px 6px
+                    rgba(0, 0, 0, 0.1)
+                );
+
+            animation:
+                floatSlow
+                6s ease-in-out infinite alternate;
+        }
+
+
+        .st-1 {
+            top: 6%;
+            left: 4%;
+            animation-duration: 5s;
+        }
+
+        .st-2 {
+            top: 12%;
+            right: 5%;
+            animation-duration: 7s;
+        }
+
+        .st-3 {
+            top: 48%;
+            left: 2%;
+            animation-duration: 6.5s;
+        }
+
+        .st-4 {
+            top: 52%;
+            right: 3%;
+            animation-duration: 5.5s;
+        }
+
+        .st-5 {
+            bottom: 8%;
+            left: 6%;
+            animation-duration: 8s;
+        }
+
+        .st-6 {
+            bottom: 6%;
+            right: 7%;
+            animation-duration: 6s;
+        }
+
+        .st-7 {
+            top: 30%;
+            right: 4%;
+            animation-duration: 7.5s;
+        }
+
+
+        @keyframes floatSlow {
+
+            0% {
+                transform:
+                    translateY(0px)
+                    rotate(0deg);
+            }
+
+            100% {
+                transform:
+                    translateY(-20px)
+                    rotate(14deg);
+            }
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero-container {
+
+            display: flex;
+
+            justify-content: center;
+
+            width: 100%;
+
+            margin-bottom: 60px;
+
+            position: relative;
+
+            z-index: 10;
+        }
+
+
+        .hero-polaroid {
+
+            background-color:
+                var(--polaroid-bg);
+
+            padding:
+                20px
+                20px
+                30px;
+
+            border-radius: 6px;
+
+            box-shadow:
+                0 12px 30px
+                    rgba(0, 0, 0, 0.12),
+                0 4px 10px
+                    rgba(0, 0, 0, 0.05);
+
+            width: 100%;
+
+            max-width: 720px;
+
+            position: relative;
+
+            transform:
+                rotate(-1.2deg);
+
+            transition:
+                all 0.4s ease;
+        }
+
+
+        .hero-polaroid:hover {
+
+            transform:
+                rotate(0deg)
+                scale(1.02);
+
+            box-shadow:
+                0 20px 40px
+                    rgba(0, 0, 0, 0.18);
+        }
+
+
+        .hero-polaroid::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: -16px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%)
+                rotate(1deg);
+
+            width: 140px;
+
+            height: 32px;
+
+            background:
+                var(--tape-pink);
+
+            box-shadow:
+                0 2px 4px
+                rgba(0, 0, 0, 0.05);
+
+            z-index: 2;
+        }
+
+
+        .hero-photo-frame {
+
+            width: 100%;
+
+            height: 380px;
+
+            overflow: hidden;
+
+            border-radius: 4px;
+
+            background-color: #eee;
+        }
+
+
+        .hero-photo-frame img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+
+        /* =========================================
+           SCRAPBOOK GRID
+        ========================================= */
+
+        .scrapbook-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(280px, 310px)
+                );
+
+            gap: 50px 35px;
+
+            justify-content: center;
+
+            width: 100%;
+
+            max-width: 1400px;
+
+            margin: 0 auto;
+
+            position: relative;
+
+            z-index: 5;
+        }
+
+
+        /* =========================================
+           POLAROID CARD
+        ========================================= */
+
+        .polaroid-card {
+
+            background-color:
+                var(--polaroid-bg);
+
+            padding:
+                16px
+                16px
+                24px;
+
+            border-radius: 4px;
+
+            box-shadow:
+                0 8px 20px
+                    rgba(0, 0, 0, 0.08),
+                0 2px 6px
+                    rgba(0, 0, 0, 0.04);
+
+            position: relative;
+
+            transition:
+                all
+                0.4s
+                cubic-bezier(
+                    0.175,
+                    0.885,
+                    0.32,
+                    1.275
+                );
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            min-width: 0;
+
+            width: 100%;
+        }
+
+
+        /* Card rotations */
+
+        .polaroid-card:nth-child(4n+1) {
+            transform: rotate(-3.5deg);
+        }
+
+        .polaroid-card:nth-child(4n+2) {
+            transform: rotate(2.8deg);
+        }
+
+        .polaroid-card:nth-child(4n+3) {
+            transform: rotate(-2deg);
+        }
+
+        .polaroid-card:nth-child(4n+4) {
+            transform: rotate(3.2deg);
+        }
+
+
+        /* Hover */
+
+        .polaroid-card:hover {
+
+            transform:
+                rotate(0deg)
+                scale(1.06)
+                translateY(-8px);
+
+            box-shadow:
+                0 22px 40px
+                    rgba(0, 0, 0, 0.16),
+                0 8px 16px
+                    rgba(0, 0, 0, 0.08);
+
+            z-index: 25;
+        }
+
+
+        /* =========================================
+           WASHI TAPE
+        ========================================= */
+
+        .polaroid-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: -14px;
+
+            width: 90px;
+
+            height: 28px;
+
+            background:
+                var(--tape-yellow);
+
+            transform:
+                rotate(-3deg);
+
+            box-shadow:
+                0 2px 4px
+                rgba(0, 0, 0, 0.05);
+
+            backdrop-filter: blur(2px);
+
+            z-index: 2;
+        }
+
+
+        .polaroid-card:nth-child(even)::before {
+
+            background:
+                var(--tape-pink);
+
+            transform:
+                rotate(2deg);
+        }
+
+
+        .polaroid-card:nth-child(3n)::before {
+
+            background:
+                var(--tape-blue);
+
+            transform:
+                rotate(-1deg);
+        }
+
+
+        /* =========================================
+           PHOTO
+        ========================================= */
+
+        .photo-frame {
+
+            width: 100%;
+
+            height: 270px;
+
+            overflow: hidden;
+
+            border-radius: 2px;
+
+            background-color: #eee;
+
+            box-shadow:
+                inset
+                0 0 8px
+                rgba(0, 0, 0, 0.08);
+
+            position: relative;
+        }
+
+
+        .photo-frame img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform
+                0.5s ease;
+        }
+
+
+        .polaroid-card:hover
+        .photo-frame img {
+
+            transform:
+                scale(1.05);
+        }
+
+
+        /* =========================================
+           MEMBER DETAILS
+        ========================================= */
+
+        .member-details {
+
+            margin-top: 18px;
+
+            text-align: center;
+
+            width: 100%;
+        }
+
+
+        .member-name {
+
+            font-family:
+                'Caveat',
+                cursive;
+
+            font-size: 2rem;
+
+            font-weight: 700;
+
+            color: #111;
+
+            margin-bottom: 6px;
+        }
+
+
+        .music-quote {
+
+            font-family:
+                'Caveat',
+                cursive;
+
+            font-size: 1.25rem;
+
+            color: #4a4a4a;
+
+            line-height: 1.35;
+
+            padding: 0 6px;
+        }
+
+
+        .member-tag {
+
+            display: inline-block;
+
+            margin-top: 12px;
+
+            font-size: 0.75rem;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            text-transform: uppercase;
+
+            padding: 4px 12px;
+
+            border-radius: 12px;
+
+            background-color: #f0f0f0;
+
+            color: #666;
+
+            max-width: 100%;
+        }
+
+
+        /* =========================================
+           FULL WIDTH SECTION
+        ========================================= */
+
+        .full-width-section {
+
+            grid-column: 1 / -1;
+
+            width: 100%;
+
+            margin-top: 30px;
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 40px;
+        }
+
+
+        /* =========================================
+           SPOTIFY
+        ========================================= */
+
+        .spotify-polaroid {
+
+            max-width: 380px;
+
+            width: 100%;
+
+            transform:
+                rotate(-1.5deg) !important;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0, 0, 0, 0.12);
+        }
+
+
+        .spotify-frame {
+
+            background: #000;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            width: 100%;
+        }
+
+
+        .spotify-frame iframe {
+
+            display: block;
+
+            width: 100%;
+
+            max-width: 100%;
+        }
+
+
+        /* =========================================
+           POLAROID CAPTION
+        ========================================= */
+
+        .polaroid-caption {
+
+            text-align: center;
+
+            margin-top: 12px;
+
+            width: 100%;
+        }
+
+
+        .polaroid-caption .album-title {
+
+            font-family:
+                'Caveat',
+                cursive;
+
+            font-size: 1.8rem;
+
+            font-weight: 700;
+
+            color: #2d3748;
+        }
+
+
+        .polaroid-caption .album-date {
+
+            font-size: 0.85rem;
+
+            color: #718096;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           STICKY NOTE
+        ========================================= */
+
+        .sticky-note-decor {
+
+            position: relative;
+
+            width: 260px;
+
+            max-width: 100%;
+
+            background: #fff8c6;
+
+            padding: 24px 20px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.08);
+
+            transform:
+                rotate(2.5deg);
+
+            border-radius: 2px;
+
+            color: #333;
+
+            text-align: center;
+        }
+
+
+        .sticky-note-decor .tape {
+
+            position: absolute;
+
+            top: -12px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%)
+                rotate(-1deg);
+
+            width: 80px;
+
+            height: 24px;
+
+            background:
+                var(--tape-pink);
+
+            box-shadow:
+                0 1px 3px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .sticky-note-text {
+
+            font-family:
+                'Caveat',
+                cursive;
+
+            font-size: 1.5rem;
+
+            line-height: 1.3;
+
+            color: #222;
+        }
+
+
+        .sticky-note-tag {
+
+            display: inline-block;
+
+            margin-top: 15px;
+
+            font-size: 0.75rem;
+
+            font-weight: 700;
+
+            background:
+                rgba(255, 255, 255, 0.8);
+
+            padding: 4px 10px;
+
+            border-radius: 12px;
+
+            color: #555;
+        }
+
+
+        /* =========================================
+           TABLET
+           1024px AND BELOW
+        ========================================= */
+
+        @media (max-width: 1024px) {
+
+            body {
+                padding:
+                    45px
+                    15px
+                    70px;
+            }
+
+
+            .profile-mini {
+
+                top: 15px;
+
+                right: 18px;
+
+                max-width: 210px;
+            }
+
+
+            .nav-container {
+
+                padding-right: 220px;
+            }
+
+
+            .glass-btn {
+
+                padding:
+                    9px 17px;
+
+                font-size: 14px;
+            }
+
+
+            .header-title {
+
+                font-size: 3.2rem;
+            }
+
+
+            .hero-polaroid {
+
+                max-width: 650px;
+            }
+
+
+            .hero-photo-frame {
+
+                height: 330px;
+            }
+
+
+            .scrapbook-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(260px, 1fr)
+                    );
+
+                max-width: 700px;
+
+                gap: 45px 30px;
+            }
+
+
+            .photo-frame {
+
+                height: 270px;
+            }
+
+
+            .sticker {
+
+                font-size: 1.8rem;
+            }
+        }
+
+
+        /* =========================================
+           MOBILE
+           768px AND BELOW
+        ========================================= */
+
+        @media (max-width: 768px) {
+
+            body {
+
+                padding:
+                    20px
+                    12px
+                    60px;
+
+                background-size:
+                    25px 25px;
+            }
+
+
+            body::after {
+
+                top: 8px;
+                left: 8px;
+                right: 8px;
+                bottom: 8px;
+
+                border-width: 2px;
+            }
+
+
+            /* Profile becomes part of normal layout */
+
+            .profile-mini {
+
+                position: relative;
+
+                top: auto;
+                right: auto;
+
+                width: fit-content;
+
+                max-width: 100%;
+
+                margin:
+                    0 auto 15px;
+
+                padding:
+                    6px 12px 6px 6px;
+
+                transform: none;
+            }
+
+
+            .profile-mini:hover {
+
+                transform: none;
+            }
+
+
+            .profile-mini .user-avatar {
+
+                width: 42px;
+
+                height: 42px;
+            }
+
+
+            .profile-mini .user-name {
+
+                font-size: 1.05rem;
+            }
+
+
+            .profile-mini small {
+
+                font-size: 0.62rem;
+            }
+
+
+            /* Navigation */
+
+            .nav-container {
+
+                width: 100%;
+
+                padding: 0;
+
+                gap: 7px;
+
+                margin-bottom: 25px;
+            }
+
+
+            .glass-btn {
+
+                padding:
+                    8px 13px;
+
+                font-size: 12px;
+            }
+
+
+            /* Header */
+
+            .header-container {
+
+                margin-bottom: 25px;
+            }
+
+
+            .header-title {
+
+                font-size:
+                    clamp(
+                        2.5rem,
+                        10vw,
+                        3rem
+                    );
+            }
+
+
+            .header-subtitle {
+
+                font-size: 0.9rem;
+
+                padding:
+                    6px 12px;
+
+                line-height: 1.4;
+            }
+
+
+            /* Hero */
+
+            .hero-container {
+
+                margin-bottom: 45px;
+            }
+
+
+            .hero-polaroid {
+
+                width: 94%;
+
+                padding:
+                    12px
+                    12px
+                    22px;
+            }
+
+
+            .hero-photo-frame {
+
+                height: 260px;
+            }
+
+
+            .member-name {
+
+                font-size: 1.8rem;
+            }
+
+
+            .music-quote {
+
+                font-size: 1.1rem;
+            }
+
+
+            /* Cards */
+
+            .scrapbook-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+
+                width: 100%;
+
+                gap: 30px 15px;
+            }
+
+
+            .polaroid-card {
+
+                padding:
+                    10px
+                    10px
+                    18px;
+            }
+
+
+            .photo-frame {
+
+                height: 220px;
+            }
+
+
+            .polaroid-card:hover {
+
+                transform:
+                    rotate(0deg)
+                    scale(1.03)
+                    translateY(-4px);
+            }
+
+
+            .polaroid-card::before {
+
+                width: 65px;
+
+                height: 22px;
+
+                top: -11px;
+            }
+
+
+            .member-details {
+
+                margin-top: 12px;
+            }
+
+
+            .member-name {
+
+                font-size: 1.6rem;
+            }
+
+
+            .music-quote {
+
+                font-size: 1rem;
+            }
+
+
+            .member-tag {
+
+                font-size: 0.62rem;
+
+                padding:
+                    4px 8px;
+            }
+
+
+            /* Spotify */
+
+            .full-width-section {
+
+                gap: 30px;
+
+                margin-top: 15px;
+            }
+
+
+            .spotify-polaroid {
+
+                max-width: 360px;
+            }
+
+
+            .spotify-frame iframe {
+
+                height: 352px;
+            }
+
+
+            .sticky-note-decor {
+
+                width: 240px;
+            }
+
+
+            /* Stickers */
+
+            .sticker {
+
+                font-size: 1.4rem;
+            }
+
+
+            .st-1 {
+                left: 1%;
+            }
+
+
+            .st-2 {
+                right: 1%;
+            }
+
+
+            .st-3,
+            .st-4 {
+
+                display: none;
+            }
+        }
+
+
+        /* =========================================
+           SMALL PHONES
+           480px AND BELOW
+        ========================================= */
+
+        @media (max-width: 480px) {
+
+            body {
+
+                padding:
+                    15px
+                    8px
+                    50px;
+            }
+
+
+            /* Navigation */
+
+            .nav-container {
+
+                gap: 6px;
+            }
+
+
+            .glass-btn {
+
+                padding:
+                    7px 10px;
+
+                font-size: 11px;
+            }
+
+
+            /* Header */
+
+            .header-title {
+
+                font-size: 2.4rem;
+            }
+
+
+            .header-subtitle {
+
+                font-size: 0.82rem;
+            }
+
+
+            /* Hero */
+
+            .hero-polaroid {
+
+                width: 96%;
+
+                padding:
+                    10px
+                    10px
+                    18px;
+            }
+
+
+            .hero-photo-frame {
+
+                height: 220px;
+            }
+
+
+            .member-name {
+
+                font-size: 1.6rem;
+            }
+
+
+            .music-quote {
+
+                font-size: 0.95rem;
+            }
+
+
+            /* Two cards per row */
+
+            .scrapbook-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 25px 10px;
+            }
+
+
+            .polaroid-card {
+
+                padding:
+                    8px
+                    8px
+                    14px;
+            }
+
+
+            .photo-frame {
+
+                height: 175px;
+            }
+
+
+            .member-name {
+
+                font-size: 1.35rem;
+            }
+
+
+            .music-quote {
+
+                font-size: 0.85rem;
+
+                line-height: 1.25;
+            }
+
+
+            .member-tag {
+
+                font-size: 0.55rem;
+
+                padding:
+                    3px 6px;
+            }
+
+
+            /* Spotify */
+
+            .spotify-frame iframe {
+
+                height: 300px;
+            }
+
+
+            .polaroid-caption .album-title {
+
+                font-size: 1.5rem;
+            }
+
+
+            /* Sticky */
+
+            .sticky-note-decor {
+
+                width: 220px;
+
+                padding:
+                    20px 15px;
+            }
+
+
+            .sticky-note-text {
+
+                font-size: 1.3rem;
+            }
+        }
+
+
+        /* =========================================
+           VERY SMALL PHONES
+           380px AND BELOW
+        ========================================= */
+
+        @media (max-width: 380px) {
+
+            .profile-mini .user-avatar {
+
+                width: 38px;
+
+                height: 38px;
+            }
+
+
+            .profile-mini .user-name {
+
+                font-size: 0.95rem;
+            }
+
+
+            .profile-mini small {
+
+                font-size: 0.58rem;
+            }
+
+
+            .glass-btn {
+
+                font-size: 10px;
+
+                padding:
+                    6px 8px;
+            }
+
+
+            /* One card per row */
+
+            .scrapbook-grid {
+
+                grid-template-columns: 1fr;
+
+                max-width: 290px;
+
+                margin: 0 auto;
+
+                gap: 35px;
+            }
+
+
+            .photo-frame {
+
+                height: 260px;
+            }
+
+
+            .member-name {
+
+                font-size: 1.8rem;
+            }
+
+
+            .music-quote {
+
+                font-size: 1rem;
+            }
+
+
+            .hero-photo-frame {
+
+                height: 190px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header>
+
+        <!-- Profile -->
+
+        <div class="profile-mini">
+
+            <img
+                class="user-avatar"
+                src=""
+                alt="Profile">
+
+            <div>
+
+                <strong class="user-name"></strong>
+
+                <small>
+                    Bias:
+                    <span class="user-bias"></span>
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+
+        <div class="nav-container">
+
+            <a
+                href="index.html"
+                class="glass-btn">
+                🏡 H♡me
+            </a>
+
+            <a
+                href="music.html"
+                class="glass-btn">
+                ❤️ Spotify 💿
+            </a>
+
+            <a
+                href="binder.html"
+                class="glass-btn">
+                ✨ PC Binder ❤︎
+            </a>
+
+            <a
+                href="svt.html"
+                class="glass-btn">
+                💎 Photo Booth 💎
+            </a>
+
+            <a
+                href="going.html"
+                class="glass-btn">
+                ❤︎ Going Seventeen 💎
+            </a>
+
+            <a
+                href="game.html"
+                class="glass-btn">
+                🧩 Puzzle Game
+            </a>
+
+            <a
+                href="game.py"
+                class="glass-btn">
+                🎮 Mini Game
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         FLOATING STICKERS
+    ========================================= -->
+
+    <div class="sticker st-1">🎵</div>
+    <div class="sticker st-2">✨</div>
+    <div class="sticker st-3">🎧</div>
+    <div class="sticker st-4">💖</div>
+    <div class="sticker st-5">🎶</div>
+    <div class="sticker st-6">💫</div>
+    <div class="sticker st-7">💎</div>
+
+
+    <!-- =========================================
+         TITLE
+    ========================================= -->
+
+    <div class="header-container">
+
+        <h1 class="header-title">
+            Welcome to Caratland
+        </h1>
+
+        <p class="header-subtitle">
+            💖 Step by step, we’ve come this far.
+            Let’s keep going together. 🤍
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         HERO
+    ========================================= -->
+
+    <section class="hero-container">
+
+        <div class="hero-polaroid">
+
+            <div class="hero-photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/736x/c3/d9/51/c3d9517e20960cf0c4e78fe496472a23.jpg"
+                    alt="SEVENTEEN Group Photo">
+
+            </div>
+
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    SEVENTEEN (세븐틴)
+                </h2>
+
+                <p class="music-quote">
+                    "13 Members, 3 Units, 1 Team.
+                    Making music together forever."
+                </p>
+
+                <span class="member-tag">
+                    TEAM SVT
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SCRAPBOOK
+    ========================================= -->
+
+    <main class="scrapbook-grid">
+
+
+        <!-- S.Coups -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/91/61/44/91614443b334f6995b62acbeba609ffe.jpg"
+                    alt="S.Coups">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    S.Coups
+                </h2>
+
+                <p class="music-quote">
+                    "Music keeps us grounded together
+                    through every storm."
+                </p>
+
+                <span class="member-tag">
+                    Leader & Hip-Hop Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Jeonghan -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/e6/3f/1a/e63f1a5ecf4021b1b119c4b5542a699a.jpg"
+                    alt="Jeonghan">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Jeonghan
+                </h2>
+
+                <p class="music-quote">
+                    "Singing comforting songs is my way
+                    of wrapping everyone in a warm hug."
+                </p>
+
+                <span class="member-tag">
+                    Vocal Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Joshua -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/00/f2/c1/00f2c15b614f5fd8c20c715ee83041b5.jpg"
+                    alt="Joshua">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Joshua
+                </h2>
+
+                <p class="music-quote">
+                    "Every note I sing is a piece of my heart
+                    shared with the world."
+                </p>
+
+                <span class="member-tag">
+                    Vocal Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Jun -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/52/67/bb/5267bb5a78a2c7d226a480f17bcc544d.jpg"
+                    alt="Jun">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Jun
+                </h2>
+
+                <p class="music-quote">
+                    "Dance and music are inseparable;
+                    they breathe life into each other."
+                </p>
+
+                <span class="member-tag">
+                    Performance Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Hoshi -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/a0/c0/c4/a0c0c472e1036f21b05c53b9bd1f6a20.jpg"
+                    alt="Hoshi">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Hoshi
+                </h2>
+
+                <p class="music-quote">
+                    "When the rhythm starts, my body moves
+                    before I even think."
+                </p>
+
+                <span class="member-tag">
+                    Performance Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Wonwoo -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/03/d9/52/03d95290200ed726ea1ecdb9bb0d86d1.jpg"
+                    alt="Wonwoo">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Wonwoo
+                </h2>
+
+                <p class="music-quote">
+                    "Rap is my canvas; I paint my thoughts
+                    and feelings with words."
+                </p>
+
+                <span class="member-tag">
+                    Hip-Hop Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Woozi -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/6a/c2/11/6ac2114db7fe39bd43e87cf81083f2d4.jpg"
+                    alt="Woozi">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Woozi
+                </h2>
+
+                <p class="music-quote">
+                    "A quiet melody always becomes something
+                    we can share with the world."
+                </p>
+
+                <span class="member-tag">
+                    Vocal & Producer
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- DK -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/736x/fa/f4/68/faf4682f76e921f9c255b0a008c3223c.jpg"
+                    alt="DK">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Dokyeom
+                </h2>
+
+                <p class="music-quote">
+                    "You are the star of your life.
+                    Trust yourself and go!"
+                </p>
+
+                <span class="member-tag">
+                    Vocal Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Mingyu -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/736x/b4/ca/13/b4ca13da0762ac655d03f414f2f0e6b3.jpg"
+                    alt="Mingyu">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Mingyu
+                </h2>
+
+                <p class="music-quote">
+                    "Music captures our moments so we can
+                    re-live every memory together."
+                </p>
+
+                <span class="member-tag">
+                    Hip-Hop Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- The8 -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/1d/ec/57/1dec5718d78f1b409f47eacd0e1c23a0.jpg"
+                    alt="The8">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    The8
+                </h2>
+
+                <p class="music-quote">
+                    "Art and melody are how I express the
+                    balance and peace inside my soul."
+                </p>
+
+                <span class="member-tag">
+                    Performance Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Seungkwan -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/7d/0a/57/7d0a57119251aaa2b7930742f02265eb.jpg"
+                    alt="Seungkwan">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Seungkwan
+                </h2>
+
+                <p class="music-quote">
+                    "Pouring my heart into every high note
+                    is my favorite way to connect with you."
+                </p>
+
+                <span class="member-tag">
+                    Vocal Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Vernon -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/c7/85/cb/c785cbda330bdb6ea760255d83681ee6.jpg"
+                    alt="Vernon">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Vernon
+                </h2>
+
+                <p class="music-quote">
+                    "Music gives us total freedom to create
+                    our own world without limits."
+                </p>
+
+                <span class="member-tag">
+                    Hip-Hop Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Dino -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/1200x/ef/06/7a/ef067a8ddd808ef9d37679ca72cb74af.jpg"
+                    alt="Dino">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Dino
+                </h2>
+
+                <p class="music-quote">
+                    "As the youngest, growing through music
+                    and dance alongside my brothers is everything."
+                </p>
+
+                <span class="member-tag">
+                    Performance & Maknae
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             HIP-HOP TEAM
+        ========================================= -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/originals/02/1a/af/021aaf3e4974039b019ee09963f1fbac.jpg"
+                    alt="Hip-Hop Team">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Hip-Hop Team
+                </h2>
+
+                <p class="music-quote">
+                    "We hope that people are able to find
+                    some happiness through us and our music."
+                </p>
+
+                <span class="member-tag">
+                    Hip-Hop Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             VOCAL TEAM
+        ========================================= -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/736x/ee/e9/c2/eee9c2c3dd24e863f2e21f92ba91bbed.jpg"
+                    alt="Vocal Team">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Vocal Team
+                </h2>
+
+                <p class="music-quote">
+                    "Singing with genuine emotion is how we
+                    send warm comfort directly to your heart."
+                </p>
+
+                <span class="member-tag">
+                    Vocal Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             PERFORMANCE TEAM
+        ========================================= -->
+
+        <div class="polaroid-card">
+
+            <div class="photo-frame">
+
+                <img
+                    src="https://i.pinimg.com/originals/aa/00/da/aa00daf79ff5a5a88f95f896b73fefd6.jpg"
+                    alt="Performance Team">
+
+            </div>
+
+            <div class="member-details">
+
+                <h2 class="member-name">
+                    Performance Team
+                </h2>
+
+                <p class="music-quote">
+                    "We turn music into movement, expressing
+                    stories through every dance step."
+                </p>
+
+                <span class="member-tag">
+                    Performance Team
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             SPOTIFY + STICKY NOTE
+        ========================================= -->
+
+        <div class="full-width-section">
+
+
+            <!-- Spotify -->
+
+            <div class="polaroid-card spotify-polaroid">
+
+                <div class="spotify-frame">
+
+                    <iframe
+                        src="https://open.spotify.com/embed/artist/7nqOGRxlXj7N2JYbgNEjYH?utm_source=generator&theme=0&si=4e8fe5e289034d47"
+                        width="100%"
+                        height="380"
+                        frameborder="0"
+                        allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy">
+                    </iframe>
+
+                </div>
+
+
+                <div class="polaroid-caption">
+
+                    <h2 class="album-title">
+                        🎀 SEVENTEEN
+                    </h2>
+
+                    <span class="album-date">
+                        Top Spotify Tracks
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Sticky Note -->
+
+            <div class="sticky-note-decor">
+
+                <div class="tape"></div>
+
+                <p class="sticky-note-text">
+                    "Say the name! SEVENTEEN!" 💎✨
+                </p>
+
+                <div class="sticky-note-tag">
+                    🎧 Carat Favorites
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================
+         PROFILE JAVASCRIPT
+    ========================================= -->
+
+    <script src="js/profile.js"></script>
+
+</body>
+
+</html>
