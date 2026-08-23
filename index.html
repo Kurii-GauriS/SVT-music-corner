@@ -1,334 +1,1101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seventeen Fanclub | Profile Setup</title>
+
+    <title>SEVENTEEN Fanclub | Profile Setup</title>
+
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            margin: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px 0;
-            background: url('https://i.pinimg.com/736x/2b/c9/f9/2bc9f99e48509ab1199a04a09e5dfbe3.jpg') no-repeat center center fixed;
+            padding: 30px 15px;
+
+            background:
+                url('https://i.pinimg.com/736x/2b/c9/f9/2bc9f99e48509ab1199a04a09e5dfbe3.jpg')
+                no-repeat center center fixed;
+
             background-size: cover;
+            color: white;
+            position: relative;
         }
 
+        /* Dark overlay */
         body::before {
             content: "";
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 5, 20, 0.65);
+            inset: 0;
+
+            background: rgba(10, 5, 20, 0.72);
+
             z-index: -1;
         }
 
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
         .container {
-            text-align: center;
-            padding: 30px 25px;
-            width: 90%;
-            max-width: 550px;
-            max-height: 90vh;
+            width: 100%;
+            max-width: 620px;
+            max-height: 92vh;
+
+            padding: 35px 30px;
+
+            background: rgba(35, 32, 62, 0.82);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 113, 206, 0.35);
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 15px 50px rgba(0, 0, 0, 0.65),
+                0 0 30px rgba(255, 113, 206, 0.15);
+
             overflow-y: auto;
-            background: rgba(44, 42, 72, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6),
-                        0 0 20px rgba(236, 72, 153, 0.2);
-            color: #ffffff;
         }
 
-        /* Custom Scrollbar for Container */
+        /* Scrollbar */
+
         .container::-webkit-scrollbar {
-            width: 6px;
+            width: 7px;
         }
+
+        .container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
         .container::-webkit-scrollbar-thumb {
-            background: #ff71ce;
-            border-radius: 10px;
+            background: linear-gradient(
+                #ff71ce,
+                #01cdfe
+            );
+
+            border-radius: 20px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header .star {
+            font-size: 25px;
+            margin-bottom: 8px;
         }
 
         h2 {
-            font-size: 24px;
-            margin: 0 0 5px 0;
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            font-size: clamp(22px, 5vw, 28px);
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
             text-transform: uppercase;
-            background: linear-gradient(45deg, #ff71ce, #01cdfe);
-            background-clip: text;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff71ce,
+                    #01cdfe,
+                    #ff71ce
+                );
+
+            background-size: 200% auto;
+
             -webkit-background-clip: text;
+            background-clip: text;
+
             color: transparent;
-            -webkit-text-fill-color: transparent;
+
+            animation: gradientMove 4s linear infinite;
         }
 
-        p.subtitle {
-            font-size: 13px;
-            color: #e0e0e0;
-            margin: 0 0 20px 0;
+        @keyframes gradientMove {
+            to {
+                background-position: 200% center;
+            }
         }
+
+        .subtitle {
+            margin-top: 8px;
+
+            color: #d9d9e5;
+
+            font-size: 13px;
+
+            letter-spacing: 0.5px;
+        }
+
+        /* =========================
+           SECTION
+        ========================= */
+
+        .profile-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-bottom: 12px;
+
+            color: #01cdfe;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+        }
+
+        .section-title::after {
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background: linear-gradient(
+                to right,
+                rgba(1, 205, 254, 0.5),
+                transparent
+            );
+        }
+
+        /* =========================
+           INPUTS
+        ========================= */
 
         .input-group {
-            margin-bottom: 15px;
-            text-align: left;
+            margin-bottom: 18px;
         }
 
         .input-group label {
             display: block;
-            font-size: 12px;
-            margin-bottom: 5px;
+
+            margin-bottom: 7px;
+
             color: #ff71ce;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
             text-transform: uppercase;
-            letter-spacing: 1px;
+
+            letter-spacing: 1.3px;
         }
 
-        .input-group input, .input-group textarea {
+        .input-group input,
+        .input-group textarea {
+
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            color: #fff;
+
+            padding: 13px 16px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            border-radius: 14px;
+
+            color: white;
+
             font-size: 14px;
+
             outline: none;
-            transition: all 0.3s ease;
+
+            transition: 0.3s ease;
+        }
+
+        .input-group input::placeholder,
+        .input-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+
+            background: rgba(255, 255, 255, 0.13);
+
+            border-color: #ff71ce;
+
+            box-shadow:
+                0 0 12px rgba(255, 113, 206, 0.35);
+
+            transform: translateY(-1px);
         }
 
         .input-group textarea {
-            resize: none;
-            height: 60px;
+            height: 85px;
+
+            resize: vertical;
+
+            min-height: 70px;
+            max-height: 150px;
         }
 
-        .input-group input:focus, .input-group textarea:focus {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: #ff71ce;
-            box-shadow: 0 0 10px rgba(255, 113, 206, 0.5);
+        /* =========================
+           BIAS SECTION
+        ========================= */
+
+        .bias-note {
+            font-size: 12px;
+
+            color: #bdbdcc;
+
+            margin-top: -4px;
+
+            margin-bottom: 18px;
         }
 
-        .section-title {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #01cdfe;
-            margin: 20px 0 10px 0;
-            text-align: left;
-        }
-
-        /* Member Grid Selection */
         .member-grid {
+
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
-            gap: 10px;
+
+            grid-template-columns:
+                repeat(4, minmax(70px, 1fr));
+
+            gap: 17px 12px;
+
             margin-bottom: 25px;
         }
 
         .member-card {
-            cursor: pointer;
+
             position: relative;
+
+            cursor: pointer;
+
+            text-align: center;
+
+            transition: 0.3s ease;
         }
 
         .member-card input {
             display: none;
         }
 
-        .member-card img {
-            width: 100%;
-            height: 75px;
-            object-fit: cover;
+        .member-image-wrapper {
+
+            position: relative;
+
+            width: 72px;
+            height: 72px;
+
+            margin: auto;
+
             border-radius: 50%;
+        }
+
+        .member-card img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
             border: 2px solid transparent;
-            transition: all 0.3s ease;
-            opacity: 0.7;
+
+            opacity: 0.65;
+
+            transition: 0.3s ease;
         }
 
         .member-card span {
+
             display: block;
+
+            margin-top: 7px;
+
+            color: #c7c7d1;
+
             font-size: 11px;
-            margin-top: 4px;
-            color: #ccc;
+
+            font-weight: 500;
+
+            transition: 0.3s ease;
         }
 
-        /* Hover & Selected States */
+        /* Hover */
+
         .member-card:hover img {
+
             opacity: 1;
-            transform: scale(1.05);
+
+            transform: scale(1.08);
+
+            border-color: rgba(1, 205, 254, 0.6);
         }
 
-        .member-card input:checked + img {
-            border-color: #ff71ce;
+        .member-card:hover span {
+            color: #01cdfe;
+        }
+
+        /* Selected */
+
+        .member-card input:checked + .member-image-wrapper img {
+
             opacity: 1;
-            box-shadow: 0 0 12px #ff71ce;
-            transform: scale(1.1);
+
+            border-color: #ff71ce;
+
+            transform: scale(1.12);
+
+            box-shadow:
+                0 0 10px #ff71ce,
+                0 0 25px rgba(255, 113, 206, 0.5);
         }
 
         .member-card input:checked ~ span {
+
             color: #ff71ce;
-            font-weight: bold;
+
+            font-weight: 800;
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 14px 0;
-            background: linear-gradient(135deg, #ff3399, #9356d0);
-            border: none;
-            border-radius: 30px;
-            color: #ffffff;
-            font-size: 15px;
+        /* Check mark */
+
+        .member-card input:checked + .member-image-wrapper::after {
+
+            content: "✓";
+
+            position: absolute;
+
+            right: -3px;
+            bottom: -2px;
+
+            width: 22px;
+            height: 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #ff71ce;
+
+            color: white;
+
+            border-radius: 50%;
+
+            font-size: 13px;
+
             font-weight: bold;
-            letter-spacing: 1px;
+
+            border: 2px solid #24213f;
+
+            box-shadow: 0 0 10px rgba(255, 113, 206, 0.7);
+        }
+
+        /* =========================
+           SUBMIT BUTTON
+        ========================= */
+
+        .submit-btn {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff3399,
+                    #9356d0,
+                    #01cdfe
+                );
+
+            background-size: 200% 200%;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 51, 153, 0.4);
+
+            transition: 0.3s ease;
+
+            box-shadow:
+                0 5px 20px rgba(255, 51, 153, 0.35);
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 51, 153, 0.7);
+
+            transform: translateY(-3px);
+
+            background-position: right center;
+
+            box-shadow:
+                0 8px 30px rgba(255, 51, 153, 0.55);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer-note {
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            color: #85859a;
+
+            font-size: 10px;
+
+            letter-spacing: 0.5px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 520px) {
+
+            body {
+                padding: 15px 10px;
+                align-items: flex-start;
+            }
+
+            .container {
+                padding: 28px 20px;
+                max-height: 95vh;
+            }
+
+            .member-grid {
+                grid-template-columns:
+                    repeat(4, 1fr);
+
+                gap: 16px 5px;
+            }
+
+            .member-image-wrapper {
+                width: 60px;
+                height: 60px;
+            }
+
+            .member-card span {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 360px) {
+
+            .member-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .member-image-wrapper {
+                width: 65px;
+                height: 65px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Create Your Profile</h2>
-    <p class="subtitle">Join the fandom & pick your bias</p>
+    <div class="container">
 
-    <form action="scrapbook.html" method="GET">
-        <div class="input-group">
-            <label for="username">Display Name</label>
-            <input type="text" id="username" placeholder="e.g. Carat_17" required>
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="star">💎</div>
+
+            <h2>Create Your Profile</h2>
+
+            <p class="subtitle">
+                Join the fandom & pick your bias ✨
+            </p>
+
         </div>
 
-        <div class="input-group">
-            <label for="bio">Short Bio</label>
-            <textarea id="bio" placeholder="Tell us why you love Seventeen..."></textarea>
-        </div>
 
-        <div class="section-title">Select Your Bias Image</div>
-        
-        <div class="member-grid">
-            <label class="member-card">
-                <input type="radio" name="bias" value="S.Coups" required>
-                <img src="https://i.pinimg.com/736x/8c/ff/36/8cff36620f23fd72fbf3faae8f1e243f.jpg" alt="S.Coups">
-                <span>S.Coups</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Jeonghan">
-                <img src="https://i.pinimg.com/736x/f4/74/f1/f474f1a990c838b388d9425fa379cd1f.jpg" alt="Jeonghan">
-                <span>Jeonghan</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Joshua">
-                <img src="https://i.pinimg.com/736x/d1/16/5f/d1165f408b27becd13992a1f3d5d8709.jpg" alt="Joshua">
-                <span>Joshua</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Jun">
-                <img src="https://i.pinimg.com/736x/45/bc/c7/45bcc7734e8b93f5e6a748806b0a81b4.jpg" alt="Jun">
-                <span>Jun</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Hoshi">
-                <img src="https://i.pinimg.com/736x/5a/7a/09/5a7a09700c7a40983d34ea607dd38167.jpg" alt="Hoshi">
-                <span>Hoshi</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Wonwoo">
-                <img src="https://i.pinimg.com/736x/e8/b6/b1/e8b6b131a9fce588576749d61fba6ccb.jpg" alt="Wonwoo">
-                <span>Wonwoo</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Woozi">
-                <img src="https://i.pinimg.com/736x/be/84/db/be84db2c2b0adbf260fc1d153b633694.jpg" alt="Woozi">
-                <span>Woozi</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="DK">
-                <img src="https://i.pinimg.com/736x/bc/e2/90/bce29056e37a6e03ac63c676e341599d.jpg" alt="DK">
-                <span>DK</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Mingyu">
-                <img src="https://i.pinimg.com/736x/d9/15/e1/d915e12df93cec64174fc6b73449be39.jpg" alt="Mingyu">
-                <span>Mingyu</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="The8">
-                <img src="https://i.pinimg.com/736x/13/93/d3/1393d3cff5cafb0d7821995f45974ad3.jpg" alt="The8">
-                <span>The8</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Seungkwan">
-                <img src="https://i.pinimg.com/736x/5b/2b/0e/5b2b0e3c84af6993c4f3e1f62b706fac.jpg" alt="Seungkwan">
-                <span>Seungkwan</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Vernon">
-                <img src="https://i.pinimg.com/736x/bc/c5/f8/bcc5f87678b244b622e611ba879fa377.jpg" alt="Vernon">
-                <span>Vernon</span>
-            </label>
-            <label class="member-card">
-                <input type="radio" name="bias" value="Dino">
-                <img src="https://i.pinimg.com/736x/6d/2a/35/6d2a35eaa3fb9f1c41ae73da0f9d083d.jpg" alt="Dino">
-                <span>Dino</span>
-            </label>
-        </div>
+        <form id="profileForm">
 
-        <button type="submit" class="submit-btn">
-            <nav class="enter">
-            ENTER THE GROOVE</nav>
-        </button>
-    </form>
-</div>
 
-<script>
-    window.addEventListener("offline", () => {
-        window.location.href = "404.html";
-    });
-    document.querySelector('form').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevent standard page jump
+            <!-- =========================
+                 BASIC PROFILE
+            ========================== -->
 
-        // Capture values
-        const username = document.getElementById('username').value;
-        const bio = document.getElementById('bio').value;
-        const selectedBias = document.querySelector('input[name="bias"]:checked');
+            <div class="profile-section">
 
-        if (selectedBias) {
-            const memberCard = selectedBias.closest('.member-card');
-            const memberImgSrc = memberCard.querySelector('img').src;
-            const memberName = selectedBias.value;
+                <div class="section-title">
+                    ✦ Your Profile
+                </div>
 
-            // Save to localStorage
-            localStorage.setItem('userProfile', JSON.stringify({
+
+                <!-- NAME -->
+
+                <div class="input-group">
+
+                    <label for="username">
+                        Display Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="e.g. Carat_17"
+                        maxlength="30"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BIO -->
+
+                <div class="input-group">
+
+                    <label for="bio">
+                        Short Bio
+                    </label>
+
+                    <textarea
+                        id="bio"
+                        placeholder="Tell us why you love SEVENTEEN..."
+                        maxlength="150"
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 BIAS
+            ========================== -->
+
+            <div class="profile-section">
+
+                <div class="section-title">
+                    ✦ Choose Your Bias
+                </div>
+
+                <p class="bias-note">
+                    Pick the member who has your heart 💎
+                </p>
+
+
+                <div class="member-grid">
+
+
+                    <!-- S.COUPS -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="S.Coups"
+                            required
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/8c/ff/36/8cff36620f23fd72fbf3faae8f1e243f.jpg"
+                                alt="S.Coups"
+                            >
+
+                        </div>
+
+                        <span>S.Coups</span>
+
+                    </label>
+
+
+                    <!-- JEONGHAN -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Jeonghan"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/f4/74/f1/f474f1a990c838b388d9425fa379cd1f.jpg"
+                                alt="Jeonghan"
+                            >
+
+                        </div>
+
+                        <span>Jeonghan</span>
+
+                    </label>
+
+
+                    <!-- JOSHUA -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Joshua"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/d1/16/5f/d1165f408b27becd13992a1f3d5d8709.jpg"
+                                alt="Joshua"
+                            >
+
+                        </div>
+
+                        <span>Joshua</span>
+
+                    </label>
+
+
+                    <!-- JUN -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Jun"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/45/bc/c7/45bcc7734e8b93f5e6a748806b0a81b4.jpg"
+                                alt="Jun"
+                            >
+
+                        </div>
+
+                        <span>Jun</span>
+
+                    </label>
+
+
+                    <!-- HOSHI -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Hoshi"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/5a/7a/09/5a7a09700c7a40983d34ea607dd38167.jpg"
+                                alt="Hoshi"
+                            >
+
+                        </div>
+
+                        <span>Hoshi</span>
+
+                    </label>
+
+
+                    <!-- WONWOO -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Wonwoo"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/e8/b6/b1/e8b6b131a9fce588576749d61fba6ccb.jpg"
+                                alt="Wonwoo"
+                            >
+
+                        </div>
+
+                        <span>Wonwoo</span>
+
+                    </label>
+
+
+                    <!-- WOOZI -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Woozi"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/be/84/db/be84db2c2b0adbf260fc1d153b633694.jpg"
+                                alt="Woozi"
+                            >
+
+                        </div>
+
+                        <span>Woozi</span>
+
+                    </label>
+
+
+                    <!-- DK -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="DK"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/bc/e2/90/bce29056e37a6e03ac63c676e341599d.jpg"
+                                alt="DK"
+                            >
+
+                        </div>
+
+                        <span>DK</span>
+
+                    </label>
+
+
+                    <!-- MINGYU -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Mingyu"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/d9/15/e1/d915e12df93cec64174fc6b73449be39.jpg"
+                                alt="Mingyu"
+                            >
+
+                        </div>
+
+                        <span>Mingyu</span>
+
+                    </label>
+
+
+                    <!-- THE8 -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="The8"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/13/93/d3/1393d3cff5cafb0d7821995f45974ad3.jpg"
+                                alt="The8"
+                            >
+
+                        </div>
+
+                        <span>The8</span>
+
+                    </label>
+
+
+                    <!-- SEUNGKWAN -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Seungkwan"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/5b/2b/0e/5b2b0e3c84af6993c4f3e1f62b706fac.jpg"
+                                alt="Seungkwan"
+                            >
+
+                        </div>
+
+                        <span>Seungkwan</span>
+
+                    </label>
+
+
+                    <!-- VERNON -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Vernon"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/bc/c5/f8/bcc5f87678b244b622e611ba879fa377.jpg"
+                                alt="Vernon"
+                            >
+
+                        </div>
+
+                        <span>Vernon</span>
+
+                    </label>
+
+
+                    <!-- DINO -->
+
+                    <label class="member-card">
+
+                        <input
+                            type="radio"
+                            name="bias"
+                            value="Dino"
+                        >
+
+                        <div class="member-image-wrapper">
+
+                            <img
+                                src="https://i.pinimg.com/736x/6d/2a/35/6d2a35eaa3fb9f1c41ae73da0f9d083d.jpg"
+                                alt="Dino"
+                            >
+
+                        </div>
+
+                        <span>Dino</span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+                ENTER THE GROOVE ✦
+            </button>
+
+
+            <p class="footer-note">
+                Your profile is saved locally on this device.
+            </p>
+
+        </form>
+
+    </div>
+
+
+    <script>
+
+        /* =========================
+           OFFLINE REDIRECT
+        ========================== */
+
+        window.addEventListener("offline", () => {
+
+            window.location.href = "404.html";
+
+        });
+
+
+        /* =========================
+           PROFILE FORM
+        ========================== */
+
+        const profileForm =
+            document.getElementById("profileForm");
+
+
+        profileForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+
+            /* Get user information */
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const bio =
+                document.getElementById("bio").value.trim();
+
+            const selectedBias =
+                document.querySelector(
+                    'input[name="bias"]:checked'
+                );
+
+
+            /* Make sure bias exists */
+
+            if (!selectedBias) {
+
+                alert("Please choose your SEVENTEEN bias 💎");
+
+                return;
+
+            }
+
+
+            /* Find selected member card */
+
+            const memberCard =
+                selectedBias.closest(".member-card");
+
+
+            const memberImage =
+                memberCard.querySelector("img");
+
+
+            const memberImgSrc =
+                memberImage.src;
+
+
+            const memberName =
+                selectedBias.value;
+
+
+            /* =========================
+               PROFILE DATA
+               
+               AGE IS INTENTIONALLY HIDDEN
+               ========================== */
+
+            const userProfile = {
+
                 name: username,
+
                 bio: bio,
+
+                age: null,
+
                 biasName: memberName,
-                biasImage: memberImgSrc
-            }));
 
-            // Redirect to scrapbook page
-            window.location.href = 'scrapbook.html';
+                biasImage: memberImgSrc,
+
+                createdAt:
+                    new Date().toISOString()
+
+            };
+
+
+            /* Save profile */
+
+            localStorage.setItem(
+                "userProfile",
+                JSON.stringify(userProfile)
+            );
+
+
+            /* Redirect */
+
+            window.location.href =
+                "scrapbook.html";
+
+        });
+
+
+        /* =========================
+           LOAD EXISTING PROFILE
+        ========================== */
+
+        const savedProfile =
+            localStorage.getItem("userProfile");
+
+
+        if (savedProfile) {
+
+            try {
+
+                const profile =
+                    JSON.parse(savedProfile);
+
+                console.log(
+                    `Welcome back, ${profile.name}! 💎`
+                );
+
+            } catch (error) {
+
+                console.log(
+                    "Unable to load saved profile."
+                );
+
+            }
+
         }
-    });
 
-    window.addEventListener("offline", () => {
-        window.location.href = "404.html";
-    });
-    const savedProfile = localStorage.getItem("userProfile");
-
-if (savedProfile) {
-    console.log("Welcome back, Carat!");
-}
-</script>
+    </script>
 
 </body>
+
 </html>

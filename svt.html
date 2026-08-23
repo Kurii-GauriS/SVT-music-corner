@@ -1,671 +1,2739 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doodle & Sticker Photo Booth</title>
 
-    <!-- Load MediaPipe Hands Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SEVENTEEN | Doodle & Sticker Photo Booth</title>
+
+    <!-- ==============================
+         MEDIAPIPE
+    =============================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
+        crossorigin="anonymous">
+    </script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+        crossorigin="anonymous">
+    </script>
+
 
     <style>
+
+        /* =========================================
+           ROOT
+        ========================================= */
+
         :root {
-            --bg-color: #f7f3ee;
-            --accent-color: #e07a5f;
-            --card-bg: #ffffff;
+
+            --pink: #ff71ce;
+            --pink-dark: #ff3fae;
+
+            --blue: #01cdfe;
+            --purple: #9356d0;
+
+            --cream: #fffafc;
+
+            --glass: rgba(38, 31, 65, 0.82);
+
+            --glass-light: rgba(255, 255, 255, 0.10);
+
+            --border:
+                rgba(255, 255, 255, 0.18);
+
+            --text: #ffffff;
+
+            --muted: #c9c5d6;
+
         }
+
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+
+            box-sizing: border-box;
+
+            margin: 0;
+
+            padding: 0;
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+        }
+
+
+        /* =========================================
+           BODY
+        ========================================= */
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: #000000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+
+            min-height: 100vh;
+
             padding: 20px;
-            margin: 0;
-            background: url('seventeen heaven.jpg') no-repeat center center fixed;
-            background-size: cover;
-           
+
+            color: var(--text);
+
+            background:
+
+                linear-gradient(
+                    rgba(12, 8, 25, 0.72),
+                    rgba(15, 8, 28, 0.82)
+                ),
+
+                url('seventeen heaven.jpg')
+                center / cover fixed no-repeat;
+
         }
 
-        /* Top Navigation Header */
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
         .nav-container {
-            margin-bottom: 20px;
+
+            width: 100%;
+
+            max-width: 1250px;
+
+            margin: 0 auto 25px;
+
             display: flex;
-            flex-wrap: wrap;
+
             justify-content: center;
-            gap: 10px;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 9px;
+
         }
-        
+
+
         .glass-btn {
-            display: inline-block;
-            padding: 8px 18px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 9px 16px;
+
             border-radius: 30px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(224, 122, 95, 0.3);
-            color: #444;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            backdrop-filter: blur(12px);
+
+            -webkit-backdrop-filter: blur(12px);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.18);
+
+            color: #ffffff;
+
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.2s ease;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: 0.3s ease;
+
         }
+
 
         .glass-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
+
+            background:
+                rgba(255, 113, 206, 0.20);
+
+            border-color:
+                rgba(255, 113, 206, 0.6);
+
+            color: #ffffff;
+
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+            box-shadow:
+                0 5px 18px
+                rgba(255, 113, 206, 0.2);
+
         }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .page-header {
+
+            text-align: center;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        .page-header .emoji {
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+
+            animation:
+                floating 3s ease-in-out infinite;
+
+        }
+
+
+        @keyframes floating {
+
+            0%,
+            100% {
+
+                transform:
+                    translateY(0);
+
+            }
+
+            50% {
+
+                transform:
+                    translateY(-7px);
+
+            }
+
+        }
+
 
         h1 {
-            font-size: 1.8rem;
-            margin: 0 0 15px 0;
-            text-align: center;
+
+            font-size:
+                clamp(24px, 4vw, 34px);
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--pink),
+                    var(--blue),
+                    var(--pink)
+                );
+
+            background-size: 200% auto;
+
+            -webkit-background-clip: text;
+
+            background-clip: text;
+
+            color: transparent;
+
+            animation:
+                gradientMove 4s linear infinite;
+
         }
 
-        .instructions {
-            font-size: 0.85rem;
-            color: #555;
-            background: rgba(224, 122, 95, 0.1);
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin: 0 0 10px 0;
-            line-height: 1.4;
+
+        @keyframes gradientMove {
+
+            to {
+
+                background-position:
+                    200% center;
+
+            }
+
         }
 
-        /* --- 3-Column Layout Workspace --- */
+
+        .welcome-text {
+
+            margin-top: 7px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================================
+           MAIN WORKSPACE
+        ========================================= */
+
         .workspace {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            justify-content: center;
-            align-items: flex-start;
-            max-width: 1100px;
+
             width: 100%;
+
+            max-width: 1250px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                230px
+                minmax(260px, 300px)
+                minmax(400px, 520px);
+
+            justify-content: center;
+
+            align-items: start;
+
+            gap: 20px;
+
         }
 
-        /* Left Side: Photo Strip Preview */
+
+        /* =========================================
+           GLASS CARD
+        ========================================= */
+
+        .glass-card {
+
+            background:
+                var(--glass);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 15px 45px
+                rgba(0, 0, 0, 0.40),
+
+                0 0 25px
+                rgba(255, 113, 206, 0.08);
+
+        }
+
+
+        /* =========================================
+           PHOTO PREVIEW
+        ========================================= */
+
         .preview-area {
+
+            padding: 18px;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
-            gap: 10px;
-            width: 240px;
+
+            gap: 12px;
+
         }
 
-        .preview-area h3 {
-            margin: 0;
-            font-size: 1.1rem;
+
+        .card-title {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 4px;
+
         }
+
+
+        .card-title h3 {
+
+            font-size: 14px;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .card-title span {
+
+            font-size: 18px;
+
+        }
+
+
+        .preview-frame {
+
+            padding: 10px;
+
+            background:
+                #fffafc;
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.3);
+
+        }
+
 
         #stripCanvas {
-            background: #ffffff;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-            border-radius: 6px;
+
+            display: block;
+
+            max-width: 100%;
+
+            height: auto;
+
+            background: white;
+
         }
 
-        /* Center: Controls Sidebar */
+
+        #downloadBtn {
+
+            width: 100%;
+
+        }
+
+
+        /* =========================================
+           CONTROL PANEL
+        ========================================= */
+
         .controls {
+
+            padding: 20px;
+
             display: flex;
+
             flex-direction: column;
-            gap: 12px;
-            width: 280px;
-            background: var(--card-bg);
-            padding: 18px;
-            border-radius: 14px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+
+            gap: 15px;
+
         }
 
-        .control-group {
+
+        .control-section {
+
+            padding-bottom: 14px;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+        }
+
+
+        .control-section:last-of-type {
+
+            border-bottom: none;
+
+            padding-bottom: 0;
+
+        }
+
+
+        .section-label {
+
             display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
 
-        label {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: #333;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        select, input[type="color"], button {
-            padding: 9px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-size: 0.88rem;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .color-picker-row {
-            display: flex;
             align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 9px;
+
+            color: var(--blue);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.2px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        .instructions {
+
+            padding: 11px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255, 113, 206, 0.08);
+
+            border:
+                1px solid
+                rgba(255, 113, 206, 0.15);
+
+            color: #d9d4e2;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .instructions strong {
+
+            color: var(--pink);
+
+        }
+
+
+        /* =========================================
+           SELECT
+        ========================================= */
+
+        select {
+
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.15);
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            color: white;
+
+            outline: none;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            transition: 0.3s ease;
+
+        }
+
+
+        select:focus {
+
+            border-color:
+                var(--pink);
+
+            box-shadow:
+                0 0 10px
+                rgba(255, 113, 206, 0.2);
+
+        }
+
+
+        select option {
+
+            background: #29243f;
+
+            color: white;
+
+        }
+
+
+        /* =========================================
+           BRUSH CONTROLS
+        ========================================= */
+
+        .brush-row {
+
+            display: grid;
+
+            grid-template-columns:
+                50px 1fr;
+
             gap: 10px;
+
+            align-items: center;
+
+            margin-top: 9px;
+
         }
 
-        .color-picker-row input[type="color"] {
-            padding: 2px;
-            width: 40px;
-            height: 35px;
+
+        #brushColor {
+
+            width: 45px;
+
+            height: 38px;
+
+            padding: 3px;
+
             border: none;
-            background: none;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.1);
+
+            cursor: pointer;
+
         }
 
-        /* Sticker Palette */
-        .sticker-palette {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
+
+        #brushSize {
+
+            width: 100%;
+
+            accent-color:
+                var(--pink);
+
+            cursor: pointer;
+
         }
+
+
+        /* =========================================
+           STICKERS
+        ========================================= */
+
+        .sticker-palette {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 6px;
+
+        }
+
 
         .sticker-btn {
-            font-size: 1.1rem;
-            padding: 4px 8px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            background: #f8fafc;
+
+            padding: 7px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
+            border-radius: 10px;
+
+            background:
+                rgba(255, 255, 255, 0.07);
+
+            color: white;
+
+            font-size: 17px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
         }
+
 
         .sticker-btn:hover {
-            background: #edf2f7;
-            transform: scale(1.08);
+
+            transform:
+                scale(1.1)
+                rotate(-3deg);
+
+            background:
+                rgba(255, 113, 206, 0.15);
+
+            border-color:
+                var(--pink);
+
         }
+
+
+        /* =========================================
+           BUTTONS
+        ========================================= */
+
+        button {
+
+            font-family: inherit;
+
+        }
+
 
         .btn {
-            background: #222;
-            color: #fff;
-            font-weight: 600;
+
             border: none;
-            transition: all 0.2s;
+
+            border-radius: 12px;
+
+            padding: 10px;
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.1);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.3s ease;
+
         }
+
 
         .btn:hover {
-            background: #444;
+
+            transform:
+                translateY(-2px);
+
         }
+
 
         .btn-clear {
-            background: #fee2e2;
-            color: #dc2626;
-            border: 1px solid #fca5a5;
-            font-size: 0.8rem;
-            padding: 6px;
+
+            color: #ffb4c8;
+
+            border:
+                1px solid
+                rgba(255, 113, 206, 0.25);
+
+            background:
+                rgba(255, 113, 206, 0.08);
+
         }
+
 
         .btn-clear:hover {
-            background: #fecaca;
+
+            background:
+                rgba(255, 113, 206, 0.16);
+
         }
 
-        /* Right Side: Camera Viewport */
-        .camera-container {
-            position: relative;
-            width: 480px;
-            height: 360px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-            background: #000;
+
+        #snapBtn {
+
+            padding: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--pink-dark),
+                    var(--purple),
+                    var(--blue)
+                );
+
+            background-size:
+                200% 200%;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+            box-shadow:
+                0 7px 22px
+                rgba(255, 51, 153, 0.3);
+
         }
+
+
+        #snapBtn:hover {
+
+            background-position:
+                right center;
+
+            box-shadow:
+                0 10px 30px
+                rgba(255, 51, 153, 0.5);
+
+        }
+
+
+        #snapBtn:disabled {
+
+            opacity: 0.55;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+        }
+
+
+        /* =========================================
+           CAMERA
+        ========================================= */
+
+        .camera-card {
+
+            padding: 12px;
+
+        }
+
+
+        .camera-container {
+
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 4 / 3;
+
+            overflow: hidden;
+
+            border-radius: 16px;
+
+            background: #050505;
+
+            box-shadow:
+                inset 0 0 30px
+                rgba(0,0,0,0.5);
+
+        }
+
 
         video {
+
             width: 100%;
+
             height: 100%;
+
             object-fit: cover;
-            transform: scaleX(-1);
+
+            transform:
+                scaleX(-1);
+
         }
 
-        /* Canvas overlays */
-        #drawCanvas, #stickerCanvas {
+
+        #drawCanvas,
+        #stickerCanvas {
+
             position: absolute;
-            top: 0;
-            left: 0;
+
+            inset: 0;
+
             width: 100%;
+
             height: 100%;
+
             pointer-events: none;
+
         }
 
-        /* --- INSTAGRAM-STYLE AESTHETIC FILTERS --- */
-        .filter-none { filter: none; }
-        .filter-warm-glow { filter: sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg); }
-        .filter-indie { filter: contrast(1.15) brightness(1.05) saturate(1.3) sepia(0.12); }
-        .filter-cyber-pink { filter: hue-rotate(310deg) saturate(1.4) contrast(1.1); }
-        .filter-vintage-mono { filter: grayscale(1) contrast(1.25) brightness(0.95); }
-        .filter-golden-hour { filter: sepia(0.4) saturate(1.5) contrast(1.05) brightness(1.05); }
-        .filter-retro-film { filter: contrast(1.2) saturate(0.85) sepia(0.2) hue-rotate(-10deg); }
-        .filter-soft-dream { filter: brightness(1.12) contrast(0.9) saturate(1.1) sepia(0.08); }
-        .filter-emerald { filter: hue-rotate(80deg) saturate(1.2) contrast(1.1); }
 
-        /* Countdown Display */
-        .countdown {
+        /* =========================================
+           CAMERA CORNERS
+        ========================================= */
+
+        .camera-corner {
+
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 6rem;
-            color: #fff;
-            font-weight: 800;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.7);
-            display: none;
+
+            width: 24px;
+
+            height: 24px;
+
+            border-color:
+                rgba(255,255,255,0.7);
+
+            border-style: solid;
+
             pointer-events: none;
+
+            z-index: 5;
+
         }
+
+
+        .corner-tl {
+
+            top: 10px;
+            left: 10px;
+
+            border-width:
+                2px 0 0 2px;
+
+        }
+
+
+        .corner-tr {
+
+            top: 10px;
+            right: 10px;
+
+            border-width:
+                2px 2px 0 0;
+
+        }
+
+
+        .corner-bl {
+
+            bottom: 10px;
+            left: 10px;
+
+            border-width:
+                0 0 2px 2px;
+
+        }
+
+
+        .corner-br {
+
+            bottom: 10px;
+            right: 10px;
+
+            border-width:
+                0 2px 2px 0;
+
+        }
+
+
+        /* =========================================
+           COUNTDOWN
+        ========================================= */
+
+        .countdown {
+
+            position: absolute;
+
+            top: 50%;
+
+            left: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            display: none;
+
+            color: white;
+
+            font-size:
+                clamp(60px, 10vw, 100px);
+
+            font-weight: 900;
+
+            text-shadow:
+                0 5px 25px
+                rgba(0,0,0,0.8);
+
+            pointer-events: none;
+
+            z-index: 20;
+
+            animation:
+                countdownPop 1s ease;
+
+        }
+
+
+        @keyframes countdownPop {
+
+            0% {
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1.4);
+
+                opacity: 0;
+
+            }
+
+            30% {
+
+                opacity: 1;
+
+            }
+
+            100% {
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(1);
+
+            }
+
+        }
+
+
+        /* =========================================
+           FILTERS
+        ========================================= */
+
+        .filter-none {
+            filter: none;
+        }
+
+        .filter-warm-glow {
+            filter:
+                sepia(.25)
+                saturate(1.2)
+                brightness(1.08)
+                hue-rotate(-5deg);
+        }
+
+        .filter-indie {
+            filter:
+                contrast(1.15)
+                brightness(1.05)
+                saturate(1.3)
+                sepia(.12);
+        }
+
+        .filter-cyber-pink {
+            filter:
+                hue-rotate(310deg)
+                saturate(1.4)
+                contrast(1.1);
+        }
+
+        .filter-vintage-mono {
+            filter:
+                grayscale(1)
+                contrast(1.25)
+                brightness(.95);
+        }
+
+        .filter-golden-hour {
+            filter:
+                sepia(.4)
+                saturate(1.5)
+                contrast(1.05)
+                brightness(1.05);
+        }
+
+        .filter-retro-film {
+            filter:
+                contrast(1.2)
+                saturate(.85)
+                sepia(.2)
+                hue-rotate(-10deg);
+        }
+
+        .filter-soft-dream {
+            filter:
+                brightness(1.12)
+                contrast(.9)
+                saturate(1.1)
+                sepia(.08);
+        }
+
+        .filter-emerald {
+            filter:
+                hue-rotate(80deg)
+                saturate(1.2)
+                contrast(1.1);
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 1050px) {
+
+            .workspace {
+
+                grid-template-columns:
+                    minmax(220px, 260px)
+                    minmax(280px, 340px);
+
+            }
+
+            .camera-card {
+
+                grid-column:
+                    1 / -1;
+
+                width:
+                    min(650px, 100%);
+
+                justify-self: center;
+
+            }
+
+        }
+
+
+        @media (max-width: 720px) {
+
+            body {
+
+                padding:
+                    15px 10px;
+
+            }
+
+
+            .workspace {
+
+                display: flex;
+
+                flex-direction: column;
+
+                align-items: center;
+
+            }
+
+
+            .preview-area,
+            .controls,
+            .camera-card {
+
+                width: 100%;
+
+                max-width: 520px;
+
+            }
+
+
+            .nav-container {
+
+                gap: 6px;
+
+            }
+
+
+            .glass-btn {
+
+                font-size: 10px;
+
+                padding:
+                    8px 11px;
+
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            h1 {
+
+                font-size: 22px;
+
+            }
+
+
+            .sticker-palette {
+
+                grid-template-columns:
+                    repeat(4, 1fr);
+
+            }
+
+
+            .preview-frame {
+
+                max-width:
+                    200px;
+
+            }
+
+        }
+
     </style>
+
 </head>
+
+
 <body>
-    
-    <!-- Navigation Header -->
-    <div class="nav-container">
-        <a href="index.html" class="glass-btn">🏡 H♡me</a>
-        <a href="scrapbook.html" class="glass-btn">📖 Scrapbook</a>
-        <a href="music.html" class="glass-btn">❤️ Spotify💿</a>
-        <a href="binder.html" class="glass-btn">✨ PC Binder❤︎</a>
-        <a href="going.html" class="glass-btn">❤︎ Going Seventeen💎</a>
-        <a href="game.html" class="glass-btn">🧩Puzzle Game</a>
-    </div>
 
-    <h1>✨ Custom Background & Hand Doodle Booth ✨</h1>
 
-    <div class="workspace">
-        <!-- 1. Left Side: Photo Output Preview -->
-        <div class="preview-area">
-            <h3>Photo Output</h3>
-            <canvas id="stripCanvas" width="220" height="620"></canvas>
-            <button class="btn" id="downloadBtn" style="display:none; margin-top:5px; width:100%;">Download PNG 📥</button>
+    <!-- =========================================
+         NAVIGATION
+    ========================================== -->
+
+    <nav class="nav-container">
+
+        <a href="index.html" class="glass-btn">
+            🏡 H♡me
+        </a>
+
+        <a href="scrapbook.html" class="glass-btn">
+            📖 Scrapbook
+        </a>
+
+        <a href="music.html" class="glass-btn">
+            ❤️ Spotify 💿
+        </a>
+
+        <a href="binder.html" class="glass-btn">
+            ✨ PC Binder ❤︎
+        </a>
+
+        <a href="going.html" class="glass-btn">
+            ❤︎ Going Seventeen 💎
+        </a>
+
+        <a href="game.html" class="glass-btn">
+            🧩 Puzzle Game
+        </a>
+
+    </nav>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="page-header">
+
+        <div class="emoji">
+            📸✨
         </div>
 
-        <!-- 2. Center: Filters & Controls -->
-        <div class="controls">
-            <p class="instructions">
-                ☝️ <strong>Index Finger Up</strong>: Draw/Doodle<br>
-                🤏 <strong>Pinch Thumb + Index</strong>: Stop/Pause
-            </p>
+        <h1>
+            Doodle & Sticker Photo Booth
+        </h1>
 
-            <div class="control-group">
-                <label>Photo Mode Layout:</label>
+        <p class="welcome-text" id="welcomeText">
+            Create your own little SEVENTEEN memory 💎
+        </p>
+
+    </header>
+
+
+    <!-- =========================================
+         WORKSPACE
+    ========================================== -->
+
+    <main class="workspace">
+
+
+        <!-- =====================================
+             PHOTO PREVIEW
+        ====================================== -->
+
+        <section class="preview-area glass-card">
+
+            <div class="card-title">
+
+                <h3>
+                    Photo Output
+                </h3>
+
+                <span>
+                    🎞️
+                </span>
+
+            </div>
+
+
+            <div class="preview-frame">
+
+                <canvas
+                    id="stripCanvas"
+                    width="240"
+                    height="300">
+                </canvas>
+
+            </div>
+
+
+            <button
+                class="btn"
+                id="downloadBtn"
+                style="
+                    display:none;
+                    background:linear-gradient(
+                        135deg,
+                        #ff3399,
+                        #9356d0
+                    );
+                "
+            >
+                📥 Download Photo
+            </button>
+
+        </section>
+
+
+        <!-- =====================================
+             CONTROLS
+        ====================================== -->
+
+        <section class="controls glass-card">
+
+
+            <!-- INSTRUCTIONS -->
+
+            <div class="control-section">
+
+                <div class="section-label">
+                    ☝️ Hand Controls
+                </div>
+
+                <div class="instructions">
+
+                    ☝️
+                    <strong>Index Finger Up</strong>
+                    — Draw / Doodle
+
+                    <br>
+
+                    🤏
+                    <strong>Thumb + Index Pinch</strong>
+                    — Pause Drawing
+
+                </div>
+
+            </div>
+
+
+            <!-- PHOTO MODE -->
+
+            <div class="control-section">
+
+                <div class="section-label">
+                    📸 Photo Mode
+                </div>
+
                 <select id="modeSelect">
-                    <option value="polaroid">Single Polaroid Frame 🖼️</option>
-                    <option value="strip">3-Photo Strip Vertical 📸</option>
+
+                    <option value="polaroid">
+                        Single Polaroid Frame 🖼️
+                    </option>
+
+                    <option value="strip">
+                        3-Photo Strip Vertical 📸
+                    </option>
+
                 </select>
+
             </div>
 
-            <div class="control-group">
-                <label>Instagram Filters:</label>
+
+            <!-- FILTER -->
+
+            <div class="control-section">
+
+                <div class="section-label">
+                    ✨ Camera Filter
+                </div>
+
                 <select id="filterSelect">
-                    <option value="filter-warm-glow">Honey Warm Glow 🍯</option>
-                    <option value="filter-golden-hour">Golden Hour Sunset 🌅</option>
-                    <option value="filter-soft-dream">Soft Pastel Dream ☁️</option>
-                    <option value="filter-indie">Indie Film Grain 🎨</option>
-                    <option value="filter-retro-film">Retro 90s Film 📽️</option>
-                    <option value="filter-cyber-pink">Cyber Pink Tone 🌸</option>
-                    <option value="filter-emerald">Vintage Emerald 🌿</option>
-                    <option value="filter-vintage-mono">Film Noir Mono 🖤</option>
-                    <option value="filter-none">Original Feed 📷</option>
+
+                    <option value="filter-warm-glow">
+                        Honey Warm Glow 🍯
+                    </option>
+
+                    <option value="filter-golden-hour">
+                        Golden Hour Sunset 🌅
+                    </option>
+
+                    <option value="filter-soft-dream">
+                        Soft Pastel Dream ☁️
+                    </option>
+
+                    <option value="filter-indie">
+                        Indie Film 🎨
+                    </option>
+
+                    <option value="filter-retro-film">
+                        Retro 90s Film 📽️
+                    </option>
+
+                    <option value="filter-cyber-pink">
+                        Cyber Pink 🌸
+                    </option>
+
+                    <option value="filter-emerald">
+                        Vintage Emerald 🌿
+                    </option>
+
+                    <option value="filter-vintage-mono">
+                        Film Noir 🖤
+                    </option>
+
+                    <option value="filter-none">
+                        Original 📷
+                    </option>
+
                 </select>
+
             </div>
 
-            <div class="control-group">
-                <label>Brush Type & Color:</label>
+
+            <!-- BRUSH -->
+
+            <div class="control-section">
+
+                <div class="section-label">
+                    🖌️ Doodle Pen
+                </div>
+
+
                 <select id="brushTypeSelect">
-                    <option value="solid">Continuous Solid Line ✏️</option>
-                    <option value="glitter">Glitter Sparkle Pen ✨</option>
+
+                    <option value="solid">
+                        Continuous Solid Line ✏️
+                    </option>
+
+                    <option value="glitter">
+                        Glitter Sparkle Pen ✨
+                    </option>
+
                 </select>
-                <div class="color-picker-row">
-                    <input type="color" id="brushColor" value="#ff758f">
-                    <input type="range" id="brushSize" min="3" max="25" value="8">
+
+
+                <div class="brush-row">
+
+                    <input
+                        type="color"
+                        id="brushColor"
+                        value="#ff758f"
+                    >
+
+                    <input
+                        type="range"
+                        id="brushSize"
+                        min="3"
+                        max="25"
+                        value="8"
+                    >
+
                 </div>
+
             </div>
 
-            <div class="control-group">
-                <label>Floating Emoji Stickers:</label>
+
+            <!-- STICKERS -->
+
+            <div class="control-section">
+
+                <div class="section-label">
+                    💖 Stickers
+                </div>
+
+
                 <div class="sticker-palette">
-                    <button class="sticker-btn" onclick="addSticker('✨')">✨</button>
-                    <button class="sticker-btn" onclick="addSticker('💖')">💖</button>
-                    <button class="sticker-btn" onclick="addSticker('🌸')">🌸</button>
-                    <button class="sticker-btn" onclick="addSticker('⭐')">⭐</button>
-                    <button class="sticker-btn" onclick="addSticker('🎀')">🎀</button>
-                    <button class="sticker-btn" onclick="addSticker('🔥')">🔥</button>
-                    <button class="sticker-btn" onclick="addSticker('👑')">👑</button>
-                    <button class="sticker-btn" onclick="addSticker('🍀')">🍀</button>
+
+                    <button
+                        class="sticker-btn"
+                        onclick="addSticker('✨')">
+                        ✨
+                    </button>
+
+                    <button
+                        class="sticker-btn"
+                        onclick="addSticker('💖')">
+                        💖
+                    </button>
+
+                    <button
+                        class="sticker-btn"
+                        onclick="addSticker('🌸')">
+                        🌸
+                    </button>
+
+                    <button
+                        class="sticker-btn"
+                        onclick="addSticker('⭐')">
+                        ⭐
+                    </button>
+
+                    <button
+                        class="sticker-btn"
+                        onclick="addSticker('🎀')">
+                        🎀
+                    </button>
+
+                    <button
+                        class="sticker-btn"
+                        onclick="addSticker('🔥')">
+                        🔥
+                    </button>
+
+                    <button
+                        class="sticker-btn"
+                        onclick="addSticker('👑')">
+                        👑
+                    </button>
+
+                    <button
+                        class="sticker-btn"
+                        onclick="addSticker('🍀')">
+                        🍀
+                    </button>
+
                 </div>
+
             </div>
 
-            <div style="display:flex; gap:8px;">
-                <button class="btn btn-clear" id="clearStickerBtn" style="flex:1;">Clear Stickers 🧼</button>
-                <button class="btn btn-clear" id="clearDrawBtn" style="flex:1;">Clear Doodles 🧹</button>
-            </div>
-            
-            <button class="btn" id="snapBtn" style="background: var(--accent-color); margin-top:5px; padding:12px;">Take Photo 📸</button>
-        </div>
 
-        <!-- 3. Right Side: Live Camera View Container -->
-        <div class="camera-container" id="camContainer">
-            <video id="video" autoplay playsinline muted></video>
-            <canvas id="drawCanvas"></canvas>
-            <canvas id="stickerCanvas"></canvas>
-            <div id="countdown" class="countdown">3</div>
-        </div>
-    </div>
+            <!-- CLEAR BUTTONS -->
+
+            <div
+                style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:8px;
+                "
+            >
+
+                <button
+                    class="btn btn-clear"
+                    id="clearStickerBtn"
+                >
+                    🧼 Stickers
+                </button>
+
+                <button
+                    class="btn btn-clear"
+                    id="clearDrawBtn"
+                >
+                    🧹 Doodles
+                </button>
+
+            </div>
+
+
+            <!-- SNAP -->
+
+            <button
+                class="btn"
+                id="snapBtn"
+            >
+                📸 TAKE PHOTO
+            </button>
+
+
+        </section>
+
+
+        <!-- =====================================
+             CAMERA
+        ====================================== -->
+
+        <section class="camera-card glass-card">
+
+            <div
+                class="camera-container"
+                id="camContainer"
+            >
+
+                <video
+                    id="video"
+                    autoplay
+                    playsinline
+                    muted>
+                </video>
+
+
+                <canvas
+                    id="drawCanvas">
+                </canvas>
+
+
+                <canvas
+                    id="stickerCanvas">
+                </canvas>
+
+
+                <!-- CAMERA CORNERS -->
+
+                <div class="camera-corner corner-tl"></div>
+
+                <div class="camera-corner corner-tr"></div>
+
+                <div class="camera-corner corner-bl"></div>
+
+                <div class="camera-corner corner-br"></div>
+
+
+                <!-- COUNTDOWN -->
+
+                <div
+                    id="countdown"
+                    class="countdown"
+                >
+                    3
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
 
     <script>
-        const video = document.getElementById('video');
-        const drawCanvas = document.getElementById('drawCanvas');
-        const drawCtx = drawCanvas.getContext('2d');
-        const stickerCanvas = document.getElementById('stickerCanvas');
-        const stickerCtx = stickerCanvas.getContext('2d');
-        const camContainer = document.getElementById('camContainer');
 
-        const filterSelect = document.getElementById('filterSelect');
-        const modeSelect = document.getElementById('modeSelect');
-        const brushTypeSelect = document.getElementById('brushTypeSelect');
-        const brushColor = document.getElementById('brushColor');
-        const brushSize = document.getElementById('brushSize');
-        const clearDrawBtn = document.getElementById('clearDrawBtn');
-        const clearStickerBtn = document.getElementById('clearStickerBtn');
-        const snapBtn = document.getElementById('snapBtn');
-        const countdownEl = document.getElementById('countdown');
 
-        const stripCanvas = document.getElementById('stripCanvas');
-        const stripCtx = stripCanvas.getContext('2d');
-        const downloadBtn = document.getElementById('downloadBtn');
+        /* =========================================
+           ELEMENTS
+        ========================================== */
 
-        let activeFilter = 'filter-warm-glow';
+        const video =
+            document.getElementById("video");
+
+        const drawCanvas =
+            document.getElementById("drawCanvas");
+
+        const drawCtx =
+            drawCanvas.getContext("2d");
+
+        const stickerCanvas =
+            document.getElementById("stickerCanvas");
+
+        const stickerCtx =
+            stickerCanvas.getContext("2d");
+
+        const camContainer =
+            document.getElementById("camContainer");
+
+
+        const filterSelect =
+            document.getElementById("filterSelect");
+
+        const modeSelect =
+            document.getElementById("modeSelect");
+
+        const brushTypeSelect =
+            document.getElementById("brushTypeSelect");
+
+        const brushColor =
+            document.getElementById("brushColor");
+
+        const brushSize =
+            document.getElementById("brushSize");
+
+        const clearDrawBtn =
+            document.getElementById("clearDrawBtn");
+
+        const clearStickerBtn =
+            document.getElementById("clearStickerBtn");
+
+        const snapBtn =
+            document.getElementById("snapBtn");
+
+        const countdownEl =
+            document.getElementById("countdown");
+
+        const stripCanvas =
+            document.getElementById("stripCanvas");
+
+        const stripCtx =
+            stripCanvas.getContext("2d");
+
+        const downloadBtn =
+            document.getElementById("downloadBtn");
+
+        const welcomeText =
+            document.getElementById("welcomeText");
+
+
+        /* =========================================
+           PROFILE
+        ========================================== */
+
+        const savedProfile =
+            localStorage.getItem("userProfile");
+
+
+        if (savedProfile) {
+
+            try {
+
+                const profile =
+                    JSON.parse(savedProfile);
+
+                if (profile.name) {
+
+                    welcomeText.textContent =
+                        `Ready, ${profile.name}? Let's make a memory 💎`;
+
+                }
+
+            } catch (error) {
+
+                console.log(
+                    "Profile could not be loaded."
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           VARIABLES
+        ========================================== */
+
+        let activeFilter =
+            "filter-warm-glow";
+
         let capturedFrames = [];
+
         let prevX = null;
+
         let prevY = null;
+
         let floatingStickers = [];
 
-        // CSS Filter mapping for Canvas Captures
+
+        /* =========================================
+           FILTER MAP
+        ========================================== */
+
         const filterStyles = {
-            'filter-none': 'none',
-            'filter-warm-glow': 'sepia(0.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg)',
-            'filter-golden-hour': 'sepia(0.4) saturate(1.5) contrast(1.05) brightness(1.05)',
-            'filter-soft-dream': 'brightness(1.12) contrast(0.9) saturate(1.1) sepia(0.08)',
-            'filter-indie': 'contrast(1.15) brightness(1.05) saturate(1.3) sepia(0.12)',
-            'filter-retro-film': 'contrast(1.2) saturate(0.85) sepia(0.2) hue-rotate(-10deg)',
-            'filter-cyber-pink': 'hue-rotate(310deg) saturate(1.4) contrast(1.1)',
-            'filter-emerald': 'hue-rotate(80deg) saturate(1.2) contrast(1.1)',
-            'filter-vintage-mono': 'grayscale(1) contrast(1.25) brightness(0.95)'
+
+            "filter-none":
+                "none",
+
+            "filter-warm-glow":
+                "sepia(.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg)",
+
+            "filter-golden-hour":
+                "sepia(.4) saturate(1.5) contrast(1.05) brightness(1.05)",
+
+            "filter-soft-dream":
+                "brightness(1.12) contrast(.9) saturate(1.1) sepia(.08)",
+
+            "filter-indie":
+                "contrast(1.15) brightness(1.05) saturate(1.3) sepia(.12)",
+
+            "filter-retro-film":
+                "contrast(1.2) saturate(.85) sepia(.2) hue-rotate(-10deg)",
+
+            "filter-cyber-pink":
+                "hue-rotate(310deg) saturate(1.4) contrast(1.1)",
+
+            "filter-emerald":
+                "hue-rotate(80deg) saturate(1.2) contrast(1.1)",
+
+            "filter-vintage-mono":
+                "grayscale(1) contrast(1.25) brightness(.95)"
+
         };
 
-        // Resize overlay canvases on viewport sync
+
+        /* =========================================
+           CANVAS SIZE
+        ========================================== */
+
         function syncCanvasDimensions() {
-            const w = camContainer.clientWidth;
-            const h = camContainer.clientHeight;
-            
-            if (drawCanvas.width !== w || drawCanvas.height !== h) {
-                // Preserve existing drawings on resize
-                const tempDraw = document.createElement('canvas');
-                tempDraw.width = drawCanvas.width;
-                tempDraw.height = drawCanvas.height;
-                tempDraw.getContext('2d').drawImage(drawCanvas, 0, 0);
 
-                drawCanvas.width = w;
-                drawCanvas.height = h;
-                stickerCanvas.width = w;
-                stickerCanvas.height = h;
+            const width =
+                camContainer.clientWidth;
 
-                drawCtx.drawImage(tempDraw, 0, 0, w, h);
+            const height =
+                camContainer.clientHeight;
+
+
+            if (
+                drawCanvas.width !== width ||
+                drawCanvas.height !== height
+            ) {
+
+                drawCanvas.width =
+                    width;
+
+                drawCanvas.height =
+                    height;
+
+
+                stickerCanvas.width =
+                    width;
+
+                stickerCanvas.height =
+                    height;
+
+
                 drawStickers();
+
             }
+
         }
 
-        // Initialize MediaPipe Hands
-        const hands = new Hands({
-            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-        });
+
+        /* =========================================
+           MEDIAPIPE HANDS
+        ========================================== */
+
+        const hands =
+            new Hands({
+
+                locateFile:
+                    (file) =>
+                        `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+
+            });
+
 
         hands.setOptions({
+
             maxNumHands: 1,
+
             modelComplexity: 1,
+
             minDetectionConfidence: 0.6,
+
             minTrackingConfidence: 0.6
+
         });
 
-        hands.onResults(onHandResults);
 
-        const camera = new Camera(video, {
-            onFrame: async () => {
-                await hands.send({ image: video });
-            },
-            width: 640,
-            height: 480
-        });
+        hands.onResults(
+            onHandResults
+        );
 
-        camera.start().then(() => {
-            syncCanvasDimensions();
-            video.className = activeFilter;
-            adjustCanvasSize();
-        });
 
-        window.addEventListener('resize', syncCanvasDimensions);
+        /* =========================================
+           CAMERA
+        ========================================== */
 
-        // Add Floating Emoji Stickers
+        const camera =
+            new Camera(video, {
+
+                onFrame:
+                    async () => {
+
+                        await hands.send({
+                            image: video
+                        });
+
+                    },
+
+                width: 640,
+
+                height: 480
+
+            });
+
+
+        camera.start()
+            .then(() => {
+
+                syncCanvasDimensions();
+
+                video.className =
+                    activeFilter;
+
+                adjustCanvasSize();
+
+            })
+            .catch((error) => {
+
+                console.error(
+                    "Camera error:",
+                    error
+                );
+
+                alert(
+                    "Camera access is required for the Photo Booth 📸"
+                );
+
+            });
+
+
+        window.addEventListener(
+            "resize",
+            syncCanvasDimensions
+        );
+
+
+        /* =========================================
+           STICKERS
+        ========================================== */
+
         function addSticker(emoji) {
+
             const padding = 50;
-            const x = Math.random() * (stickerCanvas.width - padding * 2) + padding;
-            const y = Math.random() * (stickerCanvas.height - padding * 2) + padding;
-            floatingStickers.push({ emoji, x, y, size: 36 });
+
+            const x =
+                Math.random() *
+                (stickerCanvas.width - padding * 2)
+                + padding;
+
+            const y =
+                Math.random() *
+                (stickerCanvas.height - padding * 2)
+                + padding;
+
+
+            floatingStickers.push({
+
+                emoji: emoji,
+
+                x: x,
+
+                y: y,
+
+                size: 36
+
+            });
+
+
             drawStickers();
+
         }
+
 
         function drawStickers() {
-            stickerCtx.clearRect(0, 0, stickerCanvas.width, stickerCanvas.height);
-            floatingStickers.forEach(s => {
-                stickerCtx.font = `${s.size}px sans-serif`;
-                stickerCtx.textAlign = 'center';
-                stickerCtx.textBaseline = 'middle';
-                stickerCtx.fillText(s.emoji, s.x, s.y);
-            });
+
+            stickerCtx.clearRect(
+                0,
+                0,
+                stickerCanvas.width,
+                stickerCanvas.height
+            );
+
+
+            floatingStickers.forEach(
+                sticker => {
+
+                    stickerCtx.font =
+                        `${sticker.size}px sans-serif`;
+
+                    stickerCtx.textAlign =
+                        "center";
+
+                    stickerCtx.textBaseline =
+                        "middle";
+
+                    stickerCtx.fillText(
+                        sticker.emoji,
+                        sticker.x,
+                        sticker.y
+                    );
+
+                }
+            );
+
         }
 
-        clearStickerBtn.addEventListener('click', () => {
-            floatingStickers = [];
-            stickerCtx.clearRect(0, 0, stickerCanvas.width, stickerCanvas.height);
-        });
 
-        // Glitter Pen Sparkle Effect Generator
-        function drawGlitter(x, y, color, size) {
+        /* =========================================
+           CLEAR STICKERS
+        ========================================== */
+
+        clearStickerBtn.addEventListener(
+            "click",
+            () => {
+
+                floatingStickers = [];
+
+                stickerCtx.clearRect(
+                    0,
+                    0,
+                    stickerCanvas.width,
+                    stickerCanvas.height
+                );
+
+            }
+        );
+
+
+        /* =========================================
+           CLEAR DOODLES
+        ========================================== */
+
+        clearDrawBtn.addEventListener(
+            "click",
+            () => {
+
+                drawCtx.clearRect(
+                    0,
+                    0,
+                    drawCanvas.width,
+                    drawCanvas.height
+                );
+
+                prevX = null;
+
+                prevY = null;
+
+            }
+        );
+
+
+        /* =========================================
+           GLITTER PEN
+        ========================================== */
+
+        function drawGlitter(
+            x,
+            y,
+            color,
+            size
+        ) {
+
             const particleCount = 8;
-            for (let i = 0; i < particleCount; i++) {
-                const offsetX = (Math.random() - 0.5) * size * 2.2;
-                const offsetY = (Math.random() - 0.5) * size * 2.2;
-                const radius = Math.random() * (size / 3) + 1;
+
+
+            for (
+                let i = 0;
+                i < particleCount;
+                i++
+            ) {
+
+                const offsetX =
+                    (Math.random() - 0.5)
+                    * size
+                    * 2.2;
+
+                const offsetY =
+                    (Math.random() - 0.5)
+                    * size
+                    * 2.2;
+
+                const radius =
+                    Math.random()
+                    * (size / 3)
+                    + 1;
+
 
                 drawCtx.beginPath();
-                drawCtx.arc(x + offsetX, y + offsetY, radius, 0, Math.PI * 2);
-                drawCtx.fillStyle = Math.random() > 0.4 ? color : '#ffffff';
-                drawCtx.shadowBlur = 6;
-                drawCtx.shadowColor = color;
+
+                drawCtx.arc(
+                    x + offsetX,
+                    y + offsetY,
+                    radius,
+                    0,
+                    Math.PI * 2
+                );
+
+
+                drawCtx.fillStyle =
+                    Math.random() > 0.4
+                        ? color
+                        : "#ffffff";
+
+
+                drawCtx.shadowBlur =
+                    6;
+
+                drawCtx.shadowColor =
+                    color;
+
                 drawCtx.fill();
+
             }
-            drawCtx.shadowBlur = 0; // Reset
+
+
+            drawCtx.shadowBlur =
+                0;
+
         }
 
-        // Gesture Tracking Handler
+
+        /* =========================================
+           HAND TRACKING
+        ========================================== */
+
         function onHandResults(results) {
+
             syncCanvasDimensions();
 
-            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-                const landmarks = results.multiHandLandmarks[0];
-                const indexTip = landmarks[8];
-                const thumbTip = landmarks[4];
 
-                // Mirrored coordinates matching video mirror
-                const x = (1 - indexTip.x) * drawCanvas.width;
-                const y = indexTip.y * drawCanvas.height;
+            if (
+                results.multiHandLandmarks &&
+                results.multiHandLandmarks.length > 0
+            ) {
 
-                const thumbX = (1 - thumbTip.x) * drawCanvas.width;
-                const thumbY = thumbTip.y * drawCanvas.height;
-                
-                const pinchDistance = Math.hypot(x - thumbX, y - thumbY);
+                const landmarks =
+                    results.multiHandLandmarks[0];
 
-                // Pinch gesture acts as pen lift
-                if (pinchDistance < 32) {
+
+                const indexTip =
+                    landmarks[8];
+
+                const thumbTip =
+                    landmarks[4];
+
+
+                const x =
+                    (1 - indexTip.x)
+                    * drawCanvas.width;
+
+                const y =
+                    indexTip.y
+                    * drawCanvas.height;
+
+
+                const thumbX =
+                    (1 - thumbTip.x)
+                    * drawCanvas.width;
+
+                const thumbY =
+                    thumbTip.y
+                    * drawCanvas.height;
+
+
+                const pinchDistance =
+                    Math.hypot(
+                        x - thumbX,
+                        y - thumbY
+                    );
+
+
+                /* Pinch = stop drawing */
+
+                if (
+                    pinchDistance < 32
+                ) {
+
                     prevX = null;
+
                     prevY = null;
-                } else {
-                    if (prevX !== null && prevY !== null) {
-                        if (brushTypeSelect.value === 'glitter') {
-                            drawGlitter(x, y, brushColor.value, parseFloat(brushSize.value));
-                        } else {
-                            drawCtx.beginPath();
-                            drawCtx.moveTo(prevX, prevY);
-                            drawCtx.lineTo(x, y);
-                            drawCtx.strokeStyle = brushColor.value;
-                            drawCtx.lineWidth = brushSize.value;
-                            drawCtx.lineCap = 'round';
-                            drawCtx.lineJoin = 'round';
-                            drawCtx.stroke();
-                        }
-                    }
-                    prevX = x;
-                    prevY = y;
+
+                    return;
+
                 }
-            } else {
-                prevX = null;
-                prevY = null;
+
+
+                /* Draw */
+
+                if (
+                    prevX !== null &&
+                    prevY !== null
+                ) {
+
+                    if (
+                        brushTypeSelect.value ===
+                        "glitter"
+                    ) {
+
+                        drawGlitter(
+                            x,
+                            y,
+                            brushColor.value,
+                            parseFloat(
+                                brushSize.value
+                            )
+                        );
+
+                    }
+
+                    else {
+
+                        drawCtx.beginPath();
+
+                        drawCtx.moveTo(
+                            prevX,
+                            prevY
+                        );
+
+                        drawCtx.lineTo(
+                            x,
+                            y
+                        );
+
+                        drawCtx.strokeStyle =
+                            brushColor.value;
+
+                        drawCtx.lineWidth =
+                            brushSize.value;
+
+                        drawCtx.lineCap =
+                            "round";
+
+                        drawCtx.lineJoin =
+                            "round";
+
+                        drawCtx.stroke();
+
+                    }
+
+                }
+
+
+                prevX = x;
+
+                prevY = y;
+
             }
+
+            else {
+
+                prevX = null;
+
+                prevY = null;
+
+            }
+
         }
 
-        clearDrawBtn.addEventListener('click', () => {
-            drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
-        });
 
-        filterSelect.addEventListener('change', (e) => {
-            activeFilter = e.target.value;
-            video.className = activeFilter;
-        });
+        /* =========================================
+           FILTER
+        ========================================== */
 
-        modeSelect.addEventListener('change', adjustCanvasSize);
+        filterSelect.addEventListener(
+            "change",
+            event => {
+
+                activeFilter =
+                    event.target.value;
+
+                video.className =
+                    activeFilter;
+
+            }
+        );
+
+
+        /* =========================================
+           MODE
+        ========================================== */
+
+        modeSelect.addEventListener(
+            "change",
+            adjustCanvasSize
+        );
+
 
         function adjustCanvasSize() {
-            if (modeSelect.value === 'polaroid') {
-                stripCanvas.width = 240;
-                stripCanvas.height = 300;
-            } else {
-                stripCanvas.width = 220;
-                stripCanvas.height = 620;
-            }
-        }
 
-        // Photo Capture Logic
-        snapBtn.addEventListener('click', async () => {
-            snapBtn.disabled = true;
-            capturedFrames = [];
-            const photoCount = modeSelect.value === 'polaroid' ? 1 : 3;
+            if (
+                modeSelect.value ===
+                "polaroid"
+            ) {
 
-            for (let i = 0; i < photoCount; i++) {
-                await runCountdown(3);
-                captureCurrentFrame();
-                await new Promise(r => setTimeout(r, 400));
+                stripCanvas.width =
+                    240;
+
+                stripCanvas.height =
+                    300;
+
             }
 
-            renderOutput();
-            snapBtn.disabled = false;
-        });
+            else {
 
-        function runCountdown(sec) {
-            return new Promise((resolve) => {
-                let count = sec;
-                countdownEl.style.display = 'block';
-                countdownEl.textContent = count;
+                stripCanvas.width =
+                    220;
 
-                const timer = setInterval(() => {
-                    count--;
-                    if (count > 0) {
-                        countdownEl.textContent = count;
-                    } else {
-                        clearInterval(timer);
-                        countdownEl.style.display = 'none';
-                        resolve();
-                    }
-                }, 1000);
-            });
+                stripCanvas.height =
+                    620;
+
+            }
+
+
+            stripCtx.fillStyle =
+                "#fffafc";
+
+            stripCtx.fillRect(
+                0,
+                0,
+                stripCanvas.width,
+                stripCanvas.height
+            );
+
         }
+
+
+        /* =========================================
+           COUNTDOWN
+        ========================================== */
+
+        function runCountdown(seconds) {
+
+            return new Promise(
+                resolve => {
+
+                    let count =
+                        seconds;
+
+
+                    countdownEl.style.display =
+                        "block";
+
+                    countdownEl.textContent =
+                        count;
+
+
+                    const timer =
+                        setInterval(
+                            () => {
+
+                                count--;
+
+
+                                if (
+                                    count > 0
+                                ) {
+
+                                    countdownEl.textContent =
+                                        count;
+
+                                    countdownEl.style.animation =
+                                        "none";
+
+                                    void countdownEl.offsetWidth;
+
+                                    countdownEl.style.animation =
+                                        "countdownPop 1s ease";
+
+                                }
+
+                                else {
+
+                                    clearInterval(
+                                        timer
+                                    );
+
+                                    countdownEl.style.display =
+                                        "none";
+
+                                    resolve();
+
+                                }
+
+                            },
+                            1000
+                        );
+
+                }
+            );
+
+        }
+
+
+        /* =========================================
+           CAPTURE FRAME
+        ========================================== */
 
         function captureCurrentFrame() {
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = drawCanvas.width;
-            tempCanvas.height = drawCanvas.height;
-            const tCtx = tempCanvas.getContext('2d');
 
-            // Apply Instagram CSS filter during frame capture
-            tCtx.filter = filterStyles[activeFilter] || 'none';
+            const tempCanvas =
+                document.createElement(
+                    "canvas"
+                );
 
-            // Draw video (Mirrored)
-            tCtx.save();
-            tCtx.translate(tempCanvas.width, 0);
-            tCtx.scale(-1, 1);
-            tCtx.drawImage(video, 0, 0, tempCanvas.width, tempCanvas.height);
-            tCtx.restore();
 
-            // Overlay doodles & stickers (Unfiltered)
-            tCtx.filter = 'none';
-            tCtx.drawImage(drawCanvas, 0, 0);
-            tCtx.drawImage(stickerCanvas, 0, 0);
+            tempCanvas.width =
+                drawCanvas.width;
 
-            capturedFrames.push(tempCanvas);
+            tempCanvas.height =
+                drawCanvas.height;
+
+
+            const ctx =
+                tempCanvas.getContext("2d");
+
+
+            /* Apply filter */
+
+            ctx.filter =
+                filterStyles[activeFilter]
+                || "none";
+
+
+            /* Mirror camera */
+
+            ctx.save();
+
+            ctx.translate(
+                tempCanvas.width,
+                0
+            );
+
+            ctx.scale(
+                -1,
+                1
+            );
+
+
+            ctx.drawImage(
+                video,
+                0,
+                0,
+                tempCanvas.width,
+                tempCanvas.height
+            );
+
+
+            ctx.restore();
+
+
+            /* Doodles */
+
+            ctx.filter =
+                "none";
+
+
+            ctx.drawImage(
+                drawCanvas,
+                0,
+                0
+            );
+
+
+            /* Stickers */
+
+            ctx.drawImage(
+                stickerCanvas,
+                0,
+                0
+            );
+
+
+            capturedFrames.push(
+                tempCanvas
+            );
+
         }
+
+
+        /* =========================================
+           TAKE PHOTO
+        ========================================== */
+
+        snapBtn.addEventListener(
+            "click",
+            async () => {
+
+                snapBtn.disabled =
+                    true;
+
+
+                capturedFrames = [];
+
+
+                const photoCount =
+                    modeSelect.value ===
+                    "polaroid"
+                        ? 1
+                        : 3;
+
+
+                for (
+                    let i = 0;
+                    i < photoCount;
+                    i++
+                ) {
+
+                    await runCountdown(3);
+
+
+                    captureCurrentFrame();
+
+
+                    await new Promise(
+                        resolve =>
+                            setTimeout(
+                                resolve,
+                                400
+                            )
+                    );
+
+                }
+
+
+                renderOutput();
+
+
+                snapBtn.disabled =
+                    false;
+
+            }
+        );
+
+
+        /* =========================================
+           RENDER PHOTO OUTPUT
+        ========================================== */
 
         function renderOutput() {
-            stripCtx.clearRect(0, 0, stripCanvas.width, stripCanvas.height);
 
-            if (modeSelect.value === 'polaroid') {
-                stripCtx.fillStyle = '#fdfbf7';
-                stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
+            stripCtx.clearRect(
+                0,
+                0,
+                stripCanvas.width,
+                stripCanvas.height
+            );
 
-                const margin = 15;
-                const photoW = stripCanvas.width - (margin * 2);
-                const photoH = 200;
 
-                if (capturedFrames[0]) {
-                    stripCtx.drawImage(capturedFrames[0], margin, margin, photoW, photoH);
+            /* =========================
+               POLAROID
+            ========================== */
+
+            if (
+                modeSelect.value ===
+                "polaroid"
+            ) {
+
+                stripCtx.fillStyle =
+                    "#fffafc";
+
+                stripCtx.fillRect(
+                    0,
+                    0,
+                    stripCanvas.width,
+                    stripCanvas.height
+                );
+
+
+                const margin =
+                    15;
+
+                const photoW =
+                    stripCanvas.width
+                    - margin * 2;
+
+                const photoH =
+                    200;
+
+
+                if (
+                    capturedFrames[0]
+                ) {
+
+                    stripCtx.drawImage(
+
+                        capturedFrames[0],
+
+                        margin,
+
+                        margin,
+
+                        photoW,
+
+                        photoH
+
+                    );
+
                 }
-                
-                stripCtx.strokeStyle = 'rgba(0,0,0,0.1)';
-                stripCtx.strokeRect(margin, margin, photoW, photoH);
 
-                stripCtx.font = '13px -apple-system, sans-serif';
-                stripCtx.fillStyle = '#444';
-                stripCtx.textAlign = 'center';
-                const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                stripCtx.fillText(`✨ ${dateStr} ✨`, stripCanvas.width / 2, stripCanvas.height - 25);
-            } else {
-                const padding = 15;
-                const photoW = 190;
-                const photoH = 142;
-                const topMargin = 20;
 
-                stripCtx.fillStyle = '#fdfbf7';
-                stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
+                stripCtx.strokeStyle =
+                    "rgba(0,0,0,.08)";
 
-                capturedFrames.forEach((frame, idx) => {
-                    const y = topMargin + idx * (photoH + padding);
-                    stripCtx.drawImage(frame, padding, y, photoW, photoH);
-                    
-                    stripCtx.strokeStyle = 'rgba(0,0,0,0.08)';
-                    stripCtx.lineWidth = 1;
-                    stripCtx.strokeRect(padding, y, photoW, photoH);
-                });
+                stripCtx.strokeRect(
 
-                stripCtx.font = '12px -apple-system, sans-serif';
-                stripCtx.fillStyle = '#666';
-                stripCtx.textAlign = 'center';
-                const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                stripCtx.fillText(`✨ ${dateStr} • PHOTO BOOTH ✨`, stripCanvas.width / 2, stripCanvas.height - 25);
+                    margin,
+
+                    margin,
+
+                    photoW,
+
+                    photoH
+
+                );
+
+
+                stripCtx.font =
+                    "13px sans-serif";
+
+                stripCtx.fillStyle =
+                    "#444";
+
+                stripCtx.textAlign =
+                    "center";
+
+
+                const dateStr =
+                    new Date()
+                        .toLocaleDateString(
+                            "en-US",
+                            {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric"
+                            }
+                        );
+
+
+                stripCtx.fillText(
+
+                    `✨ ${dateStr} ✨`,
+
+                    stripCanvas.width / 2,
+
+                    stripCanvas.height - 25
+
+                );
+
             }
 
-            downloadBtn.style.display = 'inline-block';
-            downloadBtn.onclick = () => {
-                const a = document.createElement('a');
-                a.download = `photo-booth-${Date.now()}.png`;
-                a.href = stripCanvas.toDataURL('image/png');
-                a.click();
-            };
+
+            /* =========================
+               PHOTO STRIP
+            ========================== */
+
+            else {
+
+                stripCtx.fillStyle =
+                    "#fffafc";
+
+                stripCtx.fillRect(
+                    0,
+                    0,
+                    stripCanvas.width,
+                    stripCanvas.height
+                );
+
+
+                const padding =
+                    15;
+
+                const photoW =
+                    190;
+
+                const photoH =
+                    142;
+
+                const topMargin =
+                    20;
+
+
+                capturedFrames.forEach(
+                    (frame, index) => {
+
+                        const y =
+                            topMargin +
+                            index *
+                            (photoH + padding);
+
+
+                        stripCtx.drawImage(
+
+                            frame,
+
+                            padding,
+
+                            y,
+
+                            photoW,
+
+                            photoH
+
+                        );
+
+
+                        stripCtx.strokeStyle =
+                            "rgba(0,0,0,.08)";
+
+                        stripCtx.strokeRect(
+
+                            padding,
+
+                            y,
+
+                            photoW,
+
+                            photoH
+
+                        );
+
+                    }
+                );
+
+
+                stripCtx.font =
+                    "12px sans-serif";
+
+                stripCtx.fillStyle =
+                    "#666";
+
+                stripCtx.textAlign =
+                    "center";
+
+
+                const dateStr =
+                    new Date()
+                        .toLocaleDateString(
+                            "en-US",
+                            {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric"
+                            }
+                        );
+
+
+                stripCtx.fillText(
+
+                    `✨ ${dateStr} • PHOTO BOOTH ✨`,
+
+                    stripCanvas.width / 2,
+
+                    stripCanvas.height - 25
+
+                );
+
+            }
+
+
+            /* Show download */
+
+            downloadBtn.style.display =
+                "block";
+
+
+            downloadBtn.onclick =
+                () => {
+
+                    const link =
+                        document.createElement(
+                            "a"
+                        );
+
+
+                    link.download =
+                        `seventeen-photo-booth-${Date.now()}.png`;
+
+
+                    link.href =
+                        stripCanvas.toDataURL(
+                            "image/png"
+                        );
+
+
+                    link.click();
+
+                };
+
         }
+
+
+        /* =========================================
+           INITIALIZE
+        ========================================== */
+
+        adjustCanvasSize();
+
     </script>
+
 </body>
+
 </html>
