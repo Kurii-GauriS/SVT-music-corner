@@ -323,6 +323,11 @@
     window.addEventListener("offline", () => {
         window.location.href = "404.html";
     });
+    const savedProfile = localStorage.getItem("userProfile");
+
+if (savedProfile) {
+    console.log("Welcome back, Carat!");
+}
 </script>
 
 </body>
