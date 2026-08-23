@@ -2,72 +2,31 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>SEVENTEEN | Doodle & Sticker Photo Booth</title>
-
-    <!-- ==============================
-         MEDIAPIPE
-    =============================== -->
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
-        crossorigin="anonymous">
-    </script>
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
-        crossorigin="anonymous">
-    </script>
-
+    <title>SEVENTEEN Album Collection</title>
 
     <style>
-
         /* =========================================
-           ROOT
-        ========================================= */
-
-        :root {
-
-            --pink: #ff71ce;
-            --pink-dark: #ff3fae;
-
-            --blue: #01cdfe;
-            --purple: #9356d0;
-
-            --cream: #fffafc;
-
-            --glass: rgba(38, 31, 65, 0.82);
-
-            --glass-light: rgba(255, 255, 255, 0.10);
-
-            --border:
-                rgba(255, 255, 255, 0.18);
-
-            --text: #ffffff;
-
-            --muted: #c9c5d6;
-
-        }
-
-
-        /* =========================================
-           RESET
+           GLOBAL
         ========================================= */
 
         * {
-
             box-sizing: border-box;
+        }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
             margin: 0;
+            min-height: 100vh;
+            padding: 40px 20px 60px;
 
-            padding: 0;
+            color: #ffffff;
+            text-align: center;
 
             font-family:
                 "Segoe UI",
@@ -76,31 +35,31 @@
                 Verdana,
                 sans-serif;
 
+            background:
+                url("https://i.pinimg.com/736x/7d/dc/14/7ddc14c904ce78a817651e76a887a4ad.jpg")
+                no-repeat
+                center center
+                fixed;
+
+            background-size: cover;
+
+            position: relative;
         }
 
 
         /* =========================================
-           BODY
+           DARK BACKGROUND OVERLAY
         ========================================= */
 
-        body {
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
 
-            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.65);
 
-            padding: 20px;
-
-            color: var(--text);
-
-            background:
-
-                linear-gradient(
-                    rgba(12, 8, 25, 0.72),
-                    rgba(15, 8, 28, 0.82)
-                ),
-
-                url('seventeen heaven.jpg')
-                center / cover fixed no-repeat;
-
+            z-index: -1;
+            pointer-events: none;
         }
 
 
@@ -109,1064 +68,346 @@
         ========================================= */
 
         .nav-container {
-
             width: 100%;
+            max-width: 1450px;
 
-            max-width: 1250px;
-
-            margin: 0 auto 25px;
+            margin: 0 auto 35px;
 
             display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
             flex-wrap: wrap;
 
-            gap: 9px;
+            justify-content: center;
+            align-items: center;
 
+            gap: 10px;
         }
 
 
         .glass-btn {
-
             display: inline-flex;
 
             align-items: center;
-
             justify-content: center;
 
-            padding: 9px 16px;
+            padding: 10px 20px;
 
             border-radius: 30px;
 
-            background:
-                rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.12);
 
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
 
-            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.18);
-
-            color: #ffffff;
+            color: #f5d5ff;
 
             text-decoration: none;
 
-            font-size: 12px;
+            font-size: 15px;
+            font-weight: 500;
 
-            font-weight: 700;
-
-            transition: 0.3s ease;
-
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
 
         .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
 
-            background:
-                rgba(255, 113, 206, 0.20);
+            transform: translateY(-3px);
 
-            border-color:
-                rgba(255, 113, 206, 0.6);
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* =========================================
+           PAGE TITLE
+        ========================================= */
+
+        .page-title {
+            margin: 0 auto 20px;
 
             color: #ffffff;
 
-            transform: translateY(-2px);
+            font-size: clamp(22px, 3vw, 32px);
 
-            box-shadow:
-                0 5px 18px
-                rgba(255, 113, 206, 0.2);
+            letter-spacing: 1px;
 
+            text-shadow:
+                0 3px 15px rgba(0, 0, 0, 0.6);
         }
 
 
         /* =========================================
-           HEADER
+           VOLUME NOTE
         ========================================= */
 
-        .page-header {
-
-            text-align: center;
-
-            margin-bottom: 28px;
-
-        }
-
-
-        .page-header .emoji {
-
-            font-size: 30px;
-
-            margin-bottom: 8px;
-
-            animation:
-                floating 3s ease-in-out infinite;
-
-        }
-
-
-        @keyframes floating {
-
-            0%,
-            100% {
-
-                transform:
-                    translateY(0);
-
-            }
-
-            50% {
-
-                transform:
-                    translateY(-7px);
-
-            }
-
-        }
-
-
-        h1 {
-
-            font-size:
-                clamp(24px, 4vw, 34px);
-
-            font-weight: 800;
-
-            letter-spacing: 1.5px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    var(--pink),
-                    var(--blue),
-                    var(--pink)
-                );
-
-            background-size: 200% auto;
-
-            -webkit-background-clip: text;
-
-            background-clip: text;
-
-            color: transparent;
-
-            animation:
-                gradientMove 4s linear infinite;
-
-        }
-
-
-        @keyframes gradientMove {
-
-            to {
-
-                background-position:
-                    200% center;
-
-            }
-
-        }
-
-
-        .welcome-text {
-
-            margin-top: 7px;
-
-            color: var(--muted);
+        .volume-note {
+            color: #f5d5ff;
 
             font-size: 13px;
 
+            margin: 0 auto 25px;
+
+            opacity: 0.85;
         }
 
 
         /* =========================================
-           MAIN WORKSPACE
+           ALBUM GRID
         ========================================= */
 
-        .workspace {
-
+        .album-container {
             width: 100%;
+            max-width: 1450px;
 
-            max-width: 1250px;
+            margin: 0 auto;
 
-            margin: auto;
+            padding: 10px;
 
             display: grid;
 
             grid-template-columns:
-                230px
-                minmax(260px, 300px)
-                minmax(400px, 520px);
+                repeat(4, minmax(0, 1fr));
 
-            justify-content: center;
+            gap: 25px;
 
             align-items: start;
-
-            gap: 20px;
-
         }
 
 
         /* =========================================
-           GLASS CARD
+           ALBUM CARD
         ========================================= */
 
-        .glass-card {
-
-            background:
-                var(--glass);
-
-            backdrop-filter:
-                blur(18px);
-
-            -webkit-backdrop-filter:
-                blur(18px);
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 22px;
-
-            box-shadow:
-                0 15px 45px
-                rgba(0, 0, 0, 0.40),
-
-                0 0 25px
-                rgba(255, 113, 206, 0.08);
-
-        }
-
-
-        /* =========================================
-           PHOTO PREVIEW
-        ========================================= */
-
-        .preview-area {
-
-            padding: 18px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            gap: 12px;
-
-        }
-
-
-        .card-title {
-
+        .album-card {
             width: 100%;
+            min-width: 0;
 
-            display: flex;
+            background: rgba(255, 255, 255, 0.10);
 
-            align-items: center;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
 
-            justify-content: space-between;
-
-            margin-bottom: 4px;
-
-        }
-
-
-        .card-title h3 {
-
-            font-size: 14px;
-
-            letter-spacing: 1px;
-
-            text-transform: uppercase;
-
-        }
-
-
-        .card-title span {
-
-            font-size: 18px;
-
-        }
-
-
-        .preview-frame {
-
-            padding: 10px;
-
-            background:
-                #fffafc;
-
-            border-radius: 8px;
-
-            box-shadow:
-                0 10px 30px
-                rgba(0, 0, 0, 0.3);
-
-        }
-
-
-        #stripCanvas {
-
-            display: block;
-
-            max-width: 100%;
-
-            height: auto;
-
-            background: white;
-
-        }
-
-
-        #downloadBtn {
-
-            width: 100%;
-
-        }
-
-
-        /* =========================================
-           CONTROL PANEL
-        ========================================= */
-
-        .controls {
-
-            padding: 20px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 15px;
-
-        }
-
-
-        .control-section {
-
-            padding-bottom: 14px;
-
-            border-bottom:
-                1px solid
-                rgba(255, 255, 255, 0.08);
-
-        }
-
-
-        .control-section:last-of-type {
-
-            border-bottom: none;
-
-            padding-bottom: 0;
-
-        }
-
-
-        .section-label {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            margin-bottom: 9px;
-
-            color: var(--blue);
-
-            font-size: 11px;
-
-            font-weight: 800;
-
-            letter-spacing: 1.2px;
-
-            text-transform: uppercase;
-
-        }
-
-
-        .instructions {
-
-            padding: 11px;
-
-            border-radius: 13px;
-
-            background:
-                rgba(255, 113, 206, 0.08);
-
-            border:
-                1px solid
-                rgba(255, 113, 206, 0.15);
-
-            color: #d9d4e2;
-
-            font-size: 11px;
-
-            line-height: 1.7;
-
-        }
-
-
-        .instructions strong {
-
-            color: var(--pink);
-
-        }
-
-
-        /* =========================================
-           SELECT
-        ========================================= */
-
-        select {
-
-            width: 100%;
-
-            padding: 11px 12px;
-
-            border-radius: 12px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.15);
-
-            background:
-                rgba(255, 255, 255, 0.08);
-
-            color: white;
-
-            outline: none;
-
-            cursor: pointer;
-
-            font-size: 12px;
-
-            transition: 0.3s ease;
-
-        }
-
-
-        select:focus {
-
-            border-color:
-                var(--pink);
-
-            box-shadow:
-                0 0 10px
-                rgba(255, 113, 206, 0.2);
-
-        }
-
-
-        select option {
-
-            background: #29243f;
-
-            color: white;
-
-        }
-
-
-        /* =========================================
-           BRUSH CONTROLS
-        ========================================= */
-
-        .brush-row {
-
-            display: grid;
-
-            grid-template-columns:
-                50px 1fr;
-
-            gap: 10px;
-
-            align-items: center;
-
-            margin-top: 9px;
-
-        }
-
-
-        #brushColor {
-
-            width: 45px;
-
-            height: 38px;
-
-            padding: 3px;
-
-            border: none;
-
-            border-radius: 10px;
-
-            background:
-                rgba(255,255,255,0.1);
-
-            cursor: pointer;
-
-        }
-
-
-        #brushSize {
-
-            width: 100%;
-
-            accent-color:
-                var(--pink);
-
-            cursor: pointer;
-
-        }
-
-
-        /* =========================================
-           STICKERS
-        ========================================= */
-
-        .sticker-palette {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 6px;
-
-        }
-
-
-        .sticker-btn {
-
-            padding: 7px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.12);
-
-            border-radius: 10px;
-
-            background:
-                rgba(255, 255, 255, 0.07);
-
-            color: white;
-
-            font-size: 17px;
-
-            cursor: pointer;
-
-            transition: 0.2s ease;
-
-        }
-
-
-        .sticker-btn:hover {
-
-            transform:
-                scale(1.1)
-                rotate(-3deg);
-
-            background:
-                rgba(255, 113, 206, 0.15);
-
-            border-color:
-                var(--pink);
-
-        }
-
-
-        /* =========================================
-           BUTTONS
-        ========================================= */
-
-        button {
-
-            font-family: inherit;
-
-        }
-
-
-        .btn {
-
-            border: none;
-
-            border-radius: 12px;
-
-            padding: 10px;
-
-            color: white;
-
-            background:
-                rgba(255,255,255,0.1);
-
-            font-size: 11px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition: 0.3s ease;
-
-        }
-
-
-        .btn:hover {
-
-            transform:
-                translateY(-2px);
-
-        }
-
-
-        .btn-clear {
-
-            color: #ffb4c8;
-
-            border:
-                1px solid
-                rgba(255, 113, 206, 0.25);
-
-            background:
-                rgba(255, 113, 206, 0.08);
-
-        }
-
-
-        .btn-clear:hover {
-
-            background:
-                rgba(255, 113, 206, 0.16);
-
-        }
-
-
-        #snapBtn {
-
-            padding: 14px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--pink-dark),
-                    var(--purple),
-                    var(--blue)
-                );
-
-            background-size:
-                200% 200%;
-
-            font-size: 13px;
-
-            letter-spacing: 1px;
-
-            box-shadow:
-                0 7px 22px
-                rgba(255, 51, 153, 0.3);
-
-        }
-
-
-        #snapBtn:hover {
-
-            background-position:
-                right center;
-
-            box-shadow:
-                0 10px 30px
-                rgba(255, 51, 153, 0.5);
-
-        }
-
-
-        #snapBtn:disabled {
-
-            opacity: 0.55;
-
-            cursor: not-allowed;
-
-            transform: none;
-
-        }
-
-
-        /* =========================================
-           CAMERA
-        ========================================= */
-
-        .camera-card {
-
-            padding: 12px;
-
-        }
-
-
-        .camera-container {
-
-            position: relative;
-
-            width: 100%;
-
-            aspect-ratio: 4 / 3;
-
-            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.18);
 
             border-radius: 16px;
 
-            background: #050505;
+            padding: 16px;
+
+            text-align: left;
 
             box-shadow:
-                inset 0 0 30px
-                rgba(0,0,0,0.5);
+                0 10px 30px rgba(0, 0, 0, 0.30);
 
+            display: flex;
+            flex-direction: column;
+
+            gap: 12px;
+
+            overflow: hidden;
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
 
-        video {
+        .album-card:hover {
+            transform: translateY(-6px);
+
+            background: rgba(255, 255, 255, 0.16);
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.40);
+        }
+
+
+        /* =========================================
+           ALBUM HEADER
+        ========================================= */
+
+        .album-header {
+            width: 100%;
+
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 10px;
+
+            min-height: 30px;
+        }
+
+
+        .album-title {
+            margin: 0;
+
+            min-width: 0;
+
+            color: #ffffff;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            line-height: 1.3;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .album-date {
+            flex-shrink: 0;
+
+            color: #f5d5ff;
+
+            font-size: 11px;
+
+            font-weight: 500;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================================
+           SPOTIFY PLAYER
+        ========================================= */
+
+        .spotify-frame {
+            width: 100%;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            background: transparent;
+
+            line-height: 0;
+        }
+
+
+        .spotify-frame iframe {
+            display: block;
 
             width: 100%;
 
-            height: 100%;
+            height: 352px;
 
-            object-fit: cover;
+            border: 0;
 
-            transform:
-                scaleX(-1);
-
-        }
-
-
-        #drawCanvas,
-        #stickerCanvas {
-
-            position: absolute;
-
-            inset: 0;
-
-            width: 100%;
-
-            height: 100%;
-
-            pointer-events: none;
-
+            border-radius: 12px;
         }
 
 
         /* =========================================
-           CAMERA CORNERS
+           3 COLUMNS
         ========================================= */
 
-        .camera-corner {
+        @media (max-width: 1200px) {
 
-            position: absolute;
-
-            width: 24px;
-
-            height: 24px;
-
-            border-color:
-                rgba(255,255,255,0.7);
-
-            border-style: solid;
-
-            pointer-events: none;
-
-            z-index: 5;
-
-        }
-
-
-        .corner-tl {
-
-            top: 10px;
-            left: 10px;
-
-            border-width:
-                2px 0 0 2px;
-
-        }
-
-
-        .corner-tr {
-
-            top: 10px;
-            right: 10px;
-
-            border-width:
-                2px 2px 0 0;
-
-        }
-
-
-        .corner-bl {
-
-            bottom: 10px;
-            left: 10px;
-
-            border-width:
-                0 0 2px 2px;
-
-        }
-
-
-        .corner-br {
-
-            bottom: 10px;
-            right: 10px;
-
-            border-width:
-                0 2px 2px 0;
-
-        }
-
-
-        /* =========================================
-           COUNTDOWN
-        ========================================= */
-
-        .countdown {
-
-            position: absolute;
-
-            top: 50%;
-
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            display: none;
-
-            color: white;
-
-            font-size:
-                clamp(60px, 10vw, 100px);
-
-            font-weight: 900;
-
-            text-shadow:
-                0 5px 25px
-                rgba(0,0,0,0.8);
-
-            pointer-events: none;
-
-            z-index: 20;
-
-            animation:
-                countdownPop 1s ease;
-
-        }
-
-
-        @keyframes countdownPop {
-
-            0% {
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(1.4);
-
-                opacity: 0;
-
-            }
-
-            30% {
-
-                opacity: 1;
-
-            }
-
-            100% {
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(1);
-
-            }
-
-        }
-
-
-        /* =========================================
-           FILTERS
-        ========================================= */
-
-        .filter-none {
-            filter: none;
-        }
-
-        .filter-warm-glow {
-            filter:
-                sepia(.25)
-                saturate(1.2)
-                brightness(1.08)
-                hue-rotate(-5deg);
-        }
-
-        .filter-indie {
-            filter:
-                contrast(1.15)
-                brightness(1.05)
-                saturate(1.3)
-                sepia(.12);
-        }
-
-        .filter-cyber-pink {
-            filter:
-                hue-rotate(310deg)
-                saturate(1.4)
-                contrast(1.1);
-        }
-
-        .filter-vintage-mono {
-            filter:
-                grayscale(1)
-                contrast(1.25)
-                brightness(.95);
-        }
-
-        .filter-golden-hour {
-            filter:
-                sepia(.4)
-                saturate(1.5)
-                contrast(1.05)
-                brightness(1.05);
-        }
-
-        .filter-retro-film {
-            filter:
-                contrast(1.2)
-                saturate(.85)
-                sepia(.2)
-                hue-rotate(-10deg);
-        }
-
-        .filter-soft-dream {
-            filter:
-                brightness(1.12)
-                contrast(.9)
-                saturate(1.1)
-                sepia(.08);
-        }
-
-        .filter-emerald {
-            filter:
-                hue-rotate(80deg)
-                saturate(1.2)
-                contrast(1.1);
-        }
-
-
-        /* =========================================
-           MOBILE
-        ========================================= */
-
-        @media (max-width: 1050px) {
-
-            .workspace {
-
+            .album-container {
                 grid-template-columns:
-                    minmax(220px, 260px)
-                    minmax(280px, 340px);
+                    repeat(3, minmax(0, 1fr));
 
+                gap: 22px;
             }
-
-            .camera-card {
-
-                grid-column:
-                    1 / -1;
-
-                width:
-                    min(650px, 100%);
-
-                justify-self: center;
-
-            }
-
         }
 
 
-        @media (max-width: 720px) {
+        /* =========================================
+           2 COLUMNS
+        ========================================= */
+
+        @media (max-width: 850px) {
 
             body {
-
-                padding:
-                    15px 10px;
-
+                padding: 30px 15px 50px;
             }
 
+            .album-container {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
 
-            .workspace {
-
-                display: flex;
-
-                flex-direction: column;
-
-                align-items: center;
-
+                gap: 20px;
             }
 
-
-            .preview-area,
-            .controls,
-            .camera-card {
-
-                width: 100%;
-
-                max-width: 520px;
-
+            .album-card {
+                padding: 14px;
             }
+        }
 
+
+        /* =========================================
+           1 COLUMN / MOBILE
+        ========================================= */
+
+        @media (max-width: 550px) {
+
+            body {
+                padding: 25px 12px 40px;
+            }
 
             .nav-container {
-
-                gap: 6px;
-
+                gap: 8px;
             }
-
 
             .glass-btn {
+                padding: 9px 15px;
+                font-size: 13px;
+            }
 
+            .album-container {
+                grid-template-columns: 1fr;
+
+                gap: 18px;
+
+                padding: 5px;
+            }
+
+            .album-title {
+                font-size: 15px;
+            }
+
+            .album-date {
                 font-size: 10px;
-
-                padding:
-                    8px 11px;
-
             }
 
+            .spotify-frame iframe {
+                height: 352px;
+            }
         }
 
 
-        @media (max-width: 420px) {
+        /* =========================================
+           VERY SMALL PHONES
+        ========================================= */
 
-            h1 {
+        @media (max-width: 380px) {
 
-                font-size: 22px;
-
+            .glass-btn {
+                width: 100%;
             }
 
-
-            .sticker-palette {
-
-                grid-template-columns:
-                    repeat(4, 1fr);
-
+            .album-header {
+                align-items: flex-start;
+                flex-direction: column;
             }
 
-
-            .preview-frame {
-
-                max-width:
-                    200px;
-
+            .album-title {
+                white-space: normal;
             }
-
         }
-
     </style>
-
 </head>
 
 
@@ -1175,7 +416,7 @@
 
     <!-- =========================================
          NAVIGATION
-    ========================================== -->
+    ========================================= -->
 
     <nav class="nav-container">
 
@@ -1187,12 +428,12 @@
             📖 Scrapbook
         </a>
 
-        <a href="music.html" class="glass-btn">
-            ❤️ Spotify 💿
-        </a>
-
         <a href="binder.html" class="glass-btn">
             ✨ PC Binder ❤︎
+        </a>
+
+        <a href="svt.html" class="glass-btn">
+            💎 Photo Booth 💎
         </a>
 
         <a href="going.html" class="glass-btn">
@@ -1207,1532 +448,1095 @@
 
 
     <!-- =========================================
-         HEADER
-    ========================================== -->
+         PAGE TITLE
+    ========================================= -->
 
-    <header class="page-header">
+    <h1 class="page-title">
+        <b>
+            <i>💿 SEVENTEEN Discography Collection 💿</i>
+        </b>
+    </h1>
 
-        <div class="emoji">
-            📸✨
-        </div>
 
-        <h1>
-            Doodle & Sticker Photo Booth
-        </h1>
-
-        <p class="welcome-text" id="welcomeText">
-            Create your own little SEVENTEEN memory 💎
-        </p>
-
-    </header>
+    <p class="volume-note">
+        🔊 Use the Spotify player controls to adjust volume
+    </p>
 
 
     <!-- =========================================
-         WORKSPACE
-    ========================================== -->
+         ALBUM COLLECTION
+    ========================================= -->
 
-    <main class="workspace">
+    <main class="album-container">
 
 
-        <!-- =====================================
-             PHOTO PREVIEW
-        ====================================== -->
+        <!-- 1. 17 CARAT -->
 
-        <section class="preview-area glass-card">
+        <div class="album-card">
 
-            <div class="card-title">
+            <div class="album-header">
 
-                <h3>
-                    Photo Output
-                </h3>
+                <h2 class="album-title">
+                    🎀 17 CARAT
+                </h2>
 
-                <span>
-                    🎞️
+                <span class="album-date">
+                    May 29, 2015
                 </span>
 
             </div>
 
+            <div class="spotify-frame">
 
-            <div class="preview-frame">
-
-                <canvas
-                    id="stripCanvas"
-                    width="240"
-                    height="300">
-                </canvas>
-
-            </div>
-
-
-            <button
-                class="btn"
-                id="downloadBtn"
-                style="
-                    display:none;
-                    background:linear-gradient(
-                        135deg,
-                        #ff3399,
-                        #9356d0
-                    );
-                "
-            >
-                📥 Download Photo
-            </button>
-
-        </section>
-
-
-        <!-- =====================================
-             CONTROLS
-        ====================================== -->
-
-        <section class="controls glass-card">
-
-
-            <!-- INSTRUCTIONS -->
-
-            <div class="control-section">
-
-                <div class="section-label">
-                    ☝️ Hand Controls
-                </div>
-
-                <div class="instructions">
-
-                    ☝️
-                    <strong>Index Finger Up</strong>
-                    — Draw / Doodle
-
-                    <br>
-
-                    🤏
-                    <strong>Thumb + Index Pinch</strong>
-                    — Pause Drawing
-
-                </div>
+                <iframe
+                    src="https://open.spotify.com/embed/album/0H2K2JrzdvJcxBEPyxC2sl"
+                    title="SEVENTEEN - 17 CARAT"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
 
             </div>
 
+        </div>
 
-            <!-- PHOTO MODE -->
 
-            <div class="control-section">
+        <!-- 2. BOYS BE -->
 
-                <div class="section-label">
-                    📸 Photo Mode
-                </div>
+        <div class="album-card">
 
-                <select id="modeSelect">
+            <div class="album-header">
 
-                    <option value="polaroid">
-                        Single Polaroid Frame 🖼️
-                    </option>
+                <h2 class="album-title">
+                    BOYS BE
+                </h2>
 
-                    <option value="strip">
-                        3-Photo Strip Vertical 📸
-                    </option>
-
-                </select>
+                <span class="album-date">
+                    Sep 10, 2015
+                </span>
 
             </div>
 
+            <div class="spotify-frame">
 
-            <!-- FILTER -->
-
-            <div class="control-section">
-
-                <div class="section-label">
-                    ✨ Camera Filter
-                </div>
-
-                <select id="filterSelect">
-
-                    <option value="filter-warm-glow">
-                        Honey Warm Glow 🍯
-                    </option>
-
-                    <option value="filter-golden-hour">
-                        Golden Hour Sunset 🌅
-                    </option>
-
-                    <option value="filter-soft-dream">
-                        Soft Pastel Dream ☁️
-                    </option>
-
-                    <option value="filter-indie">
-                        Indie Film 🎨
-                    </option>
-
-                    <option value="filter-retro-film">
-                        Retro 90s Film 📽️
-                    </option>
-
-                    <option value="filter-cyber-pink">
-                        Cyber Pink 🌸
-                    </option>
-
-                    <option value="filter-emerald">
-                        Vintage Emerald 🌿
-                    </option>
-
-                    <option value="filter-vintage-mono">
-                        Film Noir 🖤
-                    </option>
-
-                    <option value="filter-none">
-                        Original 📷
-                    </option>
-
-                </select>
+                <iframe
+                    src="https://open.spotify.com/embed/album/18aXrsD7zdPD6NSIfdwExD"
+                    title="SEVENTEEN - BOYS BE"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
 
             </div>
 
-
-            <!-- BRUSH -->
-
-            <div class="control-section">
-
-                <div class="section-label">
-                    🖌️ Doodle Pen
-                </div>
+        </div>
 
 
-                <select id="brushTypeSelect">
+        <!-- 3. Q&A -->
 
-                    <option value="solid">
-                        Continuous Solid Line ✏️
-                    </option>
+        <div class="album-card">
 
-                    <option value="glitter">
-                        Glitter Sparkle Pen ✨
-                    </option>
+            <div class="album-header">
 
-                </select>
+                <h2 class="album-title">
+                    Q&A
+                </h2>
 
-
-                <div class="brush-row">
-
-                    <input
-                        type="color"
-                        id="brushColor"
-                        value="#ff758f"
-                    >
-
-                    <input
-                        type="range"
-                        id="brushSize"
-                        min="3"
-                        max="25"
-                        value="8"
-                    >
-
-                </div>
+                <span class="album-date">
+                    Dec 4, 2015
+                </span>
 
             </div>
 
+            <div class="spotify-frame">
 
-            <!-- STICKERS -->
-
-            <div class="control-section">
-
-                <div class="section-label">
-                    💖 Stickers
-                </div>
-
-
-                <div class="sticker-palette">
-
-                    <button
-                        class="sticker-btn"
-                        onclick="addSticker('✨')">
-                        ✨
-                    </button>
-
-                    <button
-                        class="sticker-btn"
-                        onclick="addSticker('💖')">
-                        💖
-                    </button>
-
-                    <button
-                        class="sticker-btn"
-                        onclick="addSticker('🌸')">
-                        🌸
-                    </button>
-
-                    <button
-                        class="sticker-btn"
-                        onclick="addSticker('⭐')">
-                        ⭐
-                    </button>
-
-                    <button
-                        class="sticker-btn"
-                        onclick="addSticker('🎀')">
-                        🎀
-                    </button>
-
-                    <button
-                        class="sticker-btn"
-                        onclick="addSticker('🔥')">
-                        🔥
-                    </button>
-
-                    <button
-                        class="sticker-btn"
-                        onclick="addSticker('👑')">
-                        👑
-                    </button>
-
-                    <button
-                        class="sticker-btn"
-                        onclick="addSticker('🍀')">
-                        🍀
-                    </button>
-
-                </div>
+                <iframe
+                    src="https://open.spotify.com/embed/album/4qpCDSbJiez1wPcplEv2ET"
+                    title="Q&A"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
 
             </div>
 
+        </div>
 
-            <!-- CLEAR BUTTONS -->
 
-            <div
-                style="
-                    display:grid;
-                    grid-template-columns:1fr 1fr;
-                    gap:8px;
-                "
-            >
+        <!-- 4. Chocolate -->
 
-                <button
-                    class="btn btn-clear"
-                    id="clearStickerBtn"
-                >
-                    🧼 Stickers
-                </button>
+        <div class="album-card">
 
-                <button
-                    class="btn btn-clear"
-                    id="clearDrawBtn"
-                >
-                    🧹 Doodles
-                </button>
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Chocolate
+                </h2>
+
+                <span class="album-date">
+                    Feb 12, 2016
+                </span>
 
             </div>
 
+            <div class="spotify-frame">
 
-            <!-- SNAP -->
-
-            <button
-                class="btn"
-                id="snapBtn"
-            >
-                📸 TAKE PHOTO
-            </button>
-
-
-        </section>
-
-
-        <!-- =====================================
-             CAMERA
-        ====================================== -->
-
-        <section class="camera-card glass-card">
-
-            <div
-                class="camera-container"
-                id="camContainer"
-            >
-
-                <video
-                    id="video"
-                    autoplay
-                    playsinline
-                    muted>
-                </video>
-
-
-                <canvas
-                    id="drawCanvas">
-                </canvas>
-
-
-                <canvas
-                    id="stickerCanvas">
-                </canvas>
-
-
-                <!-- CAMERA CORNERS -->
-
-                <div class="camera-corner corner-tl"></div>
-
-                <div class="camera-corner corner-tr"></div>
-
-                <div class="camera-corner corner-bl"></div>
-
-                <div class="camera-corner corner-br"></div>
-
-
-                <!-- COUNTDOWN -->
-
-                <div
-                    id="countdown"
-                    class="countdown"
-                >
-                    3
-                </div>
+                <iframe
+                    src="https://open.spotify.com/embed/album/7Aqd8W6pvEpoK1fL5DILcm"
+                    title="Chocolate"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
 
             </div>
 
-        </section>
+        </div>
+
+
+        <!-- 5. FIRST LOVE & LETTER -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    First 'Love&Letter'
+                </h2>
+
+                <span class="album-date">
+                    Apr 25, 2016
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/50BrkBakrLWufmTLjCVBwn"
+                    title="First Love and Letter"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 6. LOVE & LETTER REPACKAGE -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    💌 Love & Letter Repackage
+                </h2>
+
+                <span class="album-date">
+                    Jul 4, 2016
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/7mP7AFehQDonPKEQiXvpvB"
+                    title="Love and Letter Repackage"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 7. GOING SEVENTEEN -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Going Seventeen
+                </h2>
+
+                <span class="album-date">
+                    Dec 5, 2016
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/3wXGFboFgcK9ezbPuSrKk9"
+                    title="Going Seventeen"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 8. AL1 -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Al1
+                </h2>
+
+                <span class="album-date">
+                    May 22, 2017
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/2BNimvLLlD89e4Sb7ZVX6I"
+                    title="Al1"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 9. TEEN AGE -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    TEEN, AGE
+                </h2>
+
+                <span class="album-date">
+                    Nov 6, 2017
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/5aHdNainJWMc3n2AqfiOg5"
+                    title="TEEN AGE"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 10. DIRECTOR'S CUT -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    DIRECTOR'S CUT
+                </h2>
+
+                <span class="album-date">
+                    Feb 5, 2018
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/5QpD7kgp5dpkNFuG6ez2yI"
+                    title="DIRECTOR'S CUT"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 11. WE MAKE YOU -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    WE MAKE YOU
+                </h2>
+
+                <span class="album-date">
+                    May 30, 2018
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/21mnRCzvXqfiY0uRePOEav"
+                    title="WE MAKE YOU"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 12. YOU MAKE MY DAY -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    YOU MAKE MY DAY
+                </h2>
+
+                <span class="album-date">
+                    Jul 16, 2018
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/5VmjGHq779chFVL7dgLbyo"
+                    title="YOU MAKE MY DAY"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 13. A-TEEN -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    A-TEEN
+                </h2>
+
+                <span class="album-date">
+                    Aug 13, 2018
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/62kX5esOPtWPjfCbT7tQwb"
+                    title="A-TEEN"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 14. OH MY CHINESE VERSION -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Oh MY! (Chinese Ver.)
+                </h2>
+
+                <span class="album-date">
+                    Aug 28, 2018
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/26iFbCpQBTif2lNyAM7tEo"
+                    title="Oh MY Chinese Version"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 15. YOU MADE MY DAWN -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    YOU MADE MY DAWN
+                </h2>
+
+                <span class="album-date">
+                    Jan 21, 2019
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/2Ng7FzZoNzpj4z8VRDHyb5"
+                    title="YOU MADE MY DAWN"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 16. 9-TEEN -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    9-TEEN
+                </h2>
+
+                <span class="album-date">
+                    May 19, 2019
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/track/5G5MW3CIQ26AV08Yl7UV6m"
+                    title="9-TEEN"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 17. HAPPY ENDING -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Happy Ending
+                </h2>
+
+                <span class="album-date">
+                    May 29, 2019
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/2SrJI9UCeYzVXYripQVnbi"
+                    title="Happy Ending"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 18. HIT -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    HIT
+                </h2>
+
+                <span class="album-date">
+                    Aug 5, 2019
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/5IIk4i6IkmsnF8UtRBMAeI"
+                    title="HIT"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 19. AN ODE -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    An Ode
+                </h2>
+
+                <span class="album-date">
+                    Sep 16, 2019
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/5HlxNTQpJb7buoWIRS4M7T"
+                    title="An Ode"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 20. CHOCOLATE PT.1 -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Chocolate Pt.1
+                </h2>
+
+                <span class="album-date">
+                    Dec 1, 2019
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/0M4H8nupsD6QTOnb3GpCzc"
+                    title="Chocolate Pt.1"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 21. FALLIN FLOWER -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Fallin' Flower
+                </h2>
+
+                <span class="album-date">
+                    March 31, 2020
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/3LhruYOSl2NPClKMGRpA2W"
+                    title="Fallin Flower"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 22. HENG:GARAE -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Heng:garæ
+                </h2>
+
+                <span class="album-date">
+                    Jun 22, 2020
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/3q6lN3kfsDgGaQUC7kVASH"
+                    title="Heng garae"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 23. 24H -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    24H
+                </h2>
+
+                <span class="album-date">
+                    Sep 9, 2020
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/60z8h4jCOyt36F3Arn8RGD"
+                    title="24H"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 24. SEMICOLON -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    ; [Semicolon]
+                </h2>
+
+                <span class="album-date">
+                    Oct 19, 2020
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/1EMYSiKKTSKLZrOC2nTStL"
+                    title="Semicolon"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 25. YOUR CHOICE -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Your Choice
+                </h2>
+
+                <span class="album-date">
+                    Jun 18, 2021
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/79VvXTQNeLr8KmvcdxN0Pc"
+                    title="Your Choice"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 26. ATTACCA -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Attacca
+                </h2>
+
+                <span class="album-date">
+                    Oct 22, 2021
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/2PIReru2w5i4JXOzeZnamd"
+                    title="Attacca"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 27. POWER OF LOVE -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Power of Love (あいのちから)
+                </h2>
+
+                <span class="album-date">
+                    Nov 29, 2021
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/3fqYnHqWRVePkZzPQpxclM"
+                    title="Power of Love"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 28. FACE THE SUN -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    Face the Sun
+                </h2>
+
+                <span class="album-date">
+                    May 27, 2022
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/4lfFgz2rD1irxf7dZhNJht"
+                    title="Face the Sun"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 29. SECTOR 17 -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    SECTOR 17
+                </h2>
+
+                <span class="album-date">
+                    Jul 18, 2022
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/15pRJdCJtDyzQaY9tGs750?theme=0"
+                    title="SECTOR 17"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 30. DREAM -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    DREAM
+                </h2>
+
+                <span class="album-date">
+                    Nov 9, 2022
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/2cXtPWMSKgf55ERnDrzZQb"
+                    title="DREAM"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 31. FML -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    FML
+                </h2>
+
+                <span class="album-date">
+                    Apr 24, 2023
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/1JBzeeCJ3axQMVkqWbKh0I"
+                    title="FML"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 32. ALWAYS YOURS -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    ALWAYS YOURS
+                </h2>
+
+                <span class="album-date">
+                    Aug 22, 2023
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/5Qae32LmUnMlJRqZv2BWvY"
+                    title="ALWAYS YOURS"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 33. SEVENTEENTH HEAVEN -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    SEVENTEENTH HEAVEN
+                </h2>
+
+                <span class="album-date">
+                    Oct 23, 2023
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/1rE0Gy69MFUh4GuXafWd0f"
+                    title="SEVENTEENTH HEAVEN"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 34. 17 IS RIGHT HERE -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    17 IS RIGHT HERE
+                </h2>
+
+                <span class="album-date">
+                    Apr 29, 2024
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/2Jrp37x38qZqtyrIrfxN4H?theme=0"
+                    title="17 IS RIGHT HERE"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- 35. SPILL THE FEELS -->
+
+        <div class="album-card">
+
+            <div class="album-header">
+
+                <h2 class="album-title">
+                    SPILL THE FEELS
+                </h2>
+
+                <span class="album-date">
+                    Oct 14, 2024
+                </span>
+
+            </div>
+
+            <div class="spotify-frame">
+
+                <iframe
+                    src="https://open.spotify.com/embed/album/4xggkS8rdsJL3dgji8zW6W"
+                    title="SPILL THE FEELS"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
 
     </main>
 
 
     <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
+         OFFLINE REDIRECT
+    ========================================= -->
 
     <script>
 
+        window.addEventListener("offline", function () {
 
-        /* =========================================
-           ELEMENTS
-        ========================================== */
-
-        const video =
-            document.getElementById("video");
-
-        const drawCanvas =
-            document.getElementById("drawCanvas");
-
-        const drawCtx =
-            drawCanvas.getContext("2d");
-
-        const stickerCanvas =
-            document.getElementById("stickerCanvas");
-
-        const stickerCtx =
-            stickerCanvas.getContext("2d");
-
-        const camContainer =
-            document.getElementById("camContainer");
-
-
-        const filterSelect =
-            document.getElementById("filterSelect");
-
-        const modeSelect =
-            document.getElementById("modeSelect");
-
-        const brushTypeSelect =
-            document.getElementById("brushTypeSelect");
-
-        const brushColor =
-            document.getElementById("brushColor");
-
-        const brushSize =
-            document.getElementById("brushSize");
-
-        const clearDrawBtn =
-            document.getElementById("clearDrawBtn");
-
-        const clearStickerBtn =
-            document.getElementById("clearStickerBtn");
-
-        const snapBtn =
-            document.getElementById("snapBtn");
-
-        const countdownEl =
-            document.getElementById("countdown");
-
-        const stripCanvas =
-            document.getElementById("stripCanvas");
-
-        const stripCtx =
-            stripCanvas.getContext("2d");
-
-        const downloadBtn =
-            document.getElementById("downloadBtn");
-
-        const welcomeText =
-            document.getElementById("welcomeText");
-
-
-        /* =========================================
-           PROFILE
-        ========================================== */
-
-        const savedProfile =
-            localStorage.getItem("userProfile");
-
-
-        if (savedProfile) {
-
-            try {
-
-                const profile =
-                    JSON.parse(savedProfile);
-
-                if (profile.name) {
-
-                    welcomeText.textContent =
-                        `Ready, ${profile.name}? Let's make a memory 💎`;
-
-                }
-
-            } catch (error) {
-
-                console.log(
-                    "Profile could not be loaded."
-                );
-
-            }
-
-        }
-
-
-        /* =========================================
-           VARIABLES
-        ========================================== */
-
-        let activeFilter =
-            "filter-warm-glow";
-
-        let capturedFrames = [];
-
-        let prevX = null;
-
-        let prevY = null;
-
-        let floatingStickers = [];
-
-
-        /* =========================================
-           FILTER MAP
-        ========================================== */
-
-        const filterStyles = {
-
-            "filter-none":
-                "none",
-
-            "filter-warm-glow":
-                "sepia(.25) saturate(1.2) brightness(1.08) hue-rotate(-5deg)",
-
-            "filter-golden-hour":
-                "sepia(.4) saturate(1.5) contrast(1.05) brightness(1.05)",
-
-            "filter-soft-dream":
-                "brightness(1.12) contrast(.9) saturate(1.1) sepia(.08)",
-
-            "filter-indie":
-                "contrast(1.15) brightness(1.05) saturate(1.3) sepia(.12)",
-
-            "filter-retro-film":
-                "contrast(1.2) saturate(.85) sepia(.2) hue-rotate(-10deg)",
-
-            "filter-cyber-pink":
-                "hue-rotate(310deg) saturate(1.4) contrast(1.1)",
-
-            "filter-emerald":
-                "hue-rotate(80deg) saturate(1.2) contrast(1.1)",
-
-            "filter-vintage-mono":
-                "grayscale(1) contrast(1.25) brightness(.95)"
-
-        };
-
-
-        /* =========================================
-           CANVAS SIZE
-        ========================================== */
-
-        function syncCanvasDimensions() {
-
-            const width =
-                camContainer.clientWidth;
-
-            const height =
-                camContainer.clientHeight;
-
-
-            if (
-                drawCanvas.width !== width ||
-                drawCanvas.height !== height
-            ) {
-
-                drawCanvas.width =
-                    width;
-
-                drawCanvas.height =
-                    height;
-
-
-                stickerCanvas.width =
-                    width;
-
-                stickerCanvas.height =
-                    height;
-
-
-                drawStickers();
-
-            }
-
-        }
-
-
-        /* =========================================
-           MEDIAPIPE HANDS
-        ========================================== */
-
-        const hands =
-            new Hands({
-
-                locateFile:
-                    (file) =>
-                        `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-
-            });
-
-
-        hands.setOptions({
-
-            maxNumHands: 1,
-
-            modelComplexity: 1,
-
-            minDetectionConfidence: 0.6,
-
-            minTrackingConfidence: 0.6
+            window.location.href = "404.html";
 
         });
 
-
-        hands.onResults(
-            onHandResults
-        );
-
-
-        /* =========================================
-           CAMERA
-        ========================================== */
-
-        const camera =
-            new Camera(video, {
-
-                onFrame:
-                    async () => {
-
-                        await hands.send({
-                            image: video
-                        });
-
-                    },
-
-                width: 640,
-
-                height: 480
-
-            });
-
-
-        camera.start()
-            .then(() => {
-
-                syncCanvasDimensions();
-
-                video.className =
-                    activeFilter;
-
-                adjustCanvasSize();
-
-            })
-            .catch((error) => {
-
-                console.error(
-                    "Camera error:",
-                    error
-                );
-
-                alert(
-                    "Camera access is required for the Photo Booth 📸"
-                );
-
-            });
-
-
-        window.addEventListener(
-            "resize",
-            syncCanvasDimensions
-        );
-
-
-        /* =========================================
-           STICKERS
-        ========================================== */
-
-        function addSticker(emoji) {
-
-            const padding = 50;
-
-            const x =
-                Math.random() *
-                (stickerCanvas.width - padding * 2)
-                + padding;
-
-            const y =
-                Math.random() *
-                (stickerCanvas.height - padding * 2)
-                + padding;
-
-
-            floatingStickers.push({
-
-                emoji: emoji,
-
-                x: x,
-
-                y: y,
-
-                size: 36
-
-            });
-
-
-            drawStickers();
-
-        }
-
-
-        function drawStickers() {
-
-            stickerCtx.clearRect(
-                0,
-                0,
-                stickerCanvas.width,
-                stickerCanvas.height
-            );
-
-
-            floatingStickers.forEach(
-                sticker => {
-
-                    stickerCtx.font =
-                        `${sticker.size}px sans-serif`;
-
-                    stickerCtx.textAlign =
-                        "center";
-
-                    stickerCtx.textBaseline =
-                        "middle";
-
-                    stickerCtx.fillText(
-                        sticker.emoji,
-                        sticker.x,
-                        sticker.y
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =========================================
-           CLEAR STICKERS
-        ========================================== */
-
-        clearStickerBtn.addEventListener(
-            "click",
-            () => {
-
-                floatingStickers = [];
-
-                stickerCtx.clearRect(
-                    0,
-                    0,
-                    stickerCanvas.width,
-                    stickerCanvas.height
-                );
-
-            }
-        );
-
-
-        /* =========================================
-           CLEAR DOODLES
-        ========================================== */
-
-        clearDrawBtn.addEventListener(
-            "click",
-            () => {
-
-                drawCtx.clearRect(
-                    0,
-                    0,
-                    drawCanvas.width,
-                    drawCanvas.height
-                );
-
-                prevX = null;
-
-                prevY = null;
-
-            }
-        );
-
-
-        /* =========================================
-           GLITTER PEN
-        ========================================== */
-
-        function drawGlitter(
-            x,
-            y,
-            color,
-            size
-        ) {
-
-            const particleCount = 8;
-
-
-            for (
-                let i = 0;
-                i < particleCount;
-                i++
-            ) {
-
-                const offsetX =
-                    (Math.random() - 0.5)
-                    * size
-                    * 2.2;
-
-                const offsetY =
-                    (Math.random() - 0.5)
-                    * size
-                    * 2.2;
-
-                const radius =
-                    Math.random()
-                    * (size / 3)
-                    + 1;
-
-
-                drawCtx.beginPath();
-
-                drawCtx.arc(
-                    x + offsetX,
-                    y + offsetY,
-                    radius,
-                    0,
-                    Math.PI * 2
-                );
-
-
-                drawCtx.fillStyle =
-                    Math.random() > 0.4
-                        ? color
-                        : "#ffffff";
-
-
-                drawCtx.shadowBlur =
-                    6;
-
-                drawCtx.shadowColor =
-                    color;
-
-                drawCtx.fill();
-
-            }
-
-
-            drawCtx.shadowBlur =
-                0;
-
-        }
-
-
-        /* =========================================
-           HAND TRACKING
-        ========================================== */
-
-        function onHandResults(results) {
-
-            syncCanvasDimensions();
-
-
-            if (
-                results.multiHandLandmarks &&
-                results.multiHandLandmarks.length > 0
-            ) {
-
-                const landmarks =
-                    results.multiHandLandmarks[0];
-
-
-                const indexTip =
-                    landmarks[8];
-
-                const thumbTip =
-                    landmarks[4];
-
-
-                const x =
-                    (1 - indexTip.x)
-                    * drawCanvas.width;
-
-                const y =
-                    indexTip.y
-                    * drawCanvas.height;
-
-
-                const thumbX =
-                    (1 - thumbTip.x)
-                    * drawCanvas.width;
-
-                const thumbY =
-                    thumbTip.y
-                    * drawCanvas.height;
-
-
-                const pinchDistance =
-                    Math.hypot(
-                        x - thumbX,
-                        y - thumbY
-                    );
-
-
-                /* Pinch = stop drawing */
-
-                if (
-                    pinchDistance < 32
-                ) {
-
-                    prevX = null;
-
-                    prevY = null;
-
-                    return;
-
-                }
-
-
-                /* Draw */
-
-                if (
-                    prevX !== null &&
-                    prevY !== null
-                ) {
-
-                    if (
-                        brushTypeSelect.value ===
-                        "glitter"
-                    ) {
-
-                        drawGlitter(
-                            x,
-                            y,
-                            brushColor.value,
-                            parseFloat(
-                                brushSize.value
-                            )
-                        );
-
-                    }
-
-                    else {
-
-                        drawCtx.beginPath();
-
-                        drawCtx.moveTo(
-                            prevX,
-                            prevY
-                        );
-
-                        drawCtx.lineTo(
-                            x,
-                            y
-                        );
-
-                        drawCtx.strokeStyle =
-                            brushColor.value;
-
-                        drawCtx.lineWidth =
-                            brushSize.value;
-
-                        drawCtx.lineCap =
-                            "round";
-
-                        drawCtx.lineJoin =
-                            "round";
-
-                        drawCtx.stroke();
-
-                    }
-
-                }
-
-
-                prevX = x;
-
-                prevY = y;
-
-            }
-
-            else {
-
-                prevX = null;
-
-                prevY = null;
-
-            }
-
-        }
-
-
-        /* =========================================
-           FILTER
-        ========================================== */
-
-        filterSelect.addEventListener(
-            "change",
-            event => {
-
-                activeFilter =
-                    event.target.value;
-
-                video.className =
-                    activeFilter;
-
-            }
-        );
-
-
-        /* =========================================
-           MODE
-        ========================================== */
-
-        modeSelect.addEventListener(
-            "change",
-            adjustCanvasSize
-        );
-
-
-        function adjustCanvasSize() {
-
-            if (
-                modeSelect.value ===
-                "polaroid"
-            ) {
-
-                stripCanvas.width =
-                    240;
-
-                stripCanvas.height =
-                    300;
-
-            }
-
-            else {
-
-                stripCanvas.width =
-                    220;
-
-                stripCanvas.height =
-                    620;
-
-            }
-
-
-            stripCtx.fillStyle =
-                "#fffafc";
-
-            stripCtx.fillRect(
-                0,
-                0,
-                stripCanvas.width,
-                stripCanvas.height
-            );
-
-        }
-
-
-        /* =========================================
-           COUNTDOWN
-        ========================================== */
-
-        function runCountdown(seconds) {
-
-            return new Promise(
-                resolve => {
-
-                    let count =
-                        seconds;
-
-
-                    countdownEl.style.display =
-                        "block";
-
-                    countdownEl.textContent =
-                        count;
-
-
-                    const timer =
-                        setInterval(
-                            () => {
-
-                                count--;
-
-
-                                if (
-                                    count > 0
-                                ) {
-
-                                    countdownEl.textContent =
-                                        count;
-
-                                    countdownEl.style.animation =
-                                        "none";
-
-                                    void countdownEl.offsetWidth;
-
-                                    countdownEl.style.animation =
-                                        "countdownPop 1s ease";
-
-                                }
-
-                                else {
-
-                                    clearInterval(
-                                        timer
-                                    );
-
-                                    countdownEl.style.display =
-                                        "none";
-
-                                    resolve();
-
-                                }
-
-                            },
-                            1000
-                        );
-
-                }
-            );
-
-        }
-
-
-        /* =========================================
-           CAPTURE FRAME
-        ========================================== */
-
-        function captureCurrentFrame() {
-
-            const tempCanvas =
-                document.createElement(
-                    "canvas"
-                );
-
-
-            tempCanvas.width =
-                drawCanvas.width;
-
-            tempCanvas.height =
-                drawCanvas.height;
-
-
-            const ctx =
-                tempCanvas.getContext("2d");
-
-
-            /* Apply filter */
-
-            ctx.filter =
-                filterStyles[activeFilter]
-                || "none";
-
-
-            /* Mirror camera */
-
-            ctx.save();
-
-            ctx.translate(
-                tempCanvas.width,
-                0
-            );
-
-            ctx.scale(
-                -1,
-                1
-            );
-
-
-            ctx.drawImage(
-                video,
-                0,
-                0,
-                tempCanvas.width,
-                tempCanvas.height
-            );
-
-
-            ctx.restore();
-
-
-            /* Doodles */
-
-            ctx.filter =
-                "none";
-
-
-            ctx.drawImage(
-                drawCanvas,
-                0,
-                0
-            );
-
-
-            /* Stickers */
-
-            ctx.drawImage(
-                stickerCanvas,
-                0,
-                0
-            );
-
-
-            capturedFrames.push(
-                tempCanvas
-            );
-
-        }
-
-
-        /* =========================================
-           TAKE PHOTO
-        ========================================== */
-
-        snapBtn.addEventListener(
-            "click",
-            async () => {
-
-                snapBtn.disabled =
-                    true;
-
-
-                capturedFrames = [];
-
-
-                const photoCount =
-                    modeSelect.value ===
-                    "polaroid"
-                        ? 1
-                        : 3;
-
-
-                for (
-                    let i = 0;
-                    i < photoCount;
-                    i++
-                ) {
-
-                    await runCountdown(3);
-
-
-                    captureCurrentFrame();
-
-
-                    await new Promise(
-                        resolve =>
-                            setTimeout(
-                                resolve,
-                                400
-                            )
-                    );
-
-                }
-
-
-                renderOutput();
-
-
-                snapBtn.disabled =
-                    false;
-
-            }
-        );
-
-
-        /* =========================================
-           RENDER PHOTO OUTPUT
-        ========================================== */
-
-        function renderOutput() {
-
-            stripCtx.clearRect(
-                0,
-                0,
-                stripCanvas.width,
-                stripCanvas.height
-            );
-
-
-            /* =========================
-               POLAROID
-            ========================== */
-
-            if (
-                modeSelect.value ===
-                "polaroid"
-            ) {
-
-                stripCtx.fillStyle =
-                    "#fffafc";
-
-                stripCtx.fillRect(
-                    0,
-                    0,
-                    stripCanvas.width,
-                    stripCanvas.height
-                );
-
-
-                const margin =
-                    15;
-
-                const photoW =
-                    stripCanvas.width
-                    - margin * 2;
-
-                const photoH =
-                    200;
-
-
-                if (
-                    capturedFrames[0]
-                ) {
-
-                    stripCtx.drawImage(
-
-                        capturedFrames[0],
-
-                        margin,
-
-                        margin,
-
-                        photoW,
-
-                        photoH
-
-                    );
-
-                }
-
-
-                stripCtx.strokeStyle =
-                    "rgba(0,0,0,.08)";
-
-                stripCtx.strokeRect(
-
-                    margin,
-
-                    margin,
-
-                    photoW,
-
-                    photoH
-
-                );
-
-
-                stripCtx.font =
-                    "13px sans-serif";
-
-                stripCtx.fillStyle =
-                    "#444";
-
-                stripCtx.textAlign =
-                    "center";
-
-
-                const dateStr =
-                    new Date()
-                        .toLocaleDateString(
-                            "en-US",
-                            {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric"
-                            }
-                        );
-
-
-                stripCtx.fillText(
-
-                    `✨ ${dateStr} ✨`,
-
-                    stripCanvas.width / 2,
-
-                    stripCanvas.height - 25
-
-                );
-
-            }
-
-
-            /* =========================
-               PHOTO STRIP
-            ========================== */
-
-            else {
-
-                stripCtx.fillStyle =
-                    "#fffafc";
-
-                stripCtx.fillRect(
-                    0,
-                    0,
-                    stripCanvas.width,
-                    stripCanvas.height
-                );
-
-
-                const padding =
-                    15;
-
-                const photoW =
-                    190;
-
-                const photoH =
-                    142;
-
-                const topMargin =
-                    20;
-
-
-                capturedFrames.forEach(
-                    (frame, index) => {
-
-                        const y =
-                            topMargin +
-                            index *
-                            (photoH + padding);
-
-
-                        stripCtx.drawImage(
-
-                            frame,
-
-                            padding,
-
-                            y,
-
-                            photoW,
-
-                            photoH
-
-                        );
-
-
-                        stripCtx.strokeStyle =
-                            "rgba(0,0,0,.08)";
-
-                        stripCtx.strokeRect(
-
-                            padding,
-
-                            y,
-
-                            photoW,
-
-                            photoH
-
-                        );
-
-                    }
-                );
-
-
-                stripCtx.font =
-                    "12px sans-serif";
-
-                stripCtx.fillStyle =
-                    "#666";
-
-                stripCtx.textAlign =
-                    "center";
-
-
-                const dateStr =
-                    new Date()
-                        .toLocaleDateString(
-                            "en-US",
-                            {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric"
-                            }
-                        );
-
-
-                stripCtx.fillText(
-
-                    `✨ ${dateStr} • PHOTO BOOTH ✨`,
-
-                    stripCanvas.width / 2,
-
-                    stripCanvas.height - 25
-
-                );
-
-            }
-
-
-            /* Show download */
-
-            downloadBtn.style.display =
-                "block";
-
-
-            downloadBtn.onclick =
-                () => {
-
-                    const link =
-                        document.createElement(
-                            "a"
-                        );
-
-
-                    link.download =
-                        `seventeen-photo-booth-${Date.now()}.png`;
-
-
-                    link.href =
-                        stripCanvas.toDataURL(
-                            "image/png"
-                        );
-
-
-                    link.click();
-
-                };
-
-        }
-
-
-        /* =========================================
-           INITIALIZE
-        ========================================== */
-
-        adjustCanvasSize();
-
     </script>
+
 
 </body>
 
