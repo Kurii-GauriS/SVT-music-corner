@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | SEVENTEEN</title>
+
+    <style>
+        /* =========================================
+           GLOBAL
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    rgba(20, 10, 30, 0.72),
+                    rgba(20, 10, 30, 0.82)
+                ),
+                url("https://i.pinimg.com/736x/7d/dc/14/7ddc14c904ce78a817651e76a887a4ad.jpg")
+                center / cover fixed no-repeat;
+
+            padding: 30px 20px 60px;
+        }
+
+
+        /* =========================================
+           NAVIGATION
+        ========================================= */
+
+        .nav-container {
+            width: 100%;
+            max-width: 1200px;
+
+            margin: 0 auto 30px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 10px 18px;
+
+            border-radius: 30px;
+
+            text-decoration: none;
+
+            color: #ffffff;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+
+            background: rgba(255, 255, 255, 0.25);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* =========================================
+           PROFILE WRAPPER
+        ========================================= */
+
+        .profile-wrapper {
+            width: 100%;
+            max-width: 950px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =========================================
+           PROFILE CARD
+        ========================================= */
+
+        .profile-card {
+            overflow: hidden;
+
+            border-radius: 25px;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* =========================================
+           COVER
+        ========================================= */
+
+        .profile-cover {
+            height: 230px;
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    rgba(90, 60, 120, 0.25),
+                    rgba(20, 10, 30, 0.55)
+                ),
+                url("https://i.pinimg.com/736x/33/41/e5/3341e5759d02ccaecf733752f39785ef.jpg")
+                center / cover no-repeat;
+        }
+
+
+        /* =========================================
+           PROFILE PICTURE
+        ========================================= */
+
+        .profile-picture-wrapper {
+            position: absolute;
+
+            left: 50%;
+            bottom: -70px;
+
+            transform: translateX(-50%);
+        }
+
+        .profile-picture {
+            width: 145px;
+            height: 145px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 6px solid rgba(255, 255, 255, 0.9);
+
+            background: #ffffff;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* =========================================
+           PROFILE INFO
+        ========================================= */
+
+        .profile-info {
+            text-align: center;
+
+            padding:
+                90px 30px 30px;
+        }
+
+        .profile-info h1 {
+            font-size: clamp(28px, 5vw, 42px);
+
+            margin-bottom: 5px;
+
+            letter-spacing: 1px;
+
+            text-shadow:
+                0 3px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .username {
+            color: #f5d5ff;
+
+            font-size: 15px;
+
+            margin-bottom: 15px;
+        }
+
+        .bio {
+            max-width: 600px;
+
+            margin: 0 auto 20px;
+
+            line-height: 1.7;
+
+            color: rgba(255, 255, 255, 0.85);
+
+            font-size: 15px;
+        }
+
+
+        /* =========================================
+           BADGES
+        ========================================= */
+
+        .badges {
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            font-size: 13px;
+
+            color: #f8ddff;
+        }
+
+
+        /* =========================================
+           STATS
+        ========================================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            max-width: 650px;
+
+            margin: 0 auto;
+        }
+
+        .stat {
+            padding: 20px 10px;
+
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.09);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-number {
+            display: block;
+
+            font-size: 25px;
+
+            font-weight: 700;
+
+            color: #ffffff;
+
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #e9d9ef;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================================
+           FAVORITES SECTION
+        ========================================= */
+
+        .section {
+            margin-top: 25px;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .section h2 {
+            text-align: center;
+
+            font-size: 20px;
+
+            margin-bottom: 20px;
+
+            color: #ffffff;
+        }
+
+
+        /* =========================================
+           FAVORITE CARDS
+        ========================================= */
+
+        .favorites {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .favorite-card {
+            padding: 18px;
+
+            text-align: center;
+
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.10);
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+
+            background: rgba(255, 255, 255, 0.17);
+        }
+
+        .favorite-icon {
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+        .favorite-card h3 {
+            font-size: 15px;
+
+            margin-bottom: 5px;
+        }
+
+        .favorite-card p {
+            font-size: 13px;
+
+            color: #e6dce9;
+        }
+
+
+        /* =========================================
+           ACTION BUTTONS
+        ========================================= */
+
+        .actions {
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            border: none;
+
+            padding: 12px 24px;
+
+            border-radius: 30px;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #ffffff;
+
+            background: rgba(255, 255, 255, 0.16);
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+
+            background: rgba(255, 255, 255, 0.28);
+        }
+
+        .logout-btn {
+            background: rgba(220, 80, 110, 0.35);
+        }
+
+        .logout-btn:hover {
+            background: rgba(220, 80, 110, 0.55);
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            text-align: center;
+
+            margin-top: 30px;
+
+            color: rgba(255, 255, 255, 0.65);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding:
+                    20px 12px 40px;
+            }
+
+            .profile-cover {
+                height: 190px;
+            }
+
+            .profile-picture {
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-picture-wrapper {
+                bottom: -60px;
+            }
+
+            .profile-info {
+                padding:
+                    80px 20px 25px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .favorites {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-btn {
+                font-size: 12px;
+
+                padding:
+                    8px 13px;
+            }
+
+            .section {
+                padding: 18px;
+            }
+        }
+
+
+        @media (max-width: 400px) {
+
+            .profile-cover {
+                height: 160px;
+            }
+
+            .profile-picture {
+                width: 105px;
+                height: 105px;
+            }
+
+            .profile-picture-wrapper {
+                bottom: -52px;
+            }
+
+            .profile-info {
+                padding-top: 70px;
+            }
+
+            .profile-info h1 {
+                font-size: 27px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================================
+         NAVIGATION
+    ========================================= -->
+
+    <nav class="nav-container">
+
+        <a href="index.html" class="nav-btn">
+            🏡 H♡me
+        </a>
+
+        <a href="scrapbook.html" class="nav-btn">
+            📖 Scrapbook
+        </a>
+
+        <a href="binder.html" class="nav-btn">
+            ✨ PC Binder
+        </a>
+
+        <a href="svt.html" class="nav-btn">
+            📸 Photo Booth
+        </a>
+
+        <a href="going.html" class="nav-btn">
+            💎 Going Seventeen
+        </a>
+
+        <a href="game.html" class="nav-btn">
+            🧩 Puzzle Game
+        </a>
+
+        <a href="music.html" class="nav-btn">
+            💿 Albums
+        </a>
+
+    </nav>
+
+
+    <!-- =========================================
+         PROFILE
+    ========================================= -->
+
+    <main class="profile-wrapper">
+
+        <div class="profile-card">
+
+
+            <!-- COVER -->
+
+            <div class="profile-cover">
+
+                <div class="profile-picture-wrapper">
+
+                    <img
+                        id="profileImage"
+                        class="profile-picture"
+                        src="https://i.pinimg.com/736x/33/41/e5/3341e5759d02ccaecf733752f39785ef.jpg"
+                        alt="Profile Picture"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PROFILE INFORMATION -->
+
+            <div class="profile-info">
+
+                <h1 id="profileName">
+                    CARAT ✨
+                </h1>
+
+                <p class="username" id="profileUsername">
+                    @mycaratspace
+                </p>
+
+                <p class="bio" id="profileBio">
+                    Just a CARAT collecting memories, music,
+                    photocards and seventeen moments. 💎
+                </p>
+
+
+                <!-- BADGES -->
+
+                <div class="badges">
+
+                    <span class="badge">
+                        💎 CARAT
+                    </span>
+
+                    <span class="badge">
+                        🎧 Music Lover
+                    </span>
+
+                    <span class="badge">
+                        📸 Memory Collector
+                    </span>
+
+                    <span class="badge">
+                        ✨ SVT Enthusiast
+                    </span>
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="stats">
+
+                    <div class="stat">
+
+                        <span
+                            class="stat-number"
+                            id="photoCount"
+                        >
+                            0
+                        </span>
+
+                        <span class="stat-label">
+                            Memories
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <span
+                            class="stat-number"
+                            id="songCount"
+                        >
+                            35
+                        </span>
+
+                        <span class="stat-label">
+                            Albums
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <span
+                            class="stat-number"
+                            id="favoriteCount"
+                        >
+                            3
+                        </span>
+
+                        <span class="stat-label">
+                            Favorites
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FAVORITES -->
+
+                <div class="section">
+
+                    <h2>
+                        💎 My SEVENTEEN Favorites
+                    </h2>
+
+
+                    <div class="favorites">
+
+
+                        <div class="favorite-card">
+
+                            <div class="favorite-icon">
+                                🐯
+                            </div>
+
+                            <h3>
+                                Bias
+                            </h3>
+
+                            <p>
+                                Seungkwan
+                            </p>
+
+                        </div>
+
+
+                        <div class="favorite-card">
+
+                            <div class="favorite-icon">
+                                🐸
+                            </div>
+
+                            <h3>
+                                Bias Wrecker
+                            </h3>
+
+                            <p>
+                                Hoshi
+                            </p>
+
+                        </div>
+
+
+                        <div class="favorite-card">
+
+                            <div class="favorite-icon">
+                                🎧
+                            </div>
+
+                            <h3>
+                                Favorite Song
+                            </h3>
+
+                            <p>
+                                Our Dawn Is Hotter Than Day
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTION BUTTONS -->
+
+                <div class="actions">
+
+                    <a
+                        href="scrapbook.html"
+                        class="action-btn"
+                    >
+                        📖 Open Scrapbook
+                    </a>
+
+                    <a
+                        href="albums.html"
+                        class="action-btn"
+                    >
+                        💿 View Albums
+                    </a>
+
+                    <button
+                        class="action-btn logout-btn"
+                        onclick="logout()"
+                    >
+                        🚪 Log Out
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        Made with 💎 for CARATs
+    </footer>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+
+        /*
+         * Load profile information from localStorage
+         * if it exists.
+         */
+
+        const savedName =
+            localStorage.getItem("profileName");
+
+        const savedUsername =
+            localStorage.getItem("profileUsername");
+
+        const savedBio =
+            localStorage.getItem("profileBio");
+
+
+        if (savedName) {
+            document.getElementById("profileName")
+                .textContent = savedName;
+        }
+
+        if (savedUsername) {
+            document.getElementById("profileUsername")
+                .textContent = savedUsername;
+        }
+
+        if (savedBio) {
+            document.getElementById("profileBio")
+                .textContent = savedBio;
+        }
+
+
+        /*
+         * Example:
+         * If your scrapbook saves photos
+         * inside localStorage using "photos",
+         * this automatically counts them.
+         */
+
+        try {
+
+            const photos =
+                JSON.parse(
+                    localStorage.getItem("photos")
+                );
+
+            if (Array.isArray(photos)) {
+
+                document.getElementById("photoCount")
+                    .textContent = photos.length;
+
+            }
+
+        } catch (error) {
+
+            console.log(
+                "No saved photo data found."
+            );
+
+        }
+
+
+        /*
+         * Logout
+         */
+
+        function logout() {
+
+            const confirmLogout =
+                confirm(
+                    "Leave your CARAT profile? 💎"
+                );
+
+            if (confirmLogout) {
+
+                /*
+                 * Remove login information.
+                 * We DON'T remove scrapbook data.
+                 */
+
+                localStorage.removeItem("loggedIn");
+
+                window.location.href =
+                    "index.html";
+            }
+        }
+
+    </script>
+
+</body>
+</html>
